@@ -5,6 +5,16 @@ VisualStudioVersion = 17.14.36623.8 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebResume", "WebResume\WebResume.csproj", "{458DF462-F972-42F9-B64C-D8C24A127D9E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{754FC069-D67B-A9D7-50A1-8D1CA196D8F1}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		nlog.config = nlog.config
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{C7C4893C-1C22-42D2-9AB5-BD1934BF4E83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerService", "LoggerService\LoggerService.csproj", "{3A54AE34-9B7F-44FE-B8EA-EDA2736C3692}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +25,14 @@ Global
 		{458DF462-F972-42F9-B64C-D8C24A127D9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{458DF462-F972-42F9-B64C-D8C24A127D9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{458DF462-F972-42F9-B64C-D8C24A127D9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7C4893C-1C22-42D2-9AB5-BD1934BF4E83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7C4893C-1C22-42D2-9AB5-BD1934BF4E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7C4893C-1C22-42D2-9AB5-BD1934BF4E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7C4893C-1C22-42D2-9AB5-BD1934BF4E83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A54AE34-9B7F-44FE-B8EA-EDA2736C3692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A54AE34-9B7F-44FE-B8EA-EDA2736C3692}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A54AE34-9B7F-44FE-B8EA-EDA2736C3692}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A54AE34-9B7F-44FE-B8EA-EDA2736C3692}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,8 +1,20 @@
+using NLog;
+using WebResume.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// NLog
+LogManager.Setup().LoadConfigurationFromFile(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.ConfigureCors();
+builder.Services.ConfigureIISIntegration();
+
+// IOC
+builder.Services.ConfigureLoggerService();
 
 var app = builder.Build();
 
