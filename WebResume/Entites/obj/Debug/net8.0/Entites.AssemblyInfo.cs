@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("WebResume")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("Entites")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f5b04825419645aa3e83b0c609547b7920557d23")]
-[assembly: System.Reflection.AssemblyProductAttribute("WebResume")]
-[assembly: System.Reflection.AssemblyTitleAttribute("WebResume")]
+[assembly: System.Reflection.AssemblyProductAttribute("Entites")]
+[assembly: System.Reflection.AssemblyTitleAttribute("Entites")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Создано классом WriteCodeFragment MSBuild.
