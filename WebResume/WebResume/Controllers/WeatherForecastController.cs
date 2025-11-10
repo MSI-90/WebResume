@@ -1,3 +1,4 @@
+using Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebResume.Controllers
@@ -6,28 +7,23 @@ namespace WebResume.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILoggerManager _loggerManager;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILoggerManager logger)
         {
-            _logger = logger;
+          _loggerManager = logger;
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public IEnumerable<string> Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+          _loggerManager.LogInfo("¬от информационное сообщение от нашего контроллера значений.");
+          _loggerManager.LogDebug("¬от отладочное сообщение от нашего контроллера значений.");
+          _loggerManager.LogWarn("¬от сообщение о предупреждении от нашего контроллера значений.");
+          _loggerManager.LogError("¬от сообщение об ошибке от нашего контроллера значений.");
+
+          return ["value1", "value2" ];
         }
     }
 }
