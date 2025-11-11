@@ -30,6 +30,6 @@ namespace Entites.Models
     [ForeignKey(nameof(Template))]
     public Guid TemplateId { get; set; }
     public Template? Template { get; set; }
-    public required User User { get; set; }
+    //public required User User { get; set; }
   }
 }
