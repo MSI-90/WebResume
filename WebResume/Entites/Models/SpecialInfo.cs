@@ -21,6 +21,6 @@ namespace Entites.Models
     [MinLength(5, ErrorMessage = "Минимальная длина поля составляет 5 символов.")]
     public string? Description { get; set; }
 
-    public ICollection<User>? Users { get; set; }
+    //public ICollection<User>? Users { get; set; }
   }
 }
