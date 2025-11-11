@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36623.8 d17.14
+VisualStudioVersion = 17.14.36623.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebResume", "WebResume\WebResume.csproj", "{458DF462-F972-42F9-B64C-D8C24A127D9E}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerService", "LoggerService\LoggerService.csproj", "{3A54AE34-9B7F-44FE-B8EA-EDA2736C3692}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entites", "Entites\Entites.csproj", "{861B219E-EFA7-4686-8E1F-A77AB996FB59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{5EE04124-453E-48D9-B8A5-57F5025DF907}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{861B219E-EFA7-4686-8E1F-A77AB996FB59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{861B219E-EFA7-4686-8E1F-A77AB996FB59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{861B219E-EFA7-4686-8E1F-A77AB996FB59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EE04124-453E-48D9-B8A5-57F5025DF907}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EE04124-453E-48D9-B8A5-57F5025DF907}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EE04124-453E-48D9-B8A5-57F5025DF907}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EE04124-453E-48D9-B8A5-57F5025DF907}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

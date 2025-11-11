@@ -1,0 +1,12 @@
+F:\WebResume\WebResume\Entites\bin\Debug\net8.0\Entites.deps.json
+F:\WebResume\WebResume\Entites\bin\Debug\net8.0\Entites.dll
+F:\WebResume\WebResume\Entites\bin\Debug\net8.0\Entites.pdb
+F:\WebResume\WebResume\Entites\obj\Debug\net8.0\Entites.GeneratedMSBuildEditorConfig.editorconfig
+F:\WebResume\WebResume\Entites\obj\Debug\net8.0\Entites.AssemblyInfoInputs.cache
+F:\WebResume\WebResume\Entites\obj\Debug\net8.0\Entites.AssemblyInfo.cs
+F:\WebResume\WebResume\Entites\obj\Debug\net8.0\Entites.csproj.CoreCompileInputs.cache
+F:\WebResume\WebResume\Entites\obj\Debug\net8.0\Entites.sourcelink.json
+F:\WebResume\WebResume\Entites\obj\Debug\net8.0\Entites.dll
+F:\WebResume\WebResume\Entites\obj\Debug\net8.0\refint\Entites.dll
+F:\WebResume\WebResume\Entites\obj\Debug\net8.0\Entites.pdb
+F:\WebResume\WebResume\Entites\obj\Debug\net8.0\ref\Entites.dll
