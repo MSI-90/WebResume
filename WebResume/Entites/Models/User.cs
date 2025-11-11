@@ -7,9 +7,6 @@ namespace Entites.Models
   {
     [Column("status")]
     public UserStatus Status { get; set; }
-
-    [Column("special_info")]
-    public SpecialInfo? SpecialInfo { get; set; }
     public string? RefreshToken { get; set; }
     public DateTime RefreshTokenExpiryTime { get; set; }
 
