@@ -1,0 +1,12 @@
+F:\WebResume\WebResume\Service.Contracts\bin\Debug\net8.0\Service.Contracts.deps.json
+F:\WebResume\WebResume\Service.Contracts\bin\Debug\net8.0\Service.Contracts.dll
+F:\WebResume\WebResume\Service.Contracts\bin\Debug\net8.0\Service.Contracts.pdb
+F:\WebResume\WebResume\Service.Contracts\obj\Debug\net8.0\Service.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+F:\WebResume\WebResume\Service.Contracts\obj\Debug\net8.0\Service.Contracts.AssemblyInfoInputs.cache
+F:\WebResume\WebResume\Service.Contracts\obj\Debug\net8.0\Service.Contracts.AssemblyInfo.cs
+F:\WebResume\WebResume\Service.Contracts\obj\Debug\net8.0\Service.Contracts.csproj.CoreCompileInputs.cache
+F:\WebResume\WebResume\Service.Contracts\obj\Debug\net8.0\Service.Contracts.sourcelink.json
+F:\WebResume\WebResume\Service.Contracts\obj\Debug\net8.0\Service.Contracts.dll
+F:\WebResume\WebResume\Service.Contracts\obj\Debug\net8.0\refint\Service.Contracts.dll
+F:\WebResume\WebResume\Service.Contracts\obj\Debug\net8.0\Service.Contracts.pdb
+F:\WebResume\WebResume\Service.Contracts\obj\Debug\net8.0\ref\Service.Contracts.dll

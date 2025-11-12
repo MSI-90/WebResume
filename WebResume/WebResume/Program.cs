@@ -8,15 +8,17 @@ LogManager.Setup().LoadConfigurationFromFile(string.Concat(Directory.GetCurrentD
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+  .AddApplicationPart(typeof(WebResume.Presentation.AssemblyReference).Assembly);
 
 builder.Services.ConfigureCors();
 builder.Services.ConfigureIISIntegration();
 
 // IOC
 builder.Services.ConfigureLoggerService();
-builder.Services.ConfigureRepositoryManager();
-builder.Services.ConfigureServiceManager();
+builder.Services.ConfigureService();
+//builder.Services.ConfigureRepositoryManager();
+//builder.Services.ConfigureServiceManager();
 builder.Services.ConfigurePostgresConnection(builder.Configuration);
 
 var app = builder.Build();

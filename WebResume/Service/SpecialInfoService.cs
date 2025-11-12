@@ -3,7 +3,7 @@ using Service.Contracts;
 
 namespace Service
 {
-  internal sealed class SpecialInfoService : ISpecialInfoService
+  public sealed class SpecialInfoService : ISpecialInfoService
   {
     private readonly IRepositoryManager _repository;
     private readonly ILoggerManager _logger;

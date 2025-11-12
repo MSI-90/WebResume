@@ -142,3 +142,9 @@ F:\WebResume\WebResume\WebResume\bin\Debug\net8.0\Entites.dll
 F:\WebResume\WebResume\WebResume\bin\Debug\net8.0\Repository.dll
 F:\WebResume\WebResume\WebResume\bin\Debug\net8.0\Repository.pdb
 F:\WebResume\WebResume\WebResume\bin\Debug\net8.0\Entites.pdb
+F:\WebResume\WebResume\WebResume\bin\Debug\net8.0\Service.Contracts.dll
+F:\WebResume\WebResume\WebResume\bin\Debug\net8.0\Service.dll
+F:\WebResume\WebResume\WebResume\bin\Debug\net8.0\WebResume.Presentation.dll
+F:\WebResume\WebResume\WebResume\bin\Debug\net8.0\Service.pdb
+F:\WebResume\WebResume\WebResume\bin\Debug\net8.0\WebResume.Presentation.pdb
+F:\WebResume\WebResume\WebResume\bin\Debug\net8.0\Service.Contracts.pdb

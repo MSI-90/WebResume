@@ -11,7 +11,9 @@
           "LoggerService": "1.0.0",
           "Microsoft.EntityFrameworkCore.Tools": "9.0.10",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "9.0.4",
-          "Repository": "1.0.0"
+          "Repository": "1.0.0",
+          "Service": "1.0.0",
+          "WebResume.Presentation": "1.0.0"
         },
         "runtime": {
           "WebResume.dll": {}
@@ -705,11 +707,43 @@
       },
       "Repository/1.0.0": {
         "dependencies": {
+          "Contracts": "1.0.0",
           "Entites": "1.0.0",
           "Microsoft.EntityFrameworkCore": "9.0.10"
         },
         "runtime": {
           "Repository.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Service/1.0.0": {
+        "dependencies": {
+          "Contracts": "1.0.0",
+          "Service.Contracts": "1.0.0"
+        },
+        "runtime": {
+          "Service.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Service.Contracts/1.0.0": {
+        "runtime": {
+          "Service.Contracts.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "WebResume.Presentation/1.0.0": {
+        "dependencies": {
+          "Service.Contracts": "1.0.0"
+        },
+        "runtime": {
+          "WebResume.Presentation.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -1061,6 +1095,21 @@
       "sha512": ""
     },
     "Repository/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Service/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Service.Contracts/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "WebResume.Presentation/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
