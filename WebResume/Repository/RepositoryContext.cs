@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Entites.Models;
+﻿using Entites.Models;
+using Microsoft.EntityFrameworkCore;
+using Repository.Configuration;
 
 namespace Repository
 {
@@ -13,6 +14,12 @@ namespace Repository
     {
     }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+      modelBuilder.ApplyConfiguration(new ResumeConfiguration());
+      modelBuilder.ApplyConfiguration(new TemplateConfiguration());
+      modelBuilder.ApplyConfiguration(new SpecialInfoConfiguration());
+    }
     
   }
 }

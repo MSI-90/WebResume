@@ -12,8 +12,8 @@ using Repository;
 namespace WebResume.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20251112020311_ResumeTableModified")]
-    partial class ResumeTableModified
+    [Migration("20251112030519_InitialData")]
+    partial class InitialData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,6 +73,30 @@ namespace WebResume.Migrations
                     b.HasIndex("TemplateId");
 
                     b.ToTable("resume");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("7b8b80fb-1c94-4e46-a069-ee51901b3d3e"),
+                            CreatedAt = new DateTime(2025, 11, 12, 9, 43, 42, 361, DateTimeKind.Utc),
+                            FirstName = "Sergey",
+                            JobTitle = "Specialist",
+                            LastName = "Miller",
+                            MiddleName = "Ivanovich",
+                            TemplateId = new Guid("db58c76e-bcb5-4c6a-ad60-0e61bf3ac11c"),
+                            UpdatedAt = new DateTime(2025, 11, 12, 23, 43, 42, 361, DateTimeKind.Utc)
+                        },
+                        new
+                        {
+                            Id = new Guid("ce078d47-3f43-423f-8c16-a039f805ee88"),
+                            CreatedAt = new DateTime(2025, 11, 12, 10, 1, 42, 361, DateTimeKind.Utc),
+                            FirstName = "John",
+                            JobTitle = "Programmer",
+                            LastName = "Doe",
+                            MiddleName = "middle",
+                            TemplateId = new Guid("132805d2-3fc3-457c-86de-40116433c062"),
+                            UpdatedAt = new DateTime(2025, 11, 12, 10, 1, 42, 361, DateTimeKind.Utc)
+                        });
                 });
 
             modelBuilder.Entity("Entites.Models.SpecialInfo", b =>
@@ -97,6 +121,20 @@ namespace WebResume.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("special_info");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("f4b94a1a-ac14-420e-9c67-37ef9b46445f"),
+                            Description = "The client is acting suspiciously towards the service, additional attention should be paid to their actions within the service.",
+                            Title = "Suspicious activity"
+                        },
+                        new
+                        {
+                            Id = new Guid("208c6dbc-77d1-4580-a5e8-3e972e2e1cb7"),
+                            Description = "Takes advantage of the service's loyalty and exploits it to commit fraudulent or illegal actions, resulting in financial losses for the service. It is not recommended to provide any services to the client.",
+                            Title = "Scammer"
+                        });
                 });
 
             modelBuilder.Entity("Entites.Models.Template", b =>
@@ -119,6 +157,20 @@ namespace WebResume.Migrations
                     b.HasKey("TemplateId");
 
                     b.ToTable("template");
+
+                    b.HasData(
+                        new
+                        {
+                            TemplateId = new Guid("db58c76e-bcb5-4c6a-ad60-0e61bf3ac11c"),
+                            Name = "Default template",
+                            TemplateKind = 0
+                        },
+                        new
+                        {
+                            TemplateId = new Guid("132805d2-3fc3-457c-86de-40116433c062"),
+                            Name = "Premium template",
+                            TemplateKind = 1
+                        });
                 });
 
             modelBuilder.Entity("Entites.Models.Resume", b =>
