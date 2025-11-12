@@ -15,6 +15,9 @@ builder.Services.ConfigureIISIntegration();
 
 // IOC
 builder.Services.ConfigureLoggerService();
+builder.Services.ConfigureRepositoryManager();
+builder.Services.ConfigureServiceManager();
+builder.Services.ConfigurePostgresConnection(builder.Configuration);
 
 var app = builder.Build();
 
