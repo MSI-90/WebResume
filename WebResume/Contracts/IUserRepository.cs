@@ -1,6 +1,6 @@
 ﻿namespace Contracts
 {
-  public interface IResume
+  public interface IUserRepository
   {
   }
 }

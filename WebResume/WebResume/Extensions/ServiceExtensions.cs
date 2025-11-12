@@ -1,5 +1,6 @@
 ﻿using Contracts;
 using LoggerService;
+using Repository;
 
 namespace WebResume.Extensions
 {
@@ -21,5 +22,8 @@ namespace WebResume.Extensions
 
     public static void ConfigureLoggerService(this IServiceCollection services) =>
       services.AddSingleton<ILoggerManager, LoggerManager>();
+
+    public static void ConfigureRepositoryManager(IServiceCollection services) =>
+      services.AddScoped<IRepositoryManager, RepositoryManager>();
   }
 }
