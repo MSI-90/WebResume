@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebResume.Migrations
 {
     /// <inheritdoc />
-    public partial class DatabaseCreation : Migration
+    public partial class ResumeTableModified : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -42,7 +42,9 @@ namespace WebResume.Migrations
                 columns: table => new
                 {
                     resume_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    fio = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    first_name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    last_name = table.Column<string>(type: "character varying(70)", maxLength: 70, nullable: false),
+                    middle_name = table.Column<string>(type: "character varying(70)", maxLength: 70, nullable: false),
                     job_title = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     update_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),

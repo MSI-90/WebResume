@@ -14,7 +14,7 @@ namespace Repository.Configuration
         new Resume
         {
           Id = new Guid("7B8B80FB-1C94-4E46-A069-EE51901B3D3E"),
-          FIO = "Миллер Сергей Иванович",
+          //FIO = "Миллер Сергей Иванович",
 
         }
       );
