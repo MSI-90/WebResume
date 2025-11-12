@@ -9,11 +9,23 @@ namespace Entites.Models
     [Column("resume_id")]
     public Guid Id { get; set; }
 
-    [Column("fio")]
-    [Required(ErrorMessage = "ФИО - обязательное поле.")]
-    [StringLength(50, ErrorMessage = "Максимальная длина поля ФИО составляет 50 символов.")]
-    [MinLength(3, ErrorMessage = "Минимальная длина поля ФИО составляет 3 символа.")]
-    public string? FIO { get; set; }
+    [Column("first_name")]
+    [Required(ErrorMessage = "Имя - обязательное поле.")]
+    [StringLength(50, ErrorMessage = "Максимальная длина поля Имя составляет 50 символов.")]
+    [MinLength(3, ErrorMessage = "Минимальная длина поля Имя составляет 3 символа.")]
+    public string? FirstName { get; set; }
+
+    [Column("last_name")]
+    [Required(ErrorMessage = "Фамилия - обязательное поле.")]
+    [StringLength(70, ErrorMessage = "Максимальная длина поля Фамилия составляет 70 символов.")]
+    [MinLength(3, ErrorMessage = "Минимальная длина поля Фамилия составляет 3 символа.")]
+    public string? LastName { get; set; }
+
+    [Column("middle_name")]
+    [Required(ErrorMessage = "Отчество - обязательное поле.")]
+    [StringLength(70, ErrorMessage = "Максимальная длина поля Отчество составляет 70 символов.")]
+    [MinLength(3, ErrorMessage = "Минимальная длина поля Отчество составляет 3 символа.")]
+    public string? MiddleName { get; set; }
 
     [Column("job_title")]
     [Required(ErrorMessage = "Должность - обязательное поле.")]
