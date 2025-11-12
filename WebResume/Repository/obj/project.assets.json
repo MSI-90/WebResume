@@ -210,6 +210,16 @@
           "buildTransitive/net8.0/_._": {}
         }
       },
+      "Contracts/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/Contracts.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Contracts.dll": {}
+        }
+      },
       "Entites/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
@@ -585,6 +595,11 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "Contracts/1.0.0": {
+      "type": "project",
+      "path": "../Contracts/Contracts.csproj",
+      "msbuildProject": "../Contracts/Contracts.csproj"
+    },
     "Entites/1.0.0": {
       "type": "project",
       "path": "../Entites/Entites.csproj",
@@ -593,6 +608,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "Contracts >= 1.0.0",
       "Entites >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 9.0.10"
     ]
@@ -630,6 +646,9 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
+            "F:\\WebResume\\WebResume\\Contracts\\Contracts.csproj": {
+              "projectPath": "F:\\WebResume\\WebResume\\Contracts\\Contracts.csproj"
+            },
             "F:\\WebResume\\WebResume\\Entites\\Entites.csproj": {
               "projectPath": "F:\\WebResume\\WebResume\\Entites\\Entites.csproj"
             }

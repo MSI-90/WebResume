@@ -241,6 +241,9 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
+              "F:\\WebResume\\WebResume\\Contracts\\Contracts.csproj": {
+                "projectPath": "F:\\WebResume\\WebResume\\Contracts\\Contracts.csproj"
+              },
               "F:\\WebResume\\WebResume\\Entites\\Entites.csproj": {
                 "projectPath": "F:\\WebResume\\WebResume\\Entites\\Entites.csproj"
               }
