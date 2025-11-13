@@ -16,3 +16,9 @@ F:\WebResume\WebResume\Service\obj\Debug\net8.0\Service.dll
 F:\WebResume\WebResume\Service\obj\Debug\net8.0\refint\Service.dll
 F:\WebResume\WebResume\Service\obj\Debug\net8.0\Service.pdb
 F:\WebResume\WebResume\Service\obj\Debug\net8.0\ref\Service.dll
+F:\WebResume\WebResume\Service\bin\Debug\net8.0\Entites.dll
+F:\WebResume\WebResume\Service\bin\Debug\net8.0\Entites.pdb
+F:\WebResume\WebResume\Service\bin\Debug\net8.0\Repository.dll
+F:\WebResume\WebResume\Service\bin\Debug\net8.0\Repository.pdb
+F:\WebResume\WebResume\Service\bin\Debug\net8.0\Shared.dll
+F:\WebResume\WebResume\Service\bin\Debug\net8.0\Shared.pdb

@@ -9,7 +9,8 @@ namespace WebResume.Extensions
 {
   public static class ServiceExtensions
   {
-    public static void ConfigurePostgresConnection(this IServiceCollection services, IConfiguration configuration) =>      services.AddDbContext<RepositoryContext>(options => options.UseNpgsql(configuration.GetConnectionString("sqlConnection")));
+    public static void ConfigurePostgresConnection(this IServiceCollection services, IConfiguration configuration) =>
+      services.AddDbContext<RepositoryContext>(options => options.UseNpgsql(configuration.GetConnectionString("sqlConnection")));
     
     public static void ConfigureCors(this IServiceCollection services) =>
       services.AddCors(options =>
@@ -34,13 +35,5 @@ namespace WebResume.Extensions
       services.AddScoped<ITemplateService, TemplateService>();
       services.AddScoped<ISpecialInfoService, SpecialInfoService>();
     }
-
-    //public static void ConfigureRepositoryManager(this IServiceCollection services) =>
-    //  services.AddScoped<IRepositoryManager, RepositoryManager>();
-
-    //public static void ConfigureServiceManager(this IServiceCollection services) => 
-    //  services.AddScoped<IServiceManager, ServiceManager>();
-
-
   }
 }
