@@ -1,17 +1,28 @@
-﻿using Contracts;
+﻿using AutoMapper;
+using Contracts;
+using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Contracts;
+using Shared.DataTransferObjects;
 
 namespace Service
 {
-  public sealed class TemplateService :ITemplateService
+  public sealed class TemplateService : ITemplateService
   {
     private readonly RepositoryContext _repository;
     private readonly ILoggerManager _logger;
-    public TemplateService(RepositoryContext repository, ILoggerManager logger) 
+    private readonly IMapper _mapper;
+    public TemplateService(RepositoryContext repository, ILoggerManager logger, IMapper mapper) 
     {
       _repository = repository;
       _logger = logger;
+      _mapper = mapper;
+    }
+
+    public async Task<IEnumerable<TemplateDto>> GetTemplatesAsync(CancellationToken token)
+    {
+      var templates = await _repository.Templates.ToListAsync(token);
+      return _mapper.Map<IEnumerable<TemplateDto>>(templates);
     }
   }
 }

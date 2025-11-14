@@ -12,7 +12,7 @@ namespace WebResume
         .ForCtorParam("FIO",
         opt => opt.MapFrom(x => string.Join(' ', x.LastName, x.FirstName, x.MiddleName)));
 
-      //CreateMap<Resume, ResumeDto>();
+      CreateMap<Template, TemplateDto>();
     }
   }
 }

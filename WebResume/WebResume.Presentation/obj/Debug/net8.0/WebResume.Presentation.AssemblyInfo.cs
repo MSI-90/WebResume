@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebResume.Presentation")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b97f29d45276dd99d34a4855dac6889af5b28e56")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+96c9ad0e12940eec503140c55b4598b0c653b70f")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebResume.Presentation")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebResume.Presentation")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

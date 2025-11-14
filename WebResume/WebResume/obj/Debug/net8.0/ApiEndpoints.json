@@ -25,5 +25,15 @@
     ],
     "ReturnTypes": [],
     "EndpointName": "GetResume"
+  },
+  {
+    "ContainingType": "WebResume.Presentation.Controllers.TemplateController",
+    "Method": "GetTemplates",
+    "RelativePath": "api/template",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   }
 ]

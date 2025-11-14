@@ -1,5 +1,6 @@
 ﻿using Contracts;
 using Entites.ErrorModel;
+using Entites.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
 
@@ -20,10 +21,19 @@ namespace WebResume
       var contextFeature = httpContext.Features.Get<IExceptionHandlerFeature>();
       if (contextFeature != null) 
       {
+        switch (contextFeature.Error)
+        {
+          case ResumeNotFoundException:
+            httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+            break;
+          default: httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError; 
+            break;
+        }
+
         _logger.LogError($"Что-то пошло не так: {exception.Message}");
         await httpContext.Response.WriteAsync(new ErrorDetails()
         { 
-          StatusCode = (int)HttpStatusCode.InternalServerError,
+          StatusCode = httpContext.Response.StatusCode,
           Message = exception.Message,
         }.ToString());
       }
