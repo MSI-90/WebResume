@@ -19,5 +19,12 @@ namespace WebResume.Presentation.Controllers
       var templates = await _templateService.GetTemplatesAsync(token);
       return Ok(templates);
     }
+
+    [HttpGet("{templateId:guid}", Name = "GeTemplate")]
+    public async Task<IActionResult> GeTemplate(Guid templateId, CancellationToken token)
+    {
+      var template = await _templateService.GetTemplateByIdAsync(templateId, token);
+      return Ok(template);
+    }
   }
 }

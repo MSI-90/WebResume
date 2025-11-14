@@ -26,6 +26,9 @@ namespace WebResume
           case ResumeNotFoundException:
             httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
             break;
+          case TemplateNotFoundException:
+            httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+            break;
           default: httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError; 
             break;
         }
