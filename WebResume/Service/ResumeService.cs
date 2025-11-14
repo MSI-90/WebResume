@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Contracts;
+using Entites.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Contracts;
@@ -22,17 +23,13 @@ namespace Service
     public async Task<IEnumerable<ResumeDto>> GetResumesAsync(CancellationToken token)
     {
       var resumes = await _repository.Resume.ToListAsync(token);
-      var resumeDto = _mapper.Map<IEnumerable<ResumeDto>>(resumes);
-      return resumeDto;
+      return _mapper.Map<IEnumerable<ResumeDto>>(resumes);
     }
 
     public async Task<ResumeDto> GetResumeAsync(Guid resumeId, CancellationToken token)
     {
       var resume = await _repository.Resume.Where(r => r.Id.Equals(resumeId)).FirstOrDefaultAsync(token);
-      //if (resume is null)
-      //  throw new ResumeNotFoundException();
-
-      return _mapper.Map<ResumeDto>(resume);
+      return _mapper.Map<ResumeDto>(resume) ?? throw new ResumeNotFoundException(resumeId);
     }
       
   }

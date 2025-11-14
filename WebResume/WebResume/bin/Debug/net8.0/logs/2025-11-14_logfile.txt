@@ -3,3 +3,4 @@
 2025-11-14 11:20:07.2703 ERROR Что-то пошло не так: fff
 2025-11-14 13:16:31.7107 ERROR Что-то пошло не так: Shared.DataTransferObjects.ResumeDto needs to have a constructor with 0 args or only optional args. Validate your configuration for details. (Parameter 'type')
 2025-11-14 13:21:55.1558 ERROR Что-то пошло не так: Shared.DataTransferObjects.ResumeDto needs to have a constructor with 0 args or only optional args. Validate your configuration for details. (Parameter 'type')
+2025-11-14 15:05:07.0895 ERROR Что-то пошло не так: Резюме с id 7b8b80fb-1c94-4e46-a069-ee51901b3d3f не найдено в базе данных
