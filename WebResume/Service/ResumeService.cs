@@ -1,4 +1,5 @@
-﻿using Contracts;
+﻿using AutoMapper;
+using Contracts;
 using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Contracts;
@@ -10,25 +11,28 @@ namespace Service
   {
     private readonly RepositoryContext _repository;
     private readonly ILoggerManager _logger;
-    public ResumeService(RepositoryContext repository, ILoggerManager logger)
+    private readonly IMapper _mapper;
+    public ResumeService(RepositoryContext repository, ILoggerManager logger, IMapper mapper)
     {
       _repository = repository;
       _logger = logger;
+      _mapper = mapper;
     }
 
-    public async Task<IEnumerable<ResumeDto>> GetResumeAsync(CancellationToken token)
+    public async Task<IEnumerable<ResumeDto>> GetResumesAsync(CancellationToken token)
     {
-      try
-      {
-        var resumeDto = await _repository.Resume.Select(r => new ResumeDto(
-        r.Id, string.Join(" ", r.LastName, r.FirstName, r.MiddleName), r.CreatedAt, r.UpdatedAt, r.TemplateId)).ToListAsync(token);
-        return resumeDto;
-      }
-      catch (Exception ex) 
-      {
-        _logger.LogError($"Что-то пошло не так в методе {nameof(GetResumeAsync)}");
-        throw;
-      }
+      var resumes = await _repository.Resume.ToListAsync(token);
+      var resumeDto = _mapper.Map<IEnumerable<ResumeDto>>(resumes);
+      return resumeDto;
+    }
+
+    public async Task<ResumeDto> GetResumeAsync(Guid resumeId, CancellationToken token)
+    {
+      var resume = await _repository.Resume.Where(r => r.Id.Equals(resumeId)).FirstOrDefaultAsync(token);
+      //if (resume is null)
+      //  throw new ResumeNotFoundException();
+
+      return _mapper.Map<ResumeDto>(resume);
     }
       
   }

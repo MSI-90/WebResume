@@ -1,0 +1,5 @@
+2025-11-14 10:17:55.7773 ERROR Что-то пошло не так в методе GetResumeAsync
+2025-11-14 10:18:54.3967 ERROR Что-то пошло не так в методе GetResumeAsync
+2025-11-14 11:20:07.2703 ERROR Что-то пошло не так: fff
+2025-11-14 13:16:31.7107 ERROR Что-то пошло не так: Shared.DataTransferObjects.ResumeDto needs to have a constructor with 0 args or only optional args. Validate your configuration for details. (Parameter 'type')
+2025-11-14 13:21:55.1558 ERROR Что-то пошло не так: Shared.DataTransferObjects.ResumeDto needs to have a constructor with 0 args or only optional args. Validate your configuration for details. (Parameter 'type')

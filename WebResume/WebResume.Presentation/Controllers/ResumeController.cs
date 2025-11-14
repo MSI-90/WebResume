@@ -17,15 +17,15 @@ namespace WebResume.Presentation.Controllers
     [HttpGet]
     public async Task<IActionResult> GetResumes(CancellationToken token)
     {
-      try
-      {
-        var resumeList = await _service.GetResumeAsync(token);
-        return Ok(resumeList);
-      }
-      catch
-      {
-        return StatusCode(500, "internal Server Error");
-      }
+      var resumeList = await _service.GetResumesAsync(token);
+      return Ok(resumeList);
+    }
+
+    [HttpGet("{resumeId:guid}", Name = "GetResume")]
+    public async Task<IActionResult> GetResume(Guid resumeId, CancellationToken token)
+    {
+      var resume = await _service.GetResumeAsync(resumeId, token);
+      return Ok(resume);
     }
   }
 }

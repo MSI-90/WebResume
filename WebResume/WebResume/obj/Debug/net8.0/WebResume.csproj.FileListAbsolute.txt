@@ -151,3 +151,5 @@ F:\WebResume\WebResume\WebResume\bin\Debug\net8.0\Service.Contracts.pdb
 F:\WebResume\WebResume\WebResume\obj\Debug\net8.0\WebResume.MvcApplicationPartsAssemblyInfo.cs
 F:\WebResume\WebResume\WebResume\bin\Debug\net8.0\Shared.dll
 F:\WebResume\WebResume\WebResume\bin\Debug\net8.0\Shared.pdb
+F:\WebResume\WebResume\WebResume\bin\Debug\net8.0\AutoMapper.dll
+F:\WebResume\WebResume\WebResume\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
