@@ -13,6 +13,8 @@ namespace WebResume
         opt => opt.MapFrom(x => string.Join(' ', x.LastName, x.FirstName, x.MiddleName)));
 
       CreateMap<Template, TemplateDto>();
+
+      CreateMap<ResumeForCreationDto, Resume>();
     }
   }
 }

@@ -6,5 +6,6 @@ namespace Service.Contracts
   {
     Task<IEnumerable<ResumeDto>> GetResumesAsync(CancellationToken token);
     Task<ResumeDto> GetResumeAsync(Guid resumeId, CancellationToken token);
+    Task<ResumeDto> CreateResumeAsync(ResumeForCreationDto resume);
   }
 }

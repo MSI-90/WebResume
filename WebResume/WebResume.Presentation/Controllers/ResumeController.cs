@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Entites.Models;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
+using Shared.DataTransferObjects;
 using System.Threading.Tasks;
 
 namespace WebResume.Presentation.Controllers
@@ -26,6 +28,16 @@ namespace WebResume.Presentation.Controllers
     {
       var resume = await _service.GetResumeAsync(resumeId, token);
       return Ok(resume);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateResume([FromBody] ResumeForCreationDto resumeForCreateDto)
+    {
+      if (resumeForCreateDto is null)
+        return BadRequest($"Проблема в теле запроса");
+
+      var resume = await _service.CreateResumeAsync(resumeForCreateDto);
+      return CreatedAtRoute("GetResume", new { resumeId = resume.Id }, resume);
     }
   }
 }

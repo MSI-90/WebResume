@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entites.Exceptions;
+using Entites.Models;
 using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Contracts;
@@ -31,6 +32,19 @@ namespace Service
       var resume = await _repository.Resume.Where(r => r.Id.Equals(resumeId)).FirstOrDefaultAsync(token);
       return _mapper.Map<ResumeDto>(resume) ?? throw new ResumeNotFoundException(resumeId);
     }
-      
+
+    public async Task<ResumeDto> CreateResumeAsync(ResumeForCreationDto resume)
+    {
+      var newResume = _mapper.Map<Resume>(resume);
+      newResume.Id = Guid.NewGuid();
+      newResume.UpdatedAt = newResume.CreatedAt = DateTime.UtcNow;
+      _repository.Resume.Add(newResume);
+      await _repository.SaveChangesAsync();
+
+      var createdResume = await GetResumeAsync(newResume.Id, default);
+      return createdResume;
+    }
+
+
   }
 }
