@@ -39,5 +39,12 @@ namespace WebResume.Presentation.Controllers
       var resume = await _service.CreateResumeAsync(resumeForCreateDto);
       return CreatedAtRoute("GetResume", new { resumeId = resume.Id }, resume);
     }
+
+    [HttpDelete("{resumeId:guid}")]
+    public async Task<IActionResult> DeleteResume(Guid resumeId, CancellationToken token)
+    {
+      await _service.DeleteResumeAsync(resumeId,token);
+      return NoContent();
+    }
   }
 }

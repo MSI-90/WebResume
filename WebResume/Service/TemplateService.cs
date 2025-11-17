@@ -22,13 +22,20 @@ namespace Service
 
     public async Task<IEnumerable<TemplateDto>> GetTemplatesAsync(CancellationToken token)
     {
-      var templates = await _repository.Templates.ToListAsync(token);
+      var templates = await _repository.Templates
+        .AsNoTracking()
+        .ToListAsync(token);
+
       return _mapper.Map<IEnumerable<TemplateDto>>(templates);
     }
 
     public async Task<TemplateDto> GetTemplateByIdAsync(Guid templateId, CancellationToken token)
     {
-      var template = await _repository.Templates.Where(t => t.TemplateId.Equals(templateId)).FirstOrDefaultAsync(token);
+      var template = await _repository.Templates
+        .AsNoTracking()
+        .Where(t => t.TemplateId.Equals(templateId))
+        .FirstOrDefaultAsync(token);
+
       return _mapper.Map<TemplateDto>(template) ?? throw new TemplateNotFoundException(templateId);
     }
   }

@@ -23,15 +23,20 @@ namespace Service
 
     public async Task<IEnumerable<ResumeDto>> GetResumesAsync(CancellationToken token)
     {
-      var resumes = await _repository.Resume.ToListAsync(token);
+      var resumes = await _repository.Resume.AsNoTracking().ToListAsync(token);
       return _mapper.Map<IEnumerable<ResumeDto>>(resumes);
     }
 
     public async Task<ResumeDto> GetResumeAsync(Guid resumeId, CancellationToken token)
     {
-      var resume = await _repository.Resume.Where(r => r.Id.Equals(resumeId)).FirstOrDefaultAsync(token);
+      var resume = await _repository.Resume
+        .AsNoTracking()
+        .Where(r => r.Id.Equals(resumeId))
+        .FirstOrDefaultAsync(token);
+
       return _mapper.Map<ResumeDto>(resume) ?? throw new ResumeNotFoundException(resumeId);
     }
+
 
     public async Task<ResumeDto> CreateResumeAsync(ResumeForCreationDto resume)
     {
@@ -45,6 +50,11 @@ namespace Service
       return createdResume;
     }
 
-
+    public async Task DeleteResumeAsync(Guid resumeId, CancellationToken token) 
+    {
+      var resumeForDelete = await GetResumeAsync(resumeId, token);
+      _repository.Resume.Remove(_mapper.Map<Resume>(resumeForDelete));
+      await _repository.SaveChangesAsync(token);
+    }
   }
 }
