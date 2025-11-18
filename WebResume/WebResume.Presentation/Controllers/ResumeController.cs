@@ -39,7 +39,7 @@ namespace WebResume.Presentation.Controllers
       if (resumeForCreateDto is null)
         return BadRequest($"Проблема в теле запроса");
 
-      var resume = await _service.CreateResumeAsync(resumeForCreateDto);
+      var resume = await _service.CreateResumeAsync(resumeForCreateDto, default);
       return CreatedAtRoute("GetResume", new { resumeId = resume.Id }, resume);
     }
 
@@ -51,15 +51,24 @@ namespace WebResume.Presentation.Controllers
     }
 
     [HttpPost("with-file")]
-    public async Task<IActionResult> TaskFromForm([FromForm] ResumeForCreationDto resumeForCreateDto, IFormFile file)
+    public async Task<IActionResult> TaskFromForm([FromForm] ResumeForCreationDto resumeForCreateDto, IFormFile? file)
     {
       if (resumeForCreateDto is null)
         return BadRequest($"Проблема в теле запроса");
 
-      if (file is null)
-        return BadRequest($"Не указан файл");
+      FileDto? fileDto = null;
+      if (file is not null)
+      {
+        fileDto = new FileDto
+        {
+          ContentType = file.ContentType,
+          Length = file.Length,
+          FileName = file.FileName,
+          FileStream = file.OpenReadStream()
+        };
+      }
 
-      var resume = await _service.CreateResumeAsync(resumeForCreateDto);
+      var resume = await _service.CreateResumeAsync(resumeForCreateDto, fileDto);
       return CreatedAtRoute("GetResume", new { resumeId = resume.Id }, resume);
     }
   }

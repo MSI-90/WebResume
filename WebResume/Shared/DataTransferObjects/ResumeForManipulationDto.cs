@@ -14,7 +14,6 @@ namespace Shared.DataTransferObjects
     [StringLength(70, ErrorMessage = "Максимальная длина поля Фамилия составляет 70 символов.")]
     public string? LastName { get; init; }
 
-    [Required(ErrorMessage = "Отчество - обязательное поле.")]
     [MinLength(3, ErrorMessage = "Минимальная длина поля Отчество составляет 3 символа.")]
     [StringLength(70, ErrorMessage = "Максимальная длина поля Отчество составляет 70 символов.")]
     public string? MiddleName { get; init; }

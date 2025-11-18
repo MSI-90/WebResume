@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Contracts;
 using Shared.DataTransferObjects;
+using System.IO;
 
 namespace Service
 {
@@ -14,11 +15,13 @@ namespace Service
     private readonly RepositoryContext _repository;
     private readonly ILoggerManager _logger;
     private readonly IMapper _mapper;
-    public ResumeService(RepositoryContext repository, ILoggerManager logger, IMapper mapper)
+    private readonly IFileService _fileService;
+    public ResumeService(RepositoryContext repository, ILoggerManager logger, IMapper mapper, IFileService fileService)
     {
       _repository = repository;
       _logger = logger;
       _mapper = mapper;
+      _fileService = fileService;
     }
 
     public async Task<IEnumerable<ResumeDto>> GetResumesAsync(CancellationToken token)
@@ -37,9 +40,12 @@ namespace Service
       return _mapper.Map<ResumeDto>(resume) ?? throw new ResumeNotFoundException(resumeId);
     }
 
-
-    public async Task<ResumeDto> CreateResumeAsync(ResumeForCreationDto resume)
+    public async Task<ResumeDto> CreateResumeAsync(ResumeForCreationDto resume, FileDto? file = null)
     {
+
+      if (file is not null)
+        await _fileService.ReadStream(file);
+
       var newResume = _mapper.Map<Resume>(resume);
       newResume.Id = Guid.NewGuid();
       newResume.UpdatedAt = newResume.CreatedAt = DateTime.UtcNow;
