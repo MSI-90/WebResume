@@ -9,6 +9,7 @@ namespace Repository
     public DbSet<Resume> Resume {  get; set; }
     public DbSet<SpecialInfo> SpecialInfo { get; set; }
     public DbSet<Template> Templates { get; set; }
+    public DbSet<Photo> Photos { get; set; }
     //public DbSet<User> Users { get; set; }
     public RepositoryContext(DbContextOptions options) : base(options)
     {
@@ -19,6 +20,7 @@ namespace Repository
       modelBuilder.ApplyConfiguration(new ResumeConfiguration());
       modelBuilder.ApplyConfiguration(new TemplateConfiguration());
       modelBuilder.ApplyConfiguration(new SpecialInfoConfiguration());
+      modelBuilder.ApplyConfiguration(new PhotoConfiguration());
     }
     
   }

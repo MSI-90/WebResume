@@ -17,6 +17,7 @@ namespace Repository.Configuration
           LastName = "Miller",
           MiddleName = "Ivanovich",
           JobTitle = "Specialist",
+          PhotoId = new Guid("4041131F-CFD4-408A-8932-CE86CAD50DBA"),
           CreatedAt = new DateTime(2025, 11, 12, 09, 43, 42, 361, DateTimeKind.Utc),
           UpdatedAt = new DateTime(2025, 11, 12, 23, 43, 42, 361, DateTimeKind.Utc),
           TemplateId = new Guid("DB58C76E-BCB5-4C6A-AD60-0E61BF3AC11C")
@@ -28,6 +29,7 @@ namespace Repository.Configuration
           LastName = "Doe",
           MiddleName = "middle",
           JobTitle = "Programmer",
+          PhotoId = new Guid("7CF4A689-7387-4F97-9939-49BECA8F68EA"),
           CreatedAt = new DateTime(2025, 11, 12, 10, 01, 42, 361, DateTimeKind.Utc),
           UpdatedAt = new DateTime(2025, 11, 12, 10, 01, 42, 361, DateTimeKind.Utc),
           TemplateId = new Guid("132805D2-3FC3-457C-86DE-40116433C062")

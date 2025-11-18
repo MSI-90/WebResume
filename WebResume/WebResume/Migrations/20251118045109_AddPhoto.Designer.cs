@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Repository;
@@ -11,9 +12,11 @@ using Repository;
 namespace WebResume.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20251118045109_AddPhoto")]
+    partial class AddPhoto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,20 +43,6 @@ namespace WebResume.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("photo");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("4041131f-cfd4-408a-8932-ce86cad50dba"),
-                            FileName = "filename",
-                            Length = 108485L
-                        },
-                        new
-                        {
-                            Id = new Guid("7cf4a689-7387-4f97-9939-49beca8f68ea"),
-                            FileName = "1filename2",
-                            Length = 3413L
-                        });
                 });
 
             modelBuilder.Entity("Entites.Models.Resume", b =>
@@ -120,7 +109,6 @@ namespace WebResume.Migrations
                             JobTitle = "Specialist",
                             LastName = "Miller",
                             MiddleName = "Ivanovich",
-                            PhotoId = new Guid("4041131f-cfd4-408a-8932-ce86cad50dba"),
                             TemplateId = new Guid("db58c76e-bcb5-4c6a-ad60-0e61bf3ac11c"),
                             UpdatedAt = new DateTime(2025, 11, 12, 23, 43, 42, 361, DateTimeKind.Utc)
                         },
@@ -132,7 +120,6 @@ namespace WebResume.Migrations
                             JobTitle = "Programmer",
                             LastName = "Doe",
                             MiddleName = "middle",
-                            PhotoId = new Guid("7cf4a689-7387-4f97-9939-49beca8f68ea"),
                             TemplateId = new Guid("132805d2-3fc3-457c-86de-40116433c062"),
                             UpdatedAt = new DateTime(2025, 11, 12, 10, 1, 42, 361, DateTimeKind.Utc)
                         });

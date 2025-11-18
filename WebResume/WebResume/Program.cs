@@ -14,10 +14,10 @@ builder.Services.AddAutoMapper(typeof(Program));
 // Add services to the container.
 
 // For Caustom ModelState Error model using. For exclude (400 BadRequest if a ModelState is invalid)
-builder.Services.Configure<ApiBehaviorOptions>(options =>
-{
-  options.SuppressModelStateInvalidFilter = true;
-});
+//builder.Services.Configure<ApiBehaviorOptions>(options =>
+//{
+//  options.SuppressModelStateInvalidFilter = true;
+//});
 
 builder.Services.AddControllers()
   .AddApplicationPart(typeof(WebResume.Presentation.AssemblyReference).Assembly);

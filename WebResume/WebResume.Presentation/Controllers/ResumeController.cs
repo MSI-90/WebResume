@@ -1,8 +1,9 @@
-﻿using Entites.Models;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
 using Service.Contracts;
 using Shared.DataTransferObjects;
-using System.Threading.Tasks;
 
 namespace WebResume.Presentation.Controllers
 {
@@ -11,9 +12,11 @@ namespace WebResume.Presentation.Controllers
   public class ResumeController : ControllerBase
   {
     private readonly IResumeService _service;
-    public ResumeController(IResumeService service) 
+    private readonly ILogger<ResumeController> _logger;
+    public ResumeController(IResumeService service, ILogger<ResumeController> logger) 
     {
       _service = service;
+      _logger = logger;
     }
 
     [HttpGet]
@@ -45,6 +48,19 @@ namespace WebResume.Presentation.Controllers
     {
       await _service.DeleteResumeAsync(resumeId,token);
       return NoContent();
+    }
+
+    [HttpPost("with-file")]
+    public async Task<IActionResult> TaskFromForm([FromForm] ResumeForCreationDto resumeForCreateDto, IFormFile file)
+    {
+      if (resumeForCreateDto is null)
+        return BadRequest($"Проблема в теле запроса");
+
+      if (file is null)
+        return BadRequest($"Не указан файл");
+
+      var resume = await _service.CreateResumeAsync(resumeForCreateDto);
+      return CreatedAtRoute("GetResume", new { resumeId = resume.Id }, resume);
     }
   }
 }

@@ -22,7 +22,6 @@ namespace Entites.Models
     public string? LastName { get; set; }
 
     [Column("middle_name")]
-    [Required(ErrorMessage = "Отчество - обязательное поле.")]
     [StringLength(70, ErrorMessage = "Максимальная длина поля Отчество составляет 70 символов.")]
     [MinLength(3, ErrorMessage = "Минимальная длина поля Отчество составляет 3 символа.")]
     public string? MiddleName { get; set; }
@@ -37,6 +36,11 @@ namespace Entites.Models
 
     [Column("update_at")]
     public DateTime UpdatedAt { get; set; }
+
+    [Column("photo_id")]
+    [ForeignKey(nameof(PhotoFile))]
+    public Guid? PhotoId { get; set; }
+    public Photo? PhotoFile { get; set; }
 
     [Column("template_id")]
     [ForeignKey(nameof(Template))]
