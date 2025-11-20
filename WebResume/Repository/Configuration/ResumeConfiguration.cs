@@ -8,7 +8,9 @@ namespace Repository.Configuration
   {
     public void Configure(EntityTypeBuilder<Resume> builder)
     {
-      builder.HasOne(r => r.PhotoFile).WithOne(p => p.Resume).HasForeignKey<Resume>(r => r.PhotoId).IsRequired(false);
+
+      builder.HasOne(r => r.PhotoFile).WithOne(p => p.Resume).HasForeignKey<Resume>(r => r.PhotoId).IsRequired(false).OnDelete(DeleteBehavior.Cascade);
+      builder.HasOne(r => r.Job).WithOne().IsRequired(false).OnDelete(DeleteBehavior.Cascade);
       builder.HasData
       (
         new Resume
@@ -17,7 +19,6 @@ namespace Repository.Configuration
           FirstName = "Sergey",
           LastName = "Miller",
           MiddleName = "Ivanovich",
-          JobTitle = "Specialist",
           PhotoId = new Guid("4041131F-CFD4-408A-8932-CE86CAD50DBA"),
           CreatedAt = new DateTime(2025, 11, 12, 09, 43, 42, 361, DateTimeKind.Utc),
           UpdatedAt = new DateTime(2025, 11, 12, 23, 43, 42, 361, DateTimeKind.Utc),
@@ -29,7 +30,6 @@ namespace Repository.Configuration
           FirstName = "John",
           LastName = "Doe",
           MiddleName = "middle",
-          JobTitle = "Programmer",
           PhotoId = new Guid("7CF4A689-7387-4F97-9939-49BECA8F68EA"),
           CreatedAt = new DateTime(2025, 11, 12, 10, 01, 42, 361, DateTimeKind.Utc),
           UpdatedAt = new DateTime(2025, 11, 12, 10, 01, 42, 361, DateTimeKind.Utc),

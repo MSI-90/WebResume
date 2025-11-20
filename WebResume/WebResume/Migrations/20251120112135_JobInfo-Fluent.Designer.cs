@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Repository;
@@ -11,9 +12,11 @@ using Repository;
 namespace WebResume.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20251120112135_JobInfo-Fluent")]
+    partial class JobInfoFluent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,8 +142,7 @@ namespace WebResume.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("JobInfo")
-                        .IsUnique();
+                    b.HasIndex("JobInfo");
 
                     b.HasIndex("PhotoId")
                         .IsUnique();
@@ -251,14 +253,12 @@ namespace WebResume.Migrations
             modelBuilder.Entity("Entites.Models.Resume", b =>
                 {
                     b.HasOne("Entites.Models.JobInfo", "Job")
-                        .WithOne()
-                        .HasForeignKey("Entites.Models.Resume", "JobInfo")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("JobInfo");
 
                     b.HasOne("Entites.Models.Photo", "PhotoFile")
                         .WithOne("Resume")
-                        .HasForeignKey("Entites.Models.Resume", "PhotoId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("Entites.Models.Resume", "PhotoId");
 
                     b.HasOne("Entites.Models.Template", "Template")
                         .WithMany("Resumes")

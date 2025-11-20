@@ -1,6 +1,7 @@
 ﻿using Entites.Models;
 using Microsoft.EntityFrameworkCore;
 using Repository.Configuration;
+using System.Reflection;
 
 namespace Repository
 {
@@ -10,6 +11,7 @@ namespace Repository
     public DbSet<SpecialInfo> SpecialInfo { get; set; }
     public DbSet<Template> Templates { get; set; }
     public DbSet<Photo> Photos { get; set; }
+    public DbSet<JobInfo> JobInfos { get; set; }
     //public DbSet<User> Users { get; set; }
     public RepositoryContext(DbContextOptions options) : base(options)
     {
@@ -17,10 +19,8 @@ namespace Repository
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-      modelBuilder.ApplyConfiguration(new ResumeConfiguration());
-      modelBuilder.ApplyConfiguration(new TemplateConfiguration());
-      modelBuilder.ApplyConfiguration(new SpecialInfoConfiguration());
-      modelBuilder.ApplyConfiguration(new PhotoConfiguration());
+      modelBuilder.ApplyConfigurationsFromAssembly(
+        Assembly.GetExecutingAssembly());
     }
     
   }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Repository;
@@ -11,9 +12,11 @@ using Repository;
 namespace WebResume.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20251120094301_AddJobInfo")]
+    partial class AddJobInfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,37 +29,29 @@ namespace WebResume.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnType("uuid");
 
                     b.Property<bool>("ByAgreement")
-                        .HasColumnType("boolean")
-                        .HasColumnName("agreement");
+                        .HasColumnType("boolean");
 
                     b.Property<int?>("Currency")
-                        .HasColumnType("integer")
-                        .HasColumnName("currency");
+                        .HasColumnType("integer");
 
                     b.Property<decimal?>("DesiredSalary")
-                        .HasColumnType("decimal")
-                        .HasColumnName("desired_salary");
+                        .HasColumnType("numeric");
 
                     b.Property<int?>("EmploymentType")
-                        .HasColumnType("integer")
-                        .HasColumnName("employment_type");
+                        .HasColumnType("integer");
 
                     b.Property<string>("JobTitle")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)")
-                        .HasColumnName("job_title");
+                        .HasColumnType("text");
 
                     b.Property<int?>("WorkShedule")
-                        .HasColumnType("integer")
-                        .HasColumnName("work_shedule");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.ToTable("job_info", (string)null);
+                    b.ToTable("JobInfo");
                 });
 
             modelBuilder.Entity("Entites.Models.Photo", b =>
@@ -139,8 +134,7 @@ namespace WebResume.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("JobInfo")
-                        .IsUnique();
+                    b.HasIndex("JobInfo");
 
                     b.HasIndex("PhotoId")
                         .IsUnique();
@@ -251,14 +245,12 @@ namespace WebResume.Migrations
             modelBuilder.Entity("Entites.Models.Resume", b =>
                 {
                     b.HasOne("Entites.Models.JobInfo", "Job")
-                        .WithOne()
-                        .HasForeignKey("Entites.Models.Resume", "JobInfo")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .WithMany()
+                        .HasForeignKey("JobInfo");
 
                     b.HasOne("Entites.Models.Photo", "PhotoFile")
                         .WithOne("Resume")
-                        .HasForeignKey("Entites.Models.Resume", "PhotoId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("Entites.Models.Resume", "PhotoId");
 
                     b.HasOne("Entites.Models.Template", "Template")
                         .WithMany("Resumes")
