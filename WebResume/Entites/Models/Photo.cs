@@ -6,7 +6,7 @@ namespace Entites.Models
   public class Photo
   {
     [Column("id")]
-    public Guid Id { get; set; }
+    public Guid? Id { get; set; }
 
     [Column("file_name")]
     public string? FileName { get; set; }

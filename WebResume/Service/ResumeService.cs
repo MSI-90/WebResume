@@ -42,13 +42,14 @@ namespace Service
 
     public async Task<ResumeDto> CreateResumeAsync(ResumeForCreationDto resume, FileDto? file = null)
     {
-
+      var photo = new PhotoToUpload(string.Empty, Guid.Empty, string.Empty);
       if (file is not null)
-        await _fileService.ReadStream(file);
-
+        photo = await _fileService.CreatePhotoFileAsync(file);
+        
       var newResume = _mapper.Map<Resume>(resume);
       newResume.Id = Guid.NewGuid();
       newResume.UpdatedAt = newResume.CreatedAt = DateTime.UtcNow;
+      newResume.PhotoId = photo.PhotoId.Equals(Guid.Empty) ? null: photo.PhotoId;
       _repository.Resume.Add(newResume);
       await _repository.SaveChangesAsync();
 

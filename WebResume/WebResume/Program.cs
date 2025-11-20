@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
 using NLog;
 using WebResume;
 using WebResume.Extensions;

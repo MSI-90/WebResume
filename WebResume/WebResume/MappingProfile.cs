@@ -17,6 +17,8 @@ namespace WebResume
       CreateMap<Template, TemplateDto>();
 
       CreateMap<ResumeForCreationDto, Resume>();
+
+      CreateMap<Photo, PhotoDto>();
     }
   }
 }

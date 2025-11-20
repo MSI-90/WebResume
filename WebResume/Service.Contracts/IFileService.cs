@@ -4,6 +4,7 @@ namespace Service.Contracts
 {
   public interface IFileService
   {
-    Task<(string, Guid)> ReadStream(FileDto file);
+    Task<PhotoToUpload> CreatePhotoFileAsync(FileDto file);
+    Task<Guid?> AddPhotoInfoAsync(FileDto file);
   }
 }

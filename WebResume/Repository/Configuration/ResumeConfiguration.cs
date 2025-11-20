@@ -8,6 +8,7 @@ namespace Repository.Configuration
   {
     public void Configure(EntityTypeBuilder<Resume> builder)
     {
+      builder.HasOne(r => r.PhotoFile).WithOne(p => p.Resume).HasForeignKey<Resume>(r => r.PhotoId).IsRequired(false);
       builder.HasData
       (
         new Resume

@@ -1,7 +1,7 @@
-﻿using Contracts;
+﻿using AutoMapper;
+using Contracts;
 using LoggerService;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Repository;
 using Service;
 using Service.Contracts;
@@ -42,7 +42,11 @@ namespace WebResume.Extensions
 
         var uploadsPath = Path.Combine(env.ContentRootPath, config["FileStorage"]!);
 
-        return new FileService(uploadsPath, sp.GetRequiredService<ILoggerManager>(), sp.GetRequiredService<RepositoryContext>());
+        return new FileService(
+          uploadsPath,
+          sp.GetRequiredService<ILoggerManager>(),
+          sp.GetRequiredService<RepositoryContext>(), 
+          sp.GetRequiredService<IMapper>());
       });
     }
   }
