@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Contracts;
 using Entites.Models;
+using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -19,13 +20,36 @@ namespace Service
       _mapper = mapper;
     }
 
-    public Task<ResumeDto> CreateDesiredJobAsync(JobInfoForCreationDto jobInfo)
+    public async Task<JobInfo?> GetJobInfoAsync(Guid? jobInfoGuid, CancellationToken token) => 
+      await _context.JobInfos
+        .AsNoTracking()
+        .Where(j => j.Id.Equals(jobInfoGuid))
+        .FirstOrDefaultAsync(token);
+
+    public async Task<JobInfo?> CreateDesiredJobAsync(DesiredJobInfoForCreationDto? jobInfo)
     {
-      throw new NotImplementedException();
+      var newJob = _mapper.Map<JobInfo>(jobInfo);
+      newJob.Id = Guid.NewGuid();
+      newJob = CheckAgreementData(jobInfo?.ByAgreement, newJob);
+      newJob.ResumeId = jobInfo!.ResumeId;
+      _context.JobInfos.Add(newJob);
+      await _context.SaveChangesAsync();
+
+      return await GetJobInfoAsync(newJob.Id, default);
     }
-    //public async Task<ResumeDto> CreateDesiredJobAsync (JobInfoForCreationDto jobInfo)
-    //{
-    //  var newJobInfo = _mapper.Map<JobInfo>(jobInfo);
-    //}
+
+    public static JobInfo CheckAgreementData(bool? isAgreement, JobInfo newJob)
+    {
+      if (newJob is not null)
+      {
+        if (isAgreement == true)
+        {
+          newJob.DesiredSalary = null;
+          newJob.Currency = null;
+        }
+      }
+
+      return newJob!;
+    }
   }
 }

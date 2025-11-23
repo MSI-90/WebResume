@@ -4,10 +4,10 @@
     Guid Id, 
     string FIO,
     PhotoDto? Photo,
+    DesiredJobInfoOutputDto? DesiredJob,
     DateTime CreatedAt, 
     DateTime UpdatedAt, 
-    Guid TemplateId,
-    Guid? JobId)
+    Guid TemplateId)
   {
   }
 }

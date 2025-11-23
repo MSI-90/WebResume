@@ -1,9 +1,11 @@
-﻿using Shared.DataTransferObjects;
+﻿using Entites.Models;
+using Shared.DataTransferObjects;
 
 namespace Service.Contracts
 {
   public interface IJobInfoService
   {
-    Task<ResumeDto> CreateDesiredJobAsync(JobInfoForCreationDto jobInfo);
+    Task<JobInfo?> GetJobInfoAsync(Guid? jobInfoGuid, CancellationToken token);
+    Task<JobInfo?> CreateDesiredJobAsync(DesiredJobInfoForCreationDto? jobInfo);
   }
 }

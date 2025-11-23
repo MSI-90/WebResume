@@ -11,7 +11,8 @@ namespace WebResume
       CreateMap<Resume, ResumeDto>()
         .ForCtorParam("FIO",
           opt => opt.MapFrom(x => string.Join(' ', x.LastName, x.FirstName, x.MiddleName)))
-        .ForCtorParam("Photo", opt => opt.MapFrom(x => x.PhotoFile));
+        .ForCtorParam("Photo", opt => opt.MapFrom(x => x.PhotoFile))
+        .ForCtorParam("DesiredJob", opt => opt.MapFrom(x => x.Job));
 
       CreateMap<ResumeDto, Resume>();
 
@@ -21,7 +22,9 @@ namespace WebResume
 
       CreateMap<Photo, PhotoDto>();
 
-      CreateMap<JobInfoForCreationDto, JobInfo>();
+      CreateMap<DesiredJobInfoForCreationDto, JobInfo>();
+
+      CreateMap<JobInfo, DesiredJobInfoOutputDto>();
     }
   }
 }

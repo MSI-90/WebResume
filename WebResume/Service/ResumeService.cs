@@ -15,12 +15,14 @@ namespace Service
     private readonly ILoggerManager _logger;
     private readonly IMapper _mapper;
     private readonly IFileService _fileService;
-    public ResumeService(RepositoryContext repository, ILoggerManager logger, IMapper mapper, IFileService fileService)
+    private readonly IJobInfoService _jobInfoService;
+    public ResumeService(RepositoryContext repository, ILoggerManager logger, IMapper mapper, IFileService fileService, IJobInfoService jobInfoService)
     {
       _repository = repository;
       _logger = logger;
       _mapper = mapper;
       _fileService = fileService;
+      _jobInfoService = jobInfoService;
     }
 
     public async Task<IEnumerable<ResumeDto>> GetResumesAsync(CancellationToken token)
@@ -28,6 +30,7 @@ namespace Service
       var resumes = await _repository.Resume
         .AsNoTracking()
         .Include(r => r.PhotoFile)
+        .Include(r => r.Job)
         .ToListAsync(token);
 
       return _mapper.Map<IEnumerable<ResumeDto>>(resumes);
@@ -38,6 +41,7 @@ namespace Service
       var resume = await _repository.Resume
         .AsNoTracking()
         .Include(r => r.PhotoFile)
+        .Include(r => r.Job)
         .Where(r => r.Id.Equals(resumeId))
         .FirstOrDefaultAsync(token);
 
@@ -57,6 +61,12 @@ namespace Service
       if (file is not null)
         photo = await _fileService.CreatePhotoFileAsync(file, newResume.Id);
 
+      if (resume.DesiredJob is not null) 
+      {
+        resume.DesiredJob.ResumeId = newResume.Id;
+        await _jobInfoService.CreateDesiredJobAsync(resume.DesiredJob);
+      }
+        
       var createdResume = await GetResumeAsync(newResume.Id, default);
       return createdResume;
     }

@@ -18,7 +18,7 @@ namespace Shared.DataTransferObjects
     [StringLength(70, ErrorMessage = "Максимальная длина поля Отчество составляет 70 символов.")]
     public string? MiddleName { get; init; }
 
-    public JobInfoForCreationDto? Job { get; init; }
+    public DesiredJobInfoForCreationDto? DesiredJob { get; init; }
 
     [Required]
     public Guid TemplateId { get; init; }
