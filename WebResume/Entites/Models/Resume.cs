@@ -32,11 +32,8 @@ namespace Entites.Models
     [Column("update_at")]
     public DateTime UpdatedAt { get; set; }
 
-    [Column("job_id")]
-    [ForeignKey(nameof(Job))]
-    public Guid? JobInfo { get; set; }
+    // navigation
     public JobInfo? Job { get; set; }
-
     public Photo? PhotoFile { get; set; }
 
     [Column("template_id")]

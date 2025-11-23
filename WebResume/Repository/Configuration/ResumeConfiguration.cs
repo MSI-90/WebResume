@@ -18,8 +18,9 @@ namespace Repository.Configuration
 
       builder
         .HasOne(r => r.Job)
-        .WithOne()
-        .IsRequired(false)
+        .WithOne(j => j.Resume)
+        .HasForeignKey<JobInfo>(j => j.ResumeId)
+        .IsRequired()
         .OnDelete(DeleteBehavior.Cascade);
 
       builder.HasData
