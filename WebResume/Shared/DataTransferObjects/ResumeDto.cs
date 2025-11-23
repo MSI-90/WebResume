@@ -3,7 +3,8 @@
   public record ResumeDto(
     Guid Id, 
     string FIO,
-    Guid? PhotoId,
+    PhotoDto? Photo,
+    DesiredJobInfoOutputDto? DesiredJob,
     DateTime CreatedAt, 
     DateTime UpdatedAt, 
     Guid TemplateId)

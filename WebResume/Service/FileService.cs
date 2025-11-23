@@ -21,7 +21,7 @@ namespace Service
       _mapper = mapper;
     }
 
-    public async Task<PhotoToUpload> CreatePhotoFileAsync(FileDto file)
+    public async Task<PhotoToUpload> CreatePhotoFileAsync(FileDto file, Guid resumeId)
     {
       if (file is null || file?.FileStream is null)
         throw new ArgumentNullException(nameof(file));
@@ -35,7 +35,7 @@ namespace Service
         using var stream = new FileStream(filePath, FileMode.Create);
         await file.FileStream.CopyToAsync(stream);
         
-        var photoId = await AddPhotoInfoAsync(file);
+        var photoId = await AddPhotoInfoAsync(file, resumeId);
         return new PhotoToUpload(fileName, photoId, _filePath);
 
       } catch (Exception ex)
@@ -47,7 +47,7 @@ namespace Service
       }
     }
 
-    public async Task<Guid?> AddPhotoInfoAsync(FileDto file)
+    public async Task<Guid?> AddPhotoInfoAsync(FileDto file, Guid resumeId)
     {
       var newPhoto = new Photo 
       {
@@ -55,6 +55,8 @@ namespace Service
         FileName = file.FileName, 
         Length = file.Length
       };
+
+      newPhoto.ResumeId = resumeId;
       _context.Photos.Add(newPhoto);
       await _context.SaveChangesAsync();
       return newPhoto.Id;

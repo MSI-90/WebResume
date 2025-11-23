@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Repository;
@@ -11,9 +12,11 @@ using Repository;
 namespace WebResume.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20251123122924_Resume_Photo_FK_Modify")]
+    partial class Resume_Photo_FK_Modify
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,17 +53,11 @@ namespace WebResume.Migrations
                         .HasColumnType("character varying(200)")
                         .HasColumnName("job_title");
 
-                    b.Property<Guid>("ResumeId")
-                        .HasColumnType("uuid");
-
                     b.Property<int?>("WorkSchedule")
                         .HasColumnType("integer")
                         .HasColumnName("work_shedule");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ResumeId")
-                        .IsUnique();
 
                     b.ToTable("job_info", (string)null);
                 });
@@ -124,6 +121,10 @@ namespace WebResume.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("first_name");
 
+                    b.Property<Guid?>("JobInfo")
+                        .HasColumnType("uuid")
+                        .HasColumnName("job_id");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(70)
@@ -144,6 +145,9 @@ namespace WebResume.Migrations
                         .HasColumnName("update_at");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("JobInfo")
+                        .IsUnique();
 
                     b.HasIndex("TemplateId");
 
@@ -246,17 +250,6 @@ namespace WebResume.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Entites.Models.JobInfo", b =>
-                {
-                    b.HasOne("Entites.Models.Resume", "Resume")
-                        .WithOne("Job")
-                        .HasForeignKey("Entites.Models.JobInfo", "ResumeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Resume");
-                });
-
             modelBuilder.Entity("Entites.Models.Photo", b =>
                 {
                     b.HasOne("Entites.Models.Resume", "Resume")
@@ -270,19 +263,24 @@ namespace WebResume.Migrations
 
             modelBuilder.Entity("Entites.Models.Resume", b =>
                 {
+                    b.HasOne("Entites.Models.JobInfo", "Job")
+                        .WithOne()
+                        .HasForeignKey("Entites.Models.Resume", "JobInfo")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Entites.Models.Template", "Template")
                         .WithMany("Resumes")
                         .HasForeignKey("TemplateId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Job");
 
                     b.Navigation("Template");
                 });
 
             modelBuilder.Entity("Entites.Models.Resume", b =>
                 {
-                    b.Navigation("Job");
-
                     b.Navigation("PhotoFile");
                 });
 

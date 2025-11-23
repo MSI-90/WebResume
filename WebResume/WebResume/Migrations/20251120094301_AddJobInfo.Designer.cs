@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Repository;
@@ -11,9 +12,11 @@ using Repository;
 namespace WebResume.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20251120094301_AddJobInfo")]
+    partial class AddJobInfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -26,43 +29,29 @@ namespace WebResume.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<bool>("ByAgreement")
-                        .HasColumnType("boolean")
-                        .HasColumnName("agreement");
-
-                    b.Property<int?>("Currency")
-                        .HasColumnType("integer")
-                        .HasColumnName("currency");
-
-                    b.Property<decimal?>("DesiredSalary")
-                        .HasColumnType("decimal")
-                        .HasColumnName("desired_salary");
-
-                    b.Property<int?>("EmploymentType")
-                        .HasColumnType("integer")
-                        .HasColumnName("employment_type");
-
-                    b.Property<string>("JobTitle")
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)")
-                        .HasColumnName("job_title");
-
-                    b.Property<Guid>("ResumeId")
                         .HasColumnType("uuid");
 
-                    b.Property<int?>("WorkSchedule")
-                        .HasColumnType("integer")
-                        .HasColumnName("work_shedule");
+                    b.Property<bool>("ByAgreement")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("Currency")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal?>("DesiredSalary")
+                        .HasColumnType("numeric");
+
+                    b.Property<int?>("EmploymentType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("JobTitle")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("WorkShedule")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ResumeId")
-                        .IsUnique();
-
-                    b.ToTable("job_info", (string)null);
+                    b.ToTable("JobInfo");
                 });
 
             modelBuilder.Entity("Entites.Models.Photo", b =>
@@ -80,13 +69,7 @@ namespace WebResume.Migrations
                         .HasColumnType("bigint")
                         .HasColumnName("length");
 
-                    b.Property<Guid>("ResumeId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ResumeId")
-                        .IsUnique();
 
                     b.ToTable("photo");
 
@@ -95,15 +78,13 @@ namespace WebResume.Migrations
                         {
                             Id = new Guid("4041131f-cfd4-408a-8932-ce86cad50dba"),
                             FileName = "filename",
-                            Length = 108485L,
-                            ResumeId = new Guid("00000000-0000-0000-0000-000000000000")
+                            Length = 108485L
                         },
                         new
                         {
                             Id = new Guid("7cf4a689-7387-4f97-9939-49beca8f68ea"),
                             FileName = "1filename2",
-                            Length = 3413L,
-                            ResumeId = new Guid("00000000-0000-0000-0000-000000000000")
+                            Length = 3413L
                         });
                 });
 
@@ -124,6 +105,10 @@ namespace WebResume.Migrations
                         .HasColumnType("character varying(50)")
                         .HasColumnName("first_name");
 
+                    b.Property<Guid?>("JobInfo")
+                        .HasColumnType("uuid")
+                        .HasColumnName("job_id");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(70)
@@ -135,6 +120,10 @@ namespace WebResume.Migrations
                         .HasColumnType("character varying(70)")
                         .HasColumnName("middle_name");
 
+                    b.Property<Guid?>("PhotoId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("photo_id");
+
                     b.Property<Guid>("TemplateId")
                         .HasColumnType("uuid")
                         .HasColumnName("template_id");
@@ -144,6 +133,11 @@ namespace WebResume.Migrations
                         .HasColumnName("update_at");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("JobInfo");
+
+                    b.HasIndex("PhotoId")
+                        .IsUnique();
 
                     b.HasIndex("TemplateId");
 
@@ -157,6 +151,7 @@ namespace WebResume.Migrations
                             FirstName = "Sergey",
                             LastName = "Miller",
                             MiddleName = "Ivanovich",
+                            PhotoId = new Guid("4041131f-cfd4-408a-8932-ce86cad50dba"),
                             TemplateId = new Guid("db58c76e-bcb5-4c6a-ad60-0e61bf3ac11c"),
                             UpdatedAt = new DateTime(2025, 11, 12, 23, 43, 42, 361, DateTimeKind.Utc)
                         },
@@ -167,6 +162,7 @@ namespace WebResume.Migrations
                             FirstName = "John",
                             LastName = "Doe",
                             MiddleName = "middle",
+                            PhotoId = new Guid("7cf4a689-7387-4f97-9939-49beca8f68ea"),
                             TemplateId = new Guid("132805d2-3fc3-457c-86de-40116433c062"),
                             UpdatedAt = new DateTime(2025, 11, 12, 10, 1, 42, 361, DateTimeKind.Utc)
                         });
@@ -246,44 +242,32 @@ namespace WebResume.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Entites.Models.JobInfo", b =>
-                {
-                    b.HasOne("Entites.Models.Resume", "Resume")
-                        .WithOne("Job")
-                        .HasForeignKey("Entites.Models.JobInfo", "ResumeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Resume");
-                });
-
-            modelBuilder.Entity("Entites.Models.Photo", b =>
-                {
-                    b.HasOne("Entites.Models.Resume", "Resume")
-                        .WithOne("PhotoFile")
-                        .HasForeignKey("Entites.Models.Photo", "ResumeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Resume");
-                });
-
             modelBuilder.Entity("Entites.Models.Resume", b =>
                 {
+                    b.HasOne("Entites.Models.JobInfo", "Job")
+                        .WithMany()
+                        .HasForeignKey("JobInfo");
+
+                    b.HasOne("Entites.Models.Photo", "PhotoFile")
+                        .WithOne("Resume")
+                        .HasForeignKey("Entites.Models.Resume", "PhotoId");
+
                     b.HasOne("Entites.Models.Template", "Template")
                         .WithMany("Resumes")
                         .HasForeignKey("TemplateId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Job");
+
+                    b.Navigation("PhotoFile");
 
                     b.Navigation("Template");
                 });
 
-            modelBuilder.Entity("Entites.Models.Resume", b =>
+            modelBuilder.Entity("Entites.Models.Photo", b =>
                 {
-                    b.Navigation("Job");
-
-                    b.Navigation("PhotoFile");
+                    b.Navigation("Resume");
                 });
 
             modelBuilder.Entity("Entites.Models.Template", b =>

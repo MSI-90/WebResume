@@ -26,20 +26,14 @@ namespace Entites.Models
     [MinLength(3, ErrorMessage = "Минимальная длина поля Отчество составляет 3 символа.")]
     public string? MiddleName { get; set; }
 
-    [Column("job_title")]
-    [Required(ErrorMessage = "Должность - обязательное поле.")]
-    [StringLength(50, ErrorMessage = "Максимальная длина поля Должность составляет 100 символов.")]
-    public string? JobTitle { get; set; }
-
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
 
     [Column("update_at")]
     public DateTime UpdatedAt { get; set; }
 
-    [Column("photo_id")]
-    [ForeignKey(nameof(PhotoFile))]
-    public Guid? PhotoId { get; set; }
+    // navigation
+    public JobInfo? Job { get; set; }
     public Photo? PhotoFile { get; set; }
 
     [Column("template_id")]
