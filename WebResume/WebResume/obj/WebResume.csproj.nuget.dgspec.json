@@ -485,7 +485,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "F:\\WebResume\\WebResume\\Entites\\Entites.csproj": {
+                "projectPath": "F:\\WebResume\\WebResume\\Entites\\Entites.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

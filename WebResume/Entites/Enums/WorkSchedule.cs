@@ -2,7 +2,7 @@
 
 namespace Entites.Enums
 {
-  public enum WorkShedule
+  public enum WorkSchedule
   {
     [Display(Name = "Полный день")]
     FullDay,

@@ -10,7 +10,8 @@ namespace WebResume
     {
       CreateMap<Resume, ResumeDto>()
         .ForCtorParam("FIO",
-          opt => opt.MapFrom(x => string.Join(' ', x.LastName, x.FirstName, x.MiddleName)));
+          opt => opt.MapFrom(x => string.Join(' ', x.LastName, x.FirstName, x.MiddleName)))
+        .ForCtorParam("Photo", opt => opt.MapFrom(x => x.PhotoFile));
 
       CreateMap<ResumeDto, Resume>();
 
@@ -19,6 +20,8 @@ namespace WebResume
       CreateMap<ResumeForCreationDto, Resume>();
 
       CreateMap<Photo, PhotoDto>();
+
+      CreateMap<JobInfoForCreationDto, JobInfo>();
     }
   }
 }

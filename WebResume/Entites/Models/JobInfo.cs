@@ -10,6 +10,6 @@ namespace Entites.Models
     public Currency? Currency { get; set; }
     public bool ByAgreement { get; set; }
     public EmploymentType? EmploymentType { get; set; }
-    public WorkShedule? WorkShedule { get; set; }
+    public WorkSchedule? WorkSchedule { get; set; }
   }
 }

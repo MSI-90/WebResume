@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Contracts;
 using Shared.DataTransferObjects;
-using System.IO;
 
 namespace Service
 {
@@ -34,6 +33,7 @@ namespace Service
     {
       var resume = await _repository.Resume
         .AsNoTracking()
+        .Include(r => r.PhotoFile)
         .Where(r => r.Id.Equals(resumeId))
         .FirstOrDefaultAsync(token);
 
@@ -43,15 +43,15 @@ namespace Service
     public async Task<ResumeDto> CreateResumeAsync(ResumeForCreationDto resume, FileDto? file = null)
     {
       var photo = new PhotoToUpload(string.Empty, Guid.Empty, string.Empty);
-      if (file is not null)
-        photo = await _fileService.CreatePhotoFileAsync(file);
         
       var newResume = _mapper.Map<Resume>(resume);
       newResume.Id = Guid.NewGuid();
       newResume.UpdatedAt = newResume.CreatedAt = DateTime.UtcNow;
-      newResume.PhotoId = photo.PhotoId.Equals(Guid.Empty) ? null: photo.PhotoId;
       _repository.Resume.Add(newResume);
       await _repository.SaveChangesAsync();
+
+      if (file is not null)
+        photo = await _fileService.CreatePhotoFileAsync(file, newResume.Id);
 
       var createdResume = await GetResumeAsync(newResume.Id, default);
       return createdResume;

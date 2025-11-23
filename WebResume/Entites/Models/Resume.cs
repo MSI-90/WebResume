@@ -37,9 +37,6 @@ namespace Entites.Models
     public Guid? JobInfo { get; set; }
     public JobInfo? Job { get; set; }
 
-    [Column("photo_id")]
-    [ForeignKey(nameof(PhotoFile))]
-    public Guid? PhotoId { get; set; }
     public Photo? PhotoFile { get; set; }
 
     [Column("template_id")]

@@ -18,10 +18,7 @@ namespace Shared.DataTransferObjects
     [StringLength(70, ErrorMessage = "Максимальная длина поля Отчество составляет 70 символов.")]
     public string? MiddleName { get; init; }
 
-    [Required(ErrorMessage = "Должность - обязательное поле.")]
-    [MinLength(3, ErrorMessage = "Минимальная длина поля Должность составляет 3 символа.")]
-    [StringLength(50, ErrorMessage = "Максимальная длина поля Должность составляет 100 символов.")]
-    public string? JobTitle { get; init; }
+    public JobInfoForCreationDto? Job { get; init; }
 
     [Required]
     public Guid TemplateId { get; init; }

@@ -14,6 +14,8 @@ namespace Entites.Models
     [Column("length")]
     public long Length { get; set; }
 
+    [ForeignKey(nameof(Resume))]
+    public Guid ResumeId {  get; set; }
     public Resume? Resume { get; set; } 
   }
 }
