@@ -23,6 +23,12 @@ namespace Repository.Configuration
         .IsRequired()
         .OnDelete(DeleteBehavior.Cascade);
 
+      builder
+        .HasOne(r => r.Template)
+        .WithMany(t => t.Resumes)
+        .HasForeignKey(r => r.TemplateId)
+        .OnDelete(DeleteBehavior.Restrict);
+
       builder.HasData
       (
         new Resume

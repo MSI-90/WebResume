@@ -25,7 +25,11 @@ namespace Service
 
     public async Task<IEnumerable<ResumeDto>> GetResumesAsync(CancellationToken token)
     {
-      var resumes = await _repository.Resume.AsNoTracking().ToListAsync(token);
+      var resumes = await _repository.Resume
+        .AsNoTracking()
+        .Include(r => r.PhotoFile)
+        .ToListAsync(token);
+
       return _mapper.Map<IEnumerable<ResumeDto>>(resumes);
     }
 
