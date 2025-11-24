@@ -26,6 +26,10 @@ namespace Entites.Models
     [MinLength(3, ErrorMessage = "Минимальная длина поля Отчество составляет 3 символа.")]
     public string? MiddleName { get; set; }
 
+    [Column("purpose_resume")]
+    [StringLength(500, ErrorMessage = "Максимальная длина для поля Целю резюме составляет 500 символов.")]
+    public string? PurposeResume { get; set; }
+
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
 
