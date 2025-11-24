@@ -2,6 +2,9 @@
 
 namespace Entites.Enums
 {
+  /// <summary>
+  /// Тип занятости
+  /// </summary>
   public enum EmploymentType
   {
     [Display(Name = "Полная занятость")]

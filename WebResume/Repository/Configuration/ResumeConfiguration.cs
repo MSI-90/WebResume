@@ -24,6 +24,13 @@ namespace Repository.Configuration
         .OnDelete(DeleteBehavior.Cascade);
 
       builder
+        .HasOne(r => r.PersonalInfo)
+        .WithOne(j => j.Resume)
+        .HasForeignKey<PersonalInfo>(p => p.ResumeId)
+        .IsRequired()
+        .OnDelete(DeleteBehavior.Cascade);
+
+      builder
         .HasOne(r => r.Template)
         .WithMany(t => t.Resumes)
         .HasForeignKey(r => r.TemplateId)

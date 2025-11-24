@@ -2,6 +2,9 @@
 
 namespace Entites.Enums
 {
+  /// <summary>
+  /// График работы
+  /// </summary>
   public enum WorkSchedule
   {
     [Display(Name = "Полный день")]

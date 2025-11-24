@@ -17,11 +17,10 @@ namespace Shared.DataTransferObjects
     [MinLength(3, ErrorMessage = "Минимальная длина поля Отчество составляет 3 символа.")]
     [StringLength(70, ErrorMessage = "Максимальная длина поля Отчество составляет 70 символов.")]
     public string? MiddleName { get; init; }
+    public DesiredJobInfoForCreationDto? DesiredJob { get; init; }
 
     [StringLength(500, ErrorMessage = "Максимальная длина для поля Целю резюме составляет 500 символов.")]
-    public string? PurposeResume {  get; init; }
-
-    public DesiredJobInfoForCreationDto? DesiredJob { get; init; }
+    public string? PurposeResume { get; init; }
 
     [Required]
     public Guid TemplateId { get; init; }

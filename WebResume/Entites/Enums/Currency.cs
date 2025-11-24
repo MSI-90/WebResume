@@ -2,6 +2,9 @@
 
 namespace Entites.Enums
 {
+  /// <summary>
+  /// Валюта
+  /// </summary>
   public enum Currency
   {
     [Display(Name = "Рублей")]

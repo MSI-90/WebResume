@@ -12,6 +12,9 @@ namespace Repository
     public DbSet<Template> Templates { get; set; }
     public DbSet<Photo> Photos { get; set; }
     public DbSet<JobInfo> JobInfos { get; set; }
+    public DbSet<PersonalInfo> PersonalInfos { get; set; }
+    public DbSet<Citizenship> Citizenships { get; set; }
+    public DbSet<ResumeCitizenship> ResumeCitizenships { get; set; }
     //public DbSet<User> Users { get; set; }
     public RepositoryContext(DbContextOptions options) : base(options)
     {
