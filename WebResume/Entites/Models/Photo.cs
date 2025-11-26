@@ -13,6 +13,7 @@ namespace Entites.Models
 
     [Column("length")]
     public long Length { get; set; }
+    public bool IsDeleted { get; set; }
 
     [ForeignKey(nameof(Resume))]
     public Guid ResumeId {  get; set; }

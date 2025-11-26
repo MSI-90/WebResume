@@ -4,7 +4,7 @@ namespace Entites.Exceptions
 {
   public class CitizenshipNotFoundException : NotFoundException
   {
-    public CitizenshipNotFoundException(Guid citizenshipId) : base($"Гражданство с id: {citizenshipId} не найдено в базе данных")
+    public CitizenshipNotFoundException(Guid citizenshipId) : base($"Гражданство с id: {citizenshipId} не найдено в базе данных.")
     {
     }
   }

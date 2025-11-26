@@ -5,6 +5,7 @@ using Shared.DataTransferObjects;
 using AutoMapper;
 using Entites.Models;
 using Microsoft.EntityFrameworkCore;
+using Entites.Exceptions;
 
 namespace Service
 {
@@ -64,10 +65,14 @@ namespace Service
       return newPhoto.Id;
     }
 
-    public async Task<Photo?> GetPhotoAsync(Guid photoId, CancellationToken token) => 
-      await _context.Photos
+    public async Task<Photo?> GetPhotoAsync(Guid photoId, CancellationToken token)
+    {
+      var photo = await _context.Photos
         .Where(p => p.Id.Equals(photoId))
         .FirstOrDefaultAsync(token);
+
+      return photo ?? throw new PhotoNotFoundException(photoId);
+    }
 
     public async Task DeletePhotoFromStorageAsync(Guid photoId, CancellationToken token)
     {
@@ -90,6 +95,13 @@ namespace Service
       {
         Console.WriteLine($"Ошибка при удалении: {ex.Message}");
       }
+    }
+
+    public async void ChangeDeletingAsync(Guid photoId, CancellationToken token) 
+    {
+      var photo = await GetPhotoAsync(photoId, token);
+      if(photo is not null)
+        photo.IsDeleted = true;
     }
   }
 }
