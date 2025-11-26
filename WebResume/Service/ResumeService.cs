@@ -69,6 +69,7 @@ namespace Service
     {
       var resumeForDelete = await GetResumeAsync(resumeId, token);
       _repository.Resume.Remove(_mapper.Map<Resume>(resumeForDelete));
+      _fileService.ChangeDeletingAsync(resumeId, token);
       await _repository.SaveChangesAsync(token);
     }
   }

@@ -71,7 +71,16 @@ namespace Service
         .Where(p => p.Id.Equals(photoId))
         .FirstOrDefaultAsync(token);
 
-      return photo ?? throw new PhotoNotFoundException(photoId);
+      return photo;
+    }
+
+    public async Task<Photo?> GetPhotoByResumeAsync(Guid resumeId, CancellationToken token)
+    {
+      var photo = await _context.Photos
+        .Where(p => p.ResumeId.Equals(resumeId))
+        .FirstOrDefaultAsync(token);
+
+      return photo;
     }
 
     public async Task DeletePhotoFromStorageAsync(Guid photoId, CancellationToken token)
@@ -97,10 +106,10 @@ namespace Service
       }
     }
 
-    public async void ChangeDeletingAsync(Guid photoId, CancellationToken token) 
+    public async void ChangeDeletingAsync(Guid resumeId, CancellationToken token) 
     {
-      var photo = await GetPhotoAsync(photoId, token);
-      if(photo is not null)
+      var photo = await GetPhotoByResumeAsync(resumeId, token);
+      if (photo is not null)
         photo.IsDeleted = true;
     }
   }
