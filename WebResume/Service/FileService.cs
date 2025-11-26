@@ -4,6 +4,7 @@ using Service.Contracts;
 using Shared.DataTransferObjects;
 using AutoMapper;
 using Entites.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Service
 {
@@ -27,14 +28,15 @@ namespace Service
         throw new ArgumentNullException(nameof(file));
 
       Directory.CreateDirectory(_filePath);
-      var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file?.FileName)}";
+      var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file?.FileName ?? "")}";
       var filePath = Path.Combine(_filePath, fileName);
 
       try
       {
         using var stream = new FileStream(filePath, FileMode.Create);
-        await file.FileStream.CopyToAsync(stream);
-        
+        await file!.FileStream.CopyToAsync(stream);
+
+        file.FileName = fileName;
         var photoId = await AddPhotoInfoAsync(file, resumeId);
         return new PhotoToUpload(fileName, photoId, _filePath);
 
@@ -60,6 +62,34 @@ namespace Service
       _context.Photos.Add(newPhoto);
       await _context.SaveChangesAsync();
       return newPhoto.Id;
+    }
+
+    public async Task<Photo?> GetPhotoAsync(Guid photoId, CancellationToken token) => 
+      await _context.Photos
+        .Where(p => p.Id.Equals(photoId))
+        .FirstOrDefaultAsync(token);
+
+    public async Task DeletePhotoFromStorageAsync(Guid photoId, CancellationToken token)
+    {
+      var photo = await GetPhotoAsync(photoId, token);
+      string? directoryPath = Path.GetDirectoryName(_filePath);
+      string? fileName = photo?.FileName;
+      try
+      {
+        string? filePath = Path.Combine(directoryPath, fileName);
+
+        if (File.Exists(filePath))
+        {
+          File.Delete(filePath);
+          _loggerManager.LogInfo($"Файл {fileName}");
+        }
+        else
+          _loggerManager.LogWarn($"Файл {fileName} не найден");
+      }
+      catch (Exception ex)
+      {
+        Console.WriteLine($"Ошибка при удалении: {ex.Message}");
+      }
     }
   }
 }

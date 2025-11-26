@@ -10,6 +10,5 @@ namespace Shared.DataTransferObjects
     public bool ByAgreement { get; init; }
     public EmploymentType? EmploymentType { get; init; }
     public WorkSchedule? WorkSchedule { get; init; }
-    public Guid ResumeId { get; set; }
   }
 }

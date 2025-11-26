@@ -36,6 +36,7 @@ namespace WebResume.Extensions
       services.AddScoped<ITemplateService, TemplateService>();
       services.AddScoped<ISpecialInfoService, SpecialInfoService>();
       services.AddScoped<IJobInfoService, JobInfoService>();
+      services.AddScoped<ICitizenshipService, CitizenshipService>();
       services.AddScoped<IFileService, FileService>(sp =>
       {
         var config = sp.GetRequiredService<IConfiguration>();

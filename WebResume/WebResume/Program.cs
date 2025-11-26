@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.AspNetCore.HttpOverrides;
 using NLog;
 using WebResume;
 using WebResume.Extensions;
@@ -34,6 +36,20 @@ builder.Services.ConfigurePostgresConnection(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+if (app.Environment.IsDevelopment())
+  app.UseDeveloperExceptionPage();
+else
+  app.UseHsts();
+
+app.UseStaticFiles();
+
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+  ForwardedHeaders = ForwardedHeaders.All
+});
+
+app.UseCors("CorsPolicy");
 
 app.UseExceptionHandler(opt => { });
 

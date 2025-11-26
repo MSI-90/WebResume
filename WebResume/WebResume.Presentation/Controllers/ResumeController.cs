@@ -33,16 +33,6 @@ namespace WebResume.Presentation.Controllers
       return Ok(resume);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> CreateResume([FromBody] ResumeForCreationDto resumeForCreateDto)
-    {
-      if (resumeForCreateDto is null)
-        return BadRequest($"Проблема в теле запроса");
-
-      var resume = await _service.CreateResumeAsync(resumeForCreateDto, default);
-      return CreatedAtRoute("GetResume", new { resumeId = resume.Id }, resume);
-    }
-
     [HttpDelete("{resumeId:guid}")]
     public async Task<IActionResult> DeleteResume(Guid resumeId, CancellationToken token)
     {
@@ -50,7 +40,7 @@ namespace WebResume.Presentation.Controllers
       return NoContent();
     }
 
-    [HttpPost("with-file")]
+    [HttpPost]
     public async Task<IActionResult> TaskFromForm([FromForm] ResumeForCreationDto resumeForCreateDto, IFormFile? file)
     {
       if (resumeForCreateDto is null)

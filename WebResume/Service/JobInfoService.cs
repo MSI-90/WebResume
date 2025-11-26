@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Contracts;
 using Shared.DataTransferObjects;
+using System.Text.Json;
 
 namespace Service
 {
@@ -26,12 +27,28 @@ namespace Service
         .Where(j => j.Id.Equals(jobInfoGuid))
         .FirstOrDefaultAsync(token);
 
-    public async Task<JobInfo?> CreateDesiredJobAsync(DesiredJobInfoForCreationDto? jobInfo)
+    public async Task<JobInfo?> CreateDesiredJobAsync(Guid? resumeId, string? jobInfo)
     {
-      var newJob = _mapper.Map<JobInfo>(jobInfo);
+      if (string.IsNullOrEmpty(jobInfo))
+        return null;
+
+      DesiredJobInfoForCreationDto? desiredJob;
+      try
+      {
+        desiredJob = JsonSerializer.Deserialize<DesiredJobInfoForCreationDto>(jobInfo);
+        if (desiredJob == null)
+          throw new Exception("DesiredJob is null after JSON deserialize");
+      }
+      catch (Exception ex)
+      {
+        _loggerManager.LogError(ex.Message);
+        throw;
+      }
+
+      var newJob = _mapper.Map<JobInfo>(desiredJob);
       newJob.Id = Guid.NewGuid();
-      newJob = CheckAgreementData(jobInfo?.ByAgreement, newJob);
-      newJob.ResumeId = jobInfo!.ResumeId;
+      newJob = CheckAgreementData(desiredJob?.ByAgreement, newJob);
+      newJob.ResumeId = resumeId!.Value;
       _context.JobInfos.Add(newJob);
       await _context.SaveChangesAsync();
 

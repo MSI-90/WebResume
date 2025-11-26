@@ -4,7 +4,7 @@
   {
     public string? ContentType { get; init; }
     public long Length { get; init; }
-    public string? FileName { get; init; }
+    public string? FileName { get; set; }
     public Stream? FileStream { get; init; }
   }
 }

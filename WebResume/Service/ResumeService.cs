@@ -49,9 +49,7 @@ namespace Service
     }
 
     public async Task<ResumeDto> CreateResumeAsync(ResumeForCreationDto resume, FileDto? file = null)
-    {
-      var photo = new PhotoToUpload(string.Empty, Guid.Empty, string.Empty);
-        
+    {        
       var newResume = _mapper.Map<Resume>(resume);
       newResume.Id = Guid.NewGuid();
       newResume.UpdatedAt = newResume.CreatedAt = DateTime.UtcNow;
@@ -59,13 +57,9 @@ namespace Service
       await _repository.SaveChangesAsync();
 
       if (file is not null)
-        photo = await _fileService.CreatePhotoFileAsync(file, newResume.Id);
+        await _fileService.CreatePhotoFileAsync(file, newResume.Id);
 
-      if (resume.DesiredJob is not null) 
-      {
-        resume.DesiredJob.ResumeId = newResume.Id;
-        await _jobInfoService.CreateDesiredJobAsync(resume.DesiredJob);
-      }
+      await _jobInfoService.CreateDesiredJobAsync(newResume.Id, resume.DesiredJob);
         
       var createdResume = await GetResumeAsync(newResume.Id, default);
       return createdResume;

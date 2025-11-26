@@ -25,6 +25,8 @@ namespace WebResume
       CreateMap<DesiredJobInfoForCreationDto, JobInfo>();
 
       CreateMap<JobInfo, DesiredJobInfoOutputDto>();
+
+      CreateMap<Citizenship, CitizenshipDto>();
     }
   }
 }
