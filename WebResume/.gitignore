@@ -1,3 +1,13 @@
+echo "obj/
+bin/
+*.csproj.nuget.*
+*.assets.cache
+*.AssemblyInfo.cs
+*.AssemblyInfoInputs.cache
+project.assets.json
+project.nuget.cache"
+
+
 .vs/
 **/.vs/
 **/bin/
