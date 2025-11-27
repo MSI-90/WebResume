@@ -8,7 +8,6 @@ namespace Repository.Configuration
   {
     public void Configure(EntityTypeBuilder<Photo> builder)
     {
-      builder.Property(p => p.IsDeleted).HasColumnName("is_deleted");
       builder.HasData
       (
         new Photo 

@@ -19,7 +19,6 @@ builder.Services.AddAutoMapper(typeof(Program));
 //{
 //  options.SuppressModelStateInvalidFilter = true;
 //});
-
 builder.Services.AddControllers()
   .AddApplicationPart(typeof(WebResume.Presentation.AssemblyReference).Assembly);
 

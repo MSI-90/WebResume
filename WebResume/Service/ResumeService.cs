@@ -14,19 +14,22 @@ namespace Service
     private readonly RepositoryContext _repository;
     private readonly ILoggerManager _logger;
     private readonly IMapper _mapper;
-    private readonly IPhotoService _fileService;
+    private readonly IPhotoService _photoService;
+    private readonly IFileService _fileService;
     private readonly IJobInfoService _jobInfoService;
     private readonly IBufferInfo _bufferInfo;
     public ResumeService(RepositoryContext repository, 
       ILoggerManager logger, 
       IMapper mapper, 
-      IPhotoService fileService, 
+      IPhotoService photoService, 
       IJobInfoService jobInfoService, 
-      IBufferInfo bufferInfo)
+      IBufferInfo bufferInfo,
+      IFileService fileService)
     {
       _repository = repository;
       _logger = logger;
       _mapper = mapper;
+      _photoService = photoService;
       _fileService = fileService;
       _jobInfoService = jobInfoService;
       _bufferInfo = bufferInfo;

@@ -2,6 +2,7 @@
 using Contracts;
 using LoggerService;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Repository;
 using Service;
 using Service.BackgroundServices;
@@ -39,18 +40,17 @@ namespace WebResume.Extensions
       services.AddScoped<IJobInfoService, JobInfoService>();
       services.AddScoped<ICitizenshipService, CitizenshipService>();
       services.AddScoped<IBufferInfo, BufferInfo>();
-      services.AddScoped<IPhotoService, PhotoService>(sp =>
+      services.AddScoped<IPhotoService, PhotoService>();
+      services.AddScoped<IFileService, FileService>(sp =>
       {
         var config = sp.GetRequiredService<IConfiguration>();
         var env = sp.GetRequiredService<IHostEnvironment>();
-
         var uploadsPath = Path.Combine(env.ContentRootPath, config["FileStorage"]!);
 
-        return new PhotoService(
-          uploadsPath,
+        return new FileService(
           sp.GetRequiredService<ILoggerManager>(),
-          sp.GetRequiredService<RepositoryContext>(), 
-          sp.GetRequiredService<IMapper>());
+          uploadsPath,
+          sp.GetRequiredService<IPhotoService>());
       });
     }
 
