@@ -14,15 +14,22 @@ namespace Service
     private readonly RepositoryContext _repository;
     private readonly ILoggerManager _logger;
     private readonly IMapper _mapper;
-    private readonly IFileService _fileService;
+    private readonly IPhotoService _fileService;
     private readonly IJobInfoService _jobInfoService;
-    public ResumeService(RepositoryContext repository, ILoggerManager logger, IMapper mapper, IFileService fileService, IJobInfoService jobInfoService)
+    private readonly IBufferInfo _bufferInfo;
+    public ResumeService(RepositoryContext repository, 
+      ILoggerManager logger, 
+      IMapper mapper, 
+      IPhotoService fileService, 
+      IJobInfoService jobInfoService, 
+      IBufferInfo bufferInfo)
     {
       _repository = repository;
       _logger = logger;
       _mapper = mapper;
       _fileService = fileService;
       _jobInfoService = jobInfoService;
+      _bufferInfo = bufferInfo;
     }
 
     public async Task<IEnumerable<ResumeDto>> GetResumesAsync(CancellationToken token)
@@ -68,8 +75,8 @@ namespace Service
     public async Task DeleteResumeAsync(Guid resumeId, CancellationToken token) 
     {
       var resumeForDelete = await GetResumeAsync(resumeId, token);
+      await _bufferInfo.AddPhotoInfoToBuffer(resumeId, token);
       _repository.Resume.Remove(_mapper.Map<Resume>(resumeForDelete));
-      _fileService.ChangeDeletingAsync(resumeId, token);
       await _repository.SaveChangesAsync(token);
     }
   }

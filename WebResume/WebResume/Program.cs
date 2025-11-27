@@ -32,6 +32,7 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureService();
 builder.Services.ConfigurePostgresConnection(builder.Configuration);
+builder.Services.ConfigureHostedServices();
 
 var app = builder.Build();
 

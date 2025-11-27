@@ -4,6 +4,7 @@ using LoggerService;
 using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service;
+using Service.BackgroundServices;
 using Service.Contracts;
 
 namespace WebResume.Extensions
@@ -37,19 +38,25 @@ namespace WebResume.Extensions
       services.AddScoped<ISpecialInfoService, SpecialInfoService>();
       services.AddScoped<IJobInfoService, JobInfoService>();
       services.AddScoped<ICitizenshipService, CitizenshipService>();
-      services.AddScoped<IFileService, FileService>(sp =>
+      services.AddScoped<IBufferInfo, BufferInfo>();
+      services.AddScoped<IPhotoService, PhotoService>(sp =>
       {
         var config = sp.GetRequiredService<IConfiguration>();
         var env = sp.GetRequiredService<IHostEnvironment>();
 
         var uploadsPath = Path.Combine(env.ContentRootPath, config["FileStorage"]!);
 
-        return new FileService(
+        return new PhotoService(
           uploadsPath,
           sp.GetRequiredService<ILoggerManager>(),
           sp.GetRequiredService<RepositoryContext>(), 
           sp.GetRequiredService<IMapper>());
       });
+    }
+
+    public static void ConfigureHostedServices(this IServiceCollection services)
+    {
+      services.AddHostedService<DeletePhoto>();
     }
   }
 }

@@ -5,17 +5,16 @@ using Shared.DataTransferObjects;
 using AutoMapper;
 using Entites.Models;
 using Microsoft.EntityFrameworkCore;
-using Entites.Exceptions;
 
 namespace Service
 {
-  public sealed class FileService : IFileService
+  public sealed class PhotoService : IPhotoService
   {
     private readonly ILoggerManager _loggerManager;
     private readonly RepositoryContext _context;
     private readonly string _filePath;
     public readonly IMapper _mapper;
-    public FileService(string filePath, ILoggerManager loggerManager, RepositoryContext context, IMapper mapper) 
+    public PhotoService(string filePath, ILoggerManager loggerManager, RepositoryContext context, IMapper mapper) 
     {
       _filePath = filePath;
       _loggerManager = loggerManager;
@@ -104,13 +103,6 @@ namespace Service
       {
         Console.WriteLine($"Ошибка при удалении: {ex.Message}");
       }
-    }
-
-    public async void ChangeDeletingAsync(Guid resumeId, CancellationToken token) 
-    {
-      var photo = await GetPhotoByResumeAsync(resumeId, token);
-      if (photo is not null)
-        photo.IsDeleted = true;
     }
   }
 }
