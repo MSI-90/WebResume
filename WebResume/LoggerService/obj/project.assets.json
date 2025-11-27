@@ -510,23 +510,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Windows 10\\.nuget\\packages\\": {},
+    "C:\\Users\\.NET\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Windows 10\\Desktop\\WebResume\\WebResume\\WebResume\\LoggerService\\LoggerService.csproj",
+      "projectUniqueName": "F:\\WebResume\\WebResume\\LoggerService\\LoggerService.csproj",
       "projectName": "LoggerService",
-      "projectPath": "C:\\Users\\Windows 10\\Desktop\\WebResume\\WebResume\\WebResume\\LoggerService\\LoggerService.csproj",
-      "packagesPath": "C:\\Users\\Windows 10\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Windows 10\\Desktop\\WebResume\\WebResume\\WebResume\\LoggerService\\obj\\",
+      "projectPath": "F:\\WebResume\\WebResume\\LoggerService\\LoggerService.csproj",
+      "packagesPath": "C:\\Users\\.NET\\.nuget\\packages\\",
+      "outputPath": "F:\\WebResume\\WebResume\\LoggerService\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Windows 10\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\.NET\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -535,14 +535,15 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Windows 10\\Desktop\\WebResume\\WebResume\\WebResume\\Contracts\\Contracts.csproj": {
-              "projectPath": "C:\\Users\\Windows 10\\Desktop\\WebResume\\WebResume\\WebResume\\Contracts\\Contracts.csproj"
+            "F:\\WebResume\\WebResume\\Contracts\\Contracts.csproj": {
+              "projectPath": "F:\\WebResume\\WebResume\\Contracts\\Contracts.csproj"
             }
           }
         }
@@ -584,7 +585,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
