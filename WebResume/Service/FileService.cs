@@ -46,25 +46,23 @@ namespace Service
 
     public async Task DeletePhotoFromStorageAsync(string fileName)
     {
+      string? filePath = Path.Combine(_filePath, fileName);
       try
       {
-        string? filePath = Path.Combine(_filePath, fileName);
-
         if (File.Exists(filePath))
         {
-          File.Delete(filePath);
-          _loggerManager.LogInfo($"Файл {fileName}");
-          Console.WriteLine($"Файл {fileName} удален");
+          await Task.Run(() => File.Delete(filePath));
+          _loggerManager.LogInfo($"Файл {fileName} удален");
         }
         else
         {
           _loggerManager.LogWarn($"Файл {fileName} не найден");
-          Console.WriteLine($"Файл {fileName} не найден");
         }
       }
       catch (Exception ex)
       {
-        Console.WriteLine($"Ошибка при удалении: {ex.Message}");
+        _loggerManager.LogWarn($"Ошибка при удалении: {ex.Message}");
+        throw;
       }
     }
   }

@@ -17,16 +17,16 @@ namespace Service.BackgroundServices
     public Task StartAsync(CancellationToken cancellationToken)
     {
       logger.LogInformation($"Сервис {nameof(DeletePhoto)} запущен.");
-      _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(3));
+      _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(2));
       return Task.CompletedTask;
     }
 
-    private void DoWork(object? state)
+    private async void DoWork(object? state)
     {
       int count = Interlocked.Increment(ref _executionCount);
       var factoryScope = factory.CreateScope();
       var bufferInfo = factoryScope.ServiceProvider.GetRequiredService<IBufferInfo>();
-      bufferInfo.DeletePhotoInfoFromBuffer();
+      await bufferInfo.DeletePhotoInfoFromBuffer();
       logger.LogInformation($"{nameof(DeletePhoto)} работает, число запусков: {count}");
     }
 
