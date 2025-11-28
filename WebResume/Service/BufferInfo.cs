@@ -39,23 +39,31 @@ namespace Service
       await _context.BufferInfo.AddAsync(bufferInfo);
     }
 
-    private async Task<BufferEntity?> GetBufferInfoAsync(string fileName) => 
-      await _context.BufferInfo
-      .Where(b => b.FileName.Equals(fileName))
-      .FirstOrDefaultAsync();
+    /// <summary>
+    /// Получить список записей из таблицы Buffer
+    /// </summary>
+    /// <returns>Коллекция типа List<BufferEntity></returns>
+    private async Task<List<BufferEntity>> GetBufferInfosAsync() =>
+      await _context.BufferInfo.ToListAsync();
 
+    /// <summary>
+    /// При наличии записей в таблице Buffer удалить файлы фото из папки и запись из таблицы.
+    /// Каждая запись в таблице содержит имя файла соответсвующее имени файла в папке.
+    /// </summary>
+    /// <returns>В случае отсутсвия записей в таблице БД просто завершает работу</returns>
     public async Task DeletePhotoInfoFromBuffer()
     {
-      var photos = await _context.BufferInfo.ToListAsync();
-      if (!photos.Any())
+      var photos = await GetBufferInfosAsync();
+      if (photos.Count == 0)
         return;
 
       foreach (var item in photos)
       {
-        await _fileService.DeletePhotoFromStorageAsync(item.FileName);
-
-        var bufferEntity = await GetBufferInfoAsync(item.FileName);
-        _context.BufferInfo.Remove(bufferEntity);
+        if (!string.IsNullOrEmpty(item.FileName))
+        {
+          await _fileService.DeletePhotoFromStorageAsync(item.FileName);
+          _context.BufferInfo.Remove(item);
+        }
       }
 
       await _context.SaveChangesAsync();

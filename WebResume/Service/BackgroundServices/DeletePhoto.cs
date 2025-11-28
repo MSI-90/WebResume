@@ -8,7 +8,7 @@ using Service.Contracts;
 
 namespace Service.BackgroundServices
 {
-  public sealed class DeletePhoto(ILoggerManager loggerManager, ILogger<DeletePhoto> logger, IServiceScopeFactory factory) : IHostedService, IAsyncDisposable
+  public sealed class DeletePhoto(ILogger<DeletePhoto> logger, IServiceScopeFactory factory) : IHostedService, IAsyncDisposable
   {
     private readonly Task _completedTask = Task.CompletedTask;
     private int _executionCount = 0;
@@ -16,7 +16,6 @@ namespace Service.BackgroundServices
     
     public Task StartAsync(CancellationToken cancellationToken)
     {
-      //loggerManager.LogInfo($"Сервис {nameof(DeletePhoto)} запущен.");
       logger.LogInformation($"Сервис {nameof(DeletePhoto)} запущен.");
       _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(3));
       return Task.CompletedTask;
@@ -29,13 +28,10 @@ namespace Service.BackgroundServices
       var bufferInfo = factoryScope.ServiceProvider.GetRequiredService<IBufferInfo>();
       bufferInfo.DeletePhotoInfoFromBuffer();
       logger.LogInformation($"{nameof(DeletePhoto)} работает, число запусков: {count}");
-
-      //loggerManager.LogInfo($"{nameof(DeletePhoto)} работает, число запусков: {count}");
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
-      //loggerManager.LogInfo($"{nameof(DeletePhoto)} остановлен.");
       logger.LogInformation($"{nameof(DeletePhoto)} остановлен.");
       _timer?.Change(Timeout.Infinite, 0);
       return _completedTask;
