@@ -27,9 +27,9 @@ namespace Service
         .Where(j => j.Id.Equals(jobInfoGuid))
         .FirstOrDefaultAsync(token);
 
-    public async Task<JobInfo?> CreateDesiredJobAsync(Guid? resumeId, string? jobInfo)
+    public async Task<JobInfo?> CreateDesiredJobAsync(Guid resumeId, string? jobInfo)
     {
-      if (string.IsNullOrEmpty(jobInfo))
+      if (string.IsNullOrEmpty(jobInfo) || string.IsNullOrWhiteSpace(jobInfo))
         return null;
 
       DesiredJobInfoForCreationDto? desiredJob;
@@ -48,8 +48,8 @@ namespace Service
       var newJob = _mapper.Map<JobInfo>(desiredJob);
       newJob.Id = Guid.NewGuid();
       newJob = CheckAgreementData(desiredJob?.ByAgreement, newJob);
-      newJob.ResumeId = resumeId!.Value;
-      _context.JobInfos.Add(newJob);
+      newJob.ResumeId = resumeId;
+      await _context.JobInfos.AddAsync(newJob);
       await _context.SaveChangesAsync();
 
       return await GetJobInfoAsync(newJob.Id, default);

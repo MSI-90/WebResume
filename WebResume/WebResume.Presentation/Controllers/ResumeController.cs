@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
 using Service.Contracts;
 using Shared.DataTransferObjects;
+using WebResume.Presentation.ActionFilters;
 
 namespace WebResume.Presentation.Controllers
 {
@@ -41,6 +42,7 @@ namespace WebResume.Presentation.Controllers
     }
 
     [HttpPost]
+    [ServiceFilter(typeof(TextJsonFilter))]
     public async Task<IActionResult> TaskFromForm([FromForm] ResumeForCreationDto resumeForCreateDto, IFormFile? file)
     {
       if (resumeForCreateDto is null)

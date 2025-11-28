@@ -40,7 +40,8 @@ namespace Entites.Models
     public JobInfo? Job { get; set; }
     public Photo? PhotoFile { get; set; }
     public PersonalInfo? PersonalInfo { get; set; }
-    public ICollection<ResumeCitizenship> ResumeCitizenship { get; set; } = []; 
+    public ICollection<ResumeCitizenship> ResumeCitizenship { get; set; } = [];
+    public ICollection<Experience?> Experience { get; set; } = [];
 
     [Column("template_id")]
     [ForeignKey(nameof(Template))]

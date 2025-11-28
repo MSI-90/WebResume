@@ -18,13 +18,15 @@ namespace Service
     private readonly IFileService _fileService;
     private readonly IJobInfoService _jobInfoService;
     private readonly IBufferInfo _bufferInfo;
+    private readonly IExperienceService _experienceService;
     public ResumeService(RepositoryContext repository, 
       ILoggerManager logger, 
       IMapper mapper, 
       IPhotoService photoService, 
       IJobInfoService jobInfoService, 
       IBufferInfo bufferInfo,
-      IFileService fileService)
+      IFileService fileService,
+      IExperienceService experienceService)
     {
       _repository = repository;
       _logger = logger;
@@ -33,6 +35,7 @@ namespace Service
       _fileService = fileService;
       _jobInfoService = jobInfoService;
       _bufferInfo = bufferInfo;
+      _experienceService = experienceService;
     }
 
     public async Task<IEnumerable<ResumeDto>> GetResumesAsync(CancellationToken token)
@@ -41,6 +44,7 @@ namespace Service
         .AsNoTracking()
         .Include(r => r.PhotoFile)
         .Include(r => r.Job)
+        .Include(r => r.Experience)
         .ToListAsync(token);
 
       return _mapper.Map<IEnumerable<ResumeDto>>(resumes);
@@ -52,6 +56,7 @@ namespace Service
         .AsNoTracking()
         .Include(r => r.PhotoFile)
         .Include(r => r.Job)
+        .Include(r => r.Experience)
         .Where(r => r.Id.Equals(resumeId))
         .FirstOrDefaultAsync(token);
 
@@ -63,13 +68,14 @@ namespace Service
       var newResume = _mapper.Map<Resume>(resume);
       newResume.Id = Guid.NewGuid();
       newResume.UpdatedAt = newResume.CreatedAt = DateTime.UtcNow;
-      _repository.Resume.Add(newResume);
+      await _repository.Resume.AddAsync(newResume);
       await _repository.SaveChangesAsync();
 
       if (file is not null)
         await _fileService.CreatePhotoFileAsync(file, newResume.Id);
 
       await _jobInfoService.CreateDesiredJobAsync(newResume.Id, resume.DesiredJob);
+      await _experienceService.CreateExperienceAsync(newResume.Id, resume.Experience);
         
       var createdResume = await GetResumeAsync(newResume.Id, default);
       return createdResume;

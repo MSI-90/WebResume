@@ -5,6 +5,7 @@
     string FIO,
     PhotoDto? Photo,
     DesiredJobInfoOutputDto? DesiredJob,
+    IEnumerable<ExperienceOutputDto?> Experience,
     string? PurposeResume,
     DateTime CreatedAt, 
     DateTime UpdatedAt, 

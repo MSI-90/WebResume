@@ -7,6 +7,7 @@ using Repository;
 using Service;
 using Service.BackgroundServices;
 using Service.Contracts;
+using WebResume.Presentation.ActionFilters;
 
 namespace WebResume.Extensions
 {
@@ -34,6 +35,7 @@ namespace WebResume.Extensions
 
     public static void ConfigureService(this IServiceCollection services)
     {
+      services.AddScoped<TextJsonFilter>();
       services.AddScoped<IResumeService, ResumeService>();
       services.AddScoped<ITemplateService, TemplateService>();
       services.AddScoped<ISpecialInfoService, SpecialInfoService>();
@@ -41,6 +43,7 @@ namespace WebResume.Extensions
       services.AddScoped<ICitizenshipService, CitizenshipService>();
       services.AddScoped<IBufferInfo, BufferInfo>();
       services.AddScoped<IPhotoService, PhotoService>();
+      services.AddScoped<IExperienceService, ExperienceService>();
       services.AddScoped<IFileService, FileService>(sp =>
       {
         var config = sp.GetRequiredService<IConfiguration>();

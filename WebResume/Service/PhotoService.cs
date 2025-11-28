@@ -28,7 +28,7 @@ namespace Service
       };
 
       newPhoto.ResumeId = resumeId;
-      _context.Photos.Add(newPhoto);
+      await _context.Photos.AddAsync(newPhoto);
       await _context.SaveChangesAsync();
       return newPhoto.Id;
     }
