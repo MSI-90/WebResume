@@ -37,7 +37,7 @@ else
   app.UseHsts();
 
 app.UseStaticFiles();
-
+app.UseRouting();
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
   ForwardedHeaders = ForwardedHeaders.All

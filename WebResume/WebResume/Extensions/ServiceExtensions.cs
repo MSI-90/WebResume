@@ -48,8 +48,7 @@ namespace WebResume.Extensions
 
         return new FileService(
           sp.GetRequiredService<ILoggerManager>(),
-          uploadsPath,
-          sp.GetRequiredService<IPhotoService>());
+          uploadsPath);
       });
     }
 

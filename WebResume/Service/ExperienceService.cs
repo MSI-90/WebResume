@@ -35,7 +35,7 @@ namespace Service
       var newExperiences = new List<Experience>();
       foreach (var item in experience)
       {
-        // TODO пересмотреть if (dto is null) здесь
+        //TODO: пересмотреть if (dto is null) здесь
         try 
         {
           var experienceItem = JsonSerializer.Deserialize<ExperienceForCreationDto>(item) ?? throw new ExperienceDeserializeException();

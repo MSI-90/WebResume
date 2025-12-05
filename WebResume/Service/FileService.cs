@@ -1,5 +1,4 @@
 ﻿using Contracts;
-using Microsoft.Extensions.Logging;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 
@@ -9,14 +8,12 @@ namespace Service
   {
     private readonly ILoggerManager _loggerManager;
     private readonly string _filePath;
-    private readonly IPhotoService _photoService;
-    public FileService(ILoggerManager loggerManager, string filePath, IPhotoService photoService)
+    public FileService(ILoggerManager loggerManager, string filePath)
     {
       _loggerManager = loggerManager;
       _filePath = filePath;
-      _photoService = photoService;
     }
-    public async Task<PhotoToUpload> CreatePhotoFileAsync(FileDto file, Guid resumeId)
+    public async Task<PhotoToUpload> CreatePhotoFileAsync(FileDto file)
     {
       if (file is null || file?.FileStream is null)
         throw new ArgumentNullException(nameof(file));
@@ -31,9 +28,7 @@ namespace Service
         await file!.FileStream.CopyToAsync(stream);
 
         file.FileName = fileName;
-        var photoId = await _photoService.AddPhotoInfoAsync(file, resumeId);
-        return new PhotoToUpload(fileName, photoId, filePath);
-
+        return new PhotoToUpload(fileName, filePath);
       }
       catch (Exception ex)
       {
@@ -43,7 +38,6 @@ namespace Service
         throw;
       }
     }
-
     public async Task DeletePhotoFromStorageAsync(string fileName)
     {
       string? filePath = Path.Combine(_filePath, fileName);

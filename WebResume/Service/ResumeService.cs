@@ -63,7 +63,7 @@ namespace Service
       return _mapper.Map<ResumeDto>(resume) ?? throw new ResumeNotFoundException(resumeId);
     }
 
-    public async Task<ResumeDto> CreateResumeAsync(ResumeForCreationDto resume, FileDto? file = null)
+    public async Task<ResumeDto> CreateResumeAsync(ResumeForCreationDto resume)
     {        
       var newResume = _mapper.Map<Resume>(resume);
       newResume.Id = Guid.NewGuid();
@@ -71,8 +71,8 @@ namespace Service
       await _repository.Resume.AddAsync(newResume);
       await _repository.SaveChangesAsync();
 
-      if (file is not null)
-        await _fileService.CreatePhotoFileAsync(file, newResume.Id);
+      //if (file is not null)
+      //  await _fileService.CreatePhotoFileAsync(file, newResume.Id);
 
       await _jobInfoService.CreateDesiredJobAsync(newResume.Id, resume.DesiredJob);
       await _experienceService.CreateExperienceAsync(newResume.Id, resume.Experience);

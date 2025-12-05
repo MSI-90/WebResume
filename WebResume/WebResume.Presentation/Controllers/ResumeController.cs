@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.Logging;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 
@@ -12,11 +10,9 @@ namespace WebResume.Presentation.Controllers
   public class ResumeController : ControllerBase
   {
     private readonly IResumeService _service;
-    private readonly ILogger<ResumeController> _logger;
-    public ResumeController(IResumeService service, ILogger<ResumeController> logger) 
+    public ResumeController(IResumeService service) 
     {
       _service = service;
-      _logger = logger;
     }
 
     [HttpGet]
@@ -41,24 +37,13 @@ namespace WebResume.Presentation.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> TaskFromForm([FromForm] ResumeForCreationDto resumeForCreateDto, IFormFile? file)
+    public async Task<IActionResult> ResumeFromForm([FromForm] ResumeForCreationDto resumeForCreateDto)
     {
+      
       if (resumeForCreateDto is null)
         return BadRequest($"Проблема в теле запроса");
 
-      FileDto? fileDto = null;
-      if (file is not null)
-      {
-        fileDto = new FileDto
-        {
-          ContentType = file.ContentType,
-          Length = file.Length,
-          FileName = file.FileName,
-          FileStream = file.OpenReadStream()
-        };
-      }
-
-      var resume = await _service.CreateResumeAsync(resumeForCreateDto, fileDto);
+      var resume = await _service.CreateResumeAsync(resumeForCreateDto);
       return CreatedAtRoute("GetResume", new { resumeId = resume.Id }, resume);
     }
   }

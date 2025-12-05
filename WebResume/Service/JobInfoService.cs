@@ -36,7 +36,7 @@ namespace Service
       DesiredJobInfoForCreationDto? desiredJob;
       try
       {
-        // TODO: пересмотреть момент if (desiredJob is null) здесь
+        //TODO: пересмотреть момент if (desiredJob is null) здесь
         desiredJob = JsonSerializer.Deserialize<DesiredJobInfoForCreationDto>(jobInfo) ?? throw new DesiredJobInfoDeserializeException();
       }
       catch (Exception ex)

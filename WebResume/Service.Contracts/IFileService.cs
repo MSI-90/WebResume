@@ -4,7 +4,7 @@ namespace Service.Contracts
 {
   public interface IFileService
   {
-    Task<PhotoToUpload> CreatePhotoFileAsync(FileDto file, Guid resumeId);
+    Task<PhotoToUpload> CreatePhotoFileAsync(FileDto file);
     Task DeletePhotoFromStorageAsync(string fileName);
   }
 }
