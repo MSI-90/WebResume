@@ -1,10 +1,12 @@
-﻿using Contracts;
+﻿using AutoMapper;
+using Entites.Exceptions;
+using Entites.Models;
+using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Contracts;
 using Shared.DataTransferObjects;
-using AutoMapper;
-using Entites.Models;
-using Microsoft.EntityFrameworkCore;
+using System.Runtime;
+using System.Text.Json;
 
 namespace Service
 {
@@ -13,15 +15,6 @@ namespace Service
     private readonly RepositoryContext _context;
     private readonly IFileService _fileService;
     public readonly IMapper _mapper;
-    //private Guid? photoId;
-    //public Guid? PhotoId
-    //{
-    //  get { return photoId; }
-    //  private set
-    //  {
-    //    photoId = value;
-    //  }
-    //}
     public PhotoService(RepositoryContext context, IFileService fileService, IMapper mapper) 
     {
       _context = context;
@@ -35,16 +28,15 @@ namespace Service
         return false;
 
       var allowedTypes = new[] { "image/png", "image/jpeg", "image/jpg" };
-
       if (!allowedTypes.Contains(file?.ContentType))
         return false;
 
       return true;
     }
-    public async Task<Guid?> AddPhotoWithoutResumeAync(FileDto? file)
+    public async Task<Photo?> AddPhotoWithoutResumeAync(FileDto? file)
     {
       var checkFile = CheckFileOnValidAsync(file);
-      if (!checkFile) 
+      if (!checkFile)
         return null;
 
       var photoOnDirectory = await _fileService.CreatePhotoFileAsync(file!);
@@ -55,21 +47,28 @@ namespace Service
         Length = file!.Length
       };
 
-      return newPhoto.Id;
-      //PhotoId = newPhoto.Id;
-      //return PhotoId;
+      return newPhoto;
     }
 
-    public async Task<Guid?> AddPhotoInfoAsync(FileDto file, Guid resumeId)
+    public async Task<Guid?> AddPhotoInfoAsync(ResumeForCreationDto resume, Guid? resumeId)
     {
-      var newPhoto = new Photo 
-      {
-        Id = Guid.NewGuid(), 
-        FileName = file.FileName, 
-        Length = file.Length
-      };
+      if (string.IsNullOrEmpty(resume.PhotoFile) || string.IsNullOrWhiteSpace(resume.PhotoFile))
+        return Guid.Empty;
 
-      newPhoto.ResumeId = resumeId;
+      PhotoDto photoDto;
+      try
+      {
+        //TODO: пересмотреть
+        photoDto = JsonSerializer.Deserialize<PhotoDto>(resume.PhotoFile);
+      }
+      catch (Exception ex)
+      {
+        //_loggerManager.LogError(ex.Message);
+        throw;
+      }
+
+      var newPhoto = _mapper.Map<Photo>(photoDto);
+      newPhoto!.ResumeId = resumeId!.Value;
       await _context.Photos.AddAsync(newPhoto);
       await _context.SaveChangesAsync();
       return newPhoto.Id;
@@ -89,7 +88,6 @@ namespace Service
       var photo = await _context.Photos
         .Where(p => p.ResumeId.Equals(resumeId))
         .FirstOrDefaultAsync(token);
-
       return photo;
     }
   }

@@ -71,9 +71,7 @@ namespace Service
       await _repository.Resume.AddAsync(newResume);
       await _repository.SaveChangesAsync();
 
-      //if (file is not null)
-      //  await _fileService.CreatePhotoFileAsync(file, newResume.Id);
-
+      await _photoService.AddPhotoInfoAsync(resume, newResume.Id);
       await _jobInfoService.CreateDesiredJobAsync(newResume.Id, resume.DesiredJob);
       await _experienceService.CreateExperienceAsync(newResume.Id, resume.Experience);
         

@@ -22,6 +22,7 @@ namespace WebResume
       CreateMap<ResumeForCreationDto, Resume>();
 
       CreateMap<Photo, PhotoDto>();
+      CreateMap<PhotoDto, Photo>();
 
       CreateMap<DesiredJobInfoForCreationDto, JobInfo>();
 
@@ -30,7 +31,8 @@ namespace WebResume
       CreateMap<Citizenship, CitizenshipDto>();
 
       CreateMap<ResumeForCreationDto, Resume>()
-        .ForMember(dest => dest.Experience, opt => opt.Ignore());
+        .ForMember(dest => dest.Experience, opt => opt.Ignore())
+        .ForMember(dest => dest.PhotoFile, opt => opt.Ignore());
 
       CreateMap<ExperienceForCreationDto, Experience>();
       CreateMap<Experience, ExperienceOutputDto>();
