@@ -34,22 +34,10 @@ namespace Service
       if (file?.Length == 0 || file?.Length > 3000000)
         return false;
 
-<<<<<<< HEAD
-      try
-      {
-        var fileExtension = Path.GetExtension(file?.FileName)?.ToLowerInvariant();
-        if (file?.ContentType != "image/png" && file?.ContentType != "image/jpeg")
-          return false;
-      }
-      catch (Exception ex) 
-      {
-        throw new Exception(ex.Message);
-      }
-=======
-      if (file?.ContentType != "image/png" || file?.ContentType != "image/jpeg" || file?.ContentType != "image/jpg")
+      var allowedTypes = new[] { "image/png", "image/jpeg", "image/jpg" };
+      if (!allowedTypes.Contains(file?.ContentType))
         return false;
 
->>>>>>> 4e1a70a (Смотреть.)
       return true;
     }
     public async Task<Guid?> AddPhotoWithoutResumeAync(FileDto? file)
