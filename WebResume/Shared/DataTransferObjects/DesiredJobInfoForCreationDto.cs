@@ -1,6 +1,14 @@
-﻿namespace Shared.DataTransferObjects
+﻿using Entites.Enums;
+
+namespace Shared.DataTransferObjects
 {
-  public record DesiredJobInfoForCreationDto : DesiredJobInfoForManipulationDto
+  public record DesiredJobInfoForCreationDto
   {
+    public string? JobTitle { get; init; }
+    public decimal? DesiredSalary { get; init; }
+    public Currency? Currency { get; init; }
+    public bool ByAgreement { get; init; }
+    public EmploymentType? EmploymentType { get; init; }
+    public WorkSchedule? WorkSchedule { get; init; }
   }
 }
