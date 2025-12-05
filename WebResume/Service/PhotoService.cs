@@ -35,6 +35,7 @@ namespace Service
         return false;
 
       var allowedTypes = new[] { "image/png", "image/jpeg", "image/jpg" };
+
       if (!allowedTypes.Contains(file?.ContentType))
         return false;
 
