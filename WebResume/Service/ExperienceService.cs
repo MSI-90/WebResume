@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Contracts;
+using Entites.Exceptions;
 using Entites.Models;
 using Microsoft.EntityFrameworkCore;
 using Repository;
@@ -34,15 +35,20 @@ namespace Service
       var newExperiences = new List<Experience>();
       foreach (var item in experience)
       {
-        var dto = JsonSerializer.Deserialize<ExperienceForCreationDto>(item);
-        if (dto is null)
-          throw new Exception("Experience is null after JSON deserialize");
-
-        var newExp = _mapper.Map<Experience>(dto);
-        newExp.Id = Guid.NewGuid();
-        newExp.ResumeId = resumeId;
-
-        newExperiences.Add(newExp);
+        // TODO пересмотреть if (dto is null) здесь
+        try 
+        {
+          var experienceItem = JsonSerializer.Deserialize<ExperienceForCreationDto>(item) ?? throw new ExperienceDeserializeException();
+          var newExp = _mapper.Map<Experience>(experienceItem);
+          newExp.Id = Guid.NewGuid();
+          newExp.ResumeId = resumeId;
+          newExperiences.Add(newExp);
+        }
+        catch (Exception ex)
+        {
+          _loggerManager.LogError(ex.Message);
+          throw new ExperienceDeserializeException();
+        }
       }
 
       await _context.Experience.AddRangeAsync(newExperiences);

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Contracts;
+using Entites.Exceptions;
 using Entites.Models;
 using Microsoft.EntityFrameworkCore;
 using Repository;
@@ -35,14 +36,13 @@ namespace Service
       DesiredJobInfoForCreationDto? desiredJob;
       try
       {
-        desiredJob = JsonSerializer.Deserialize<DesiredJobInfoForCreationDto>(jobInfo);
-        if (desiredJob == null)
-          throw new Exception("DesiredJob is null after JSON deserialize");
+        // TODO: пересмотреть момент if (desiredJob is null) здесь
+        desiredJob = JsonSerializer.Deserialize<DesiredJobInfoForCreationDto>(jobInfo) ?? throw new DesiredJobInfoDeserializeException();
       }
       catch (Exception ex)
       {
         _loggerManager.LogError(ex.Message);
-        throw;
+        throw new DesiredJobInfoDeserializeException();
       }
 
       var newJob = _mapper.Map<JobInfo>(desiredJob);
@@ -59,7 +59,7 @@ namespace Service
     {
       if (newJob is not null)
       {
-        if (isAgreement == true)
+        if (isAgreement is true)
         {
           newJob.DesiredSalary = null;
           newJob.Currency = null;

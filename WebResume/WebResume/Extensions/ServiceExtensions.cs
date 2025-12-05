@@ -1,13 +1,10 @@
-﻿using AutoMapper;
-using Contracts;
+﻿using Contracts;
 using LoggerService;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Repository;
 using Service;
 using Service.BackgroundServices;
 using Service.Contracts;
-using WebResume.Presentation.ActionFilters;
 
 namespace WebResume.Extensions
 {
@@ -35,7 +32,6 @@ namespace WebResume.Extensions
 
     public static void ConfigureService(this IServiceCollection services)
     {
-      services.AddScoped<TextJsonFilter>();
       services.AddScoped<IResumeService, ResumeService>();
       services.AddScoped<ITemplateService, TemplateService>();
       services.AddScoped<ISpecialInfoService, SpecialInfoService>();

@@ -29,6 +29,12 @@ namespace WebResume
           case TemplateNotFoundException:
             httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
             break;
+          case DesiredJobInfoDeserializeException:
+            httpContext.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
+            break;
+          case ExperienceDeserializeException:
+            httpContext.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
+            break;
           default: httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError; 
             break;
         }
