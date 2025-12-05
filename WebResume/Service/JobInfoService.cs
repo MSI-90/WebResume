@@ -37,12 +37,11 @@ namespace Service
       DesiredJobInfoForCreationDto? desiredJob;
       try
       {
-        //TODO: пересмотреть момент if (desiredJob is null) здесь
         desiredJob = JsonSerializer.Deserialize<DesiredJobInfoForCreationDto>(resume.DesiredJob) ?? throw new DesiredJobInfoDeserializeException();
       }
-      catch (Exception ex)
+      catch (JsonException jex)
       {
-        _loggerManager.LogError(ex.Message);
+        _loggerManager.LogError(jex.Message);
         throw new DesiredJobInfoDeserializeException();
       }
 

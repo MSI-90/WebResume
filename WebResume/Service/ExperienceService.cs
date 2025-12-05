@@ -34,7 +34,6 @@ namespace Service
       var newExperiences = new List<Experience>();
       foreach (var item in resume.Experience)
       {
-        //TODO: пересмотреть if (dto is null) здесь
         try 
         {
           var experienceItem = JsonSerializer.Deserialize<ExperienceForCreationDto>(item) ?? throw new ExperienceDeserializeException();
@@ -43,9 +42,9 @@ namespace Service
           newExp.ResumeId = resume.ResumeId!.Value;
           newExperiences.Add(newExp);
         }
-        catch (Exception ex)
+        catch (JsonException jex)
         {
-          _loggerManager.LogError(ex.Message);
+          _loggerManager.LogError(jex.Message);
           throw new ExperienceDeserializeException();
         }
       }

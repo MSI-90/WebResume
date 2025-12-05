@@ -72,12 +72,13 @@ namespace Service
       await _repository.SaveChangesAsync();
 
       resumeDTO.ResumeId = newResume.Id;
+
+
       await _photoService.AddPhotoInfoAsync(resumeDTO);
       await _jobInfoService.CreateDesiredJobAsync(resumeDTO);
       await _experienceService.CreateExperienceAsync(resumeDTO);
-        
-      var createdResume = await GetResumeAsync(newResume.Id, default);
-      return createdResume;
+
+      return await GetResumeAsync(newResume.Id, default);
     }
 
     public async Task DeleteResumeAsync(Guid resumeId, CancellationToken token) 
