@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Entites.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -39,10 +40,6 @@ namespace WebResume.Presentation.Controllers
     [HttpPost]
     public async Task<IActionResult> ResumeFromForm([FromForm] ResumeForCreationDto resumeForCreateDto)
     {
-      
-      if (resumeForCreateDto is null)
-        return BadRequest($"Проблема в теле запроса");
-
       var resume = await _service.CreateResumeAsync(resumeForCreateDto);
       return CreatedAtRoute("GetResume", new { resumeId = resume.Id }, resume);
     }

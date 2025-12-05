@@ -21,19 +21,18 @@ namespace Service
       _loggerManager = logger;
       _mapper = mapper;
     }
-
     public async Task<IEnumerable<Experience?>> GetExperienceAsync(Guid resumeId, CancellationToken token) => 
       await _context.Experience
       .Where(e => e.ResumeId.Equals(resumeId))
       .ToListAsync(token);
     
-    public async Task<IEnumerable<Experience?>> CreateExperienceAsync(Guid resumeId, IEnumerable<string>? experience)
+    public async Task<IEnumerable<Experience?>> CreateExperienceAsync(ResumeForCreationDto resume)
     {
-      if (experience is null || !experience.Any())
+      if (resume.Experience is null || !resume.Experience.Any())
         return Enumerable.Empty<Experience>();
 
       var newExperiences = new List<Experience>();
-      foreach (var item in experience)
+      foreach (var item in resume.Experience)
       {
         //TODO: пересмотреть if (dto is null) здесь
         try 
@@ -41,7 +40,7 @@ namespace Service
           var experienceItem = JsonSerializer.Deserialize<ExperienceForCreationDto>(item) ?? throw new ExperienceDeserializeException();
           var newExp = _mapper.Map<Experience>(experienceItem);
           newExp.Id = Guid.NewGuid();
-          newExp.ResumeId = resumeId;
+          newExp.ResumeId = resume.ResumeId!.Value;
           newExperiences.Add(newExp);
         }
         catch (Exception ex)
@@ -54,7 +53,7 @@ namespace Service
       await _context.Experience.AddRangeAsync(newExperiences);
       await _context.SaveChangesAsync();
 
-      return await GetExperienceAsync(resumeId, default);
+      return await GetExperienceAsync(resume.ResumeId!.Value, default);
     }
   }
 }

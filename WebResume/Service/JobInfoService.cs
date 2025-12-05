@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Contracts;
 using Shared.DataTransferObjects;
+using System.Security.AccessControl;
 using System.Text.Json;
 
 namespace Service
@@ -28,16 +29,16 @@ namespace Service
         .Where(j => j.Id.Equals(jobInfoGuid))
         .FirstOrDefaultAsync(token);
 
-    public async Task<JobInfo?> CreateDesiredJobAsync(Guid resumeId, string? jobInfo)
+    public async Task<Guid?> CreateDesiredJobAsync(ResumeForCreationDto resume)
     {
-      if (string.IsNullOrEmpty(jobInfo) || string.IsNullOrWhiteSpace(jobInfo))
+      if (string.IsNullOrEmpty(resume.DesiredJob) || string.IsNullOrWhiteSpace(resume.DesiredJob))
         return null;
 
       DesiredJobInfoForCreationDto? desiredJob;
       try
       {
         //TODO: пересмотреть момент if (desiredJob is null) здесь
-        desiredJob = JsonSerializer.Deserialize<DesiredJobInfoForCreationDto>(jobInfo) ?? throw new DesiredJobInfoDeserializeException();
+        desiredJob = JsonSerializer.Deserialize<DesiredJobInfoForCreationDto>(resume.DesiredJob) ?? throw new DesiredJobInfoDeserializeException();
       }
       catch (Exception ex)
       {
@@ -48,11 +49,11 @@ namespace Service
       var newJob = _mapper.Map<JobInfo>(desiredJob);
       newJob.Id = Guid.NewGuid();
       newJob = CheckAgreementData(desiredJob?.ByAgreement, newJob);
-      newJob.ResumeId = resumeId;
+      newJob.ResumeId = resume.ResumeId!.Value;
       await _context.JobInfos.AddAsync(newJob);
       await _context.SaveChangesAsync();
 
-      return await GetJobInfoAsync(newJob.Id, default);
+      return newJob.Id;
     }
 
     public static JobInfo CheckAgreementData(bool? isAgreement, JobInfo newJob)

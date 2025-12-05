@@ -63,17 +63,18 @@ namespace Service
       return _mapper.Map<ResumeDto>(resume) ?? throw new ResumeNotFoundException(resumeId);
     }
 
-    public async Task<ResumeDto> CreateResumeAsync(ResumeForCreationDto resume)
-    {        
-      var newResume = _mapper.Map<Resume>(resume);
+    public async Task<ResumeDto> CreateResumeAsync(ResumeForCreationDto resumeDTO)
+    {
+      var newResume = _mapper.Map<Resume>(resumeDTO);
       newResume.Id = Guid.NewGuid();
       newResume.UpdatedAt = newResume.CreatedAt = DateTime.UtcNow;
       await _repository.Resume.AddAsync(newResume);
       await _repository.SaveChangesAsync();
 
-      await _photoService.AddPhotoInfoAsync(resume, newResume.Id);
-      await _jobInfoService.CreateDesiredJobAsync(newResume.Id, resume.DesiredJob);
-      await _experienceService.CreateExperienceAsync(newResume.Id, resume.Experience);
+      resumeDTO.ResumeId = newResume.Id;
+      await _photoService.AddPhotoInfoAsync(resumeDTO);
+      await _jobInfoService.CreateDesiredJobAsync(resumeDTO);
+      await _experienceService.CreateExperienceAsync(resumeDTO);
         
       var createdResume = await GetResumeAsync(newResume.Id, default);
       return createdResume;

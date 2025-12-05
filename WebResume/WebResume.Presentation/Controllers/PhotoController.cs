@@ -15,12 +15,6 @@ namespace WebResume.Presentation.Controllers
       _photoService = photoService;
     }
 
-    [HttpGet]
-    public IActionResult GetPhotos() 
-    {
-      return Ok();
-    }
-
     [HttpPost]
     public async Task<IActionResult> AddPhoto(IFormFile? file)
     {

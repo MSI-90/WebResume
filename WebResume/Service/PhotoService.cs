@@ -22,7 +22,7 @@ namespace Service
       _mapper = mapper;
     }
 
-    public bool CheckFileOnValidAsync(FileDto? file) 
+    public static bool CheckFileOnValidAsync(FileDto? file) 
     {
       if (file?.Length == 0 || file?.Length > 3000000)
         return false;
@@ -33,24 +33,18 @@ namespace Service
 
       return true;
     }
-    public async Task<Photo?> AddPhotoWithoutResumeAync(FileDto? file)
+    public async Task<PhotoDto?> AddPhotoWithoutResumeAync(FileDto? file)
     {
       var checkFile = CheckFileOnValidAsync(file);
       if (!checkFile)
-        return null;
+        throw new PhotoBigSizeException();
 
       var photoOnDirectory = await _fileService.CreatePhotoFileAsync(file!);
-      var newPhoto = new Photo
-      {
-        Id = Guid.NewGuid(),
-        FileName = photoOnDirectory.FileName,
-        Length = file!.Length
-      };
-
+      var newPhoto = new PhotoDto(Guid.NewGuid(), photoOnDirectory.FileName, file!.Length);
       return newPhoto;
     }
 
-    public async Task<Guid?> AddPhotoInfoAsync(ResumeForCreationDto resume, Guid? resumeId)
+    public async Task<Guid?> AddPhotoInfoAsync(ResumeForCreationDto resume)
     {
       if (string.IsNullOrEmpty(resume.PhotoFile) || string.IsNullOrWhiteSpace(resume.PhotoFile))
         return Guid.Empty;
@@ -68,7 +62,7 @@ namespace Service
       }
 
       var newPhoto = _mapper.Map<Photo>(photoDto);
-      newPhoto!.ResumeId = resumeId!.Value;
+      newPhoto!.ResumeId = resume.ResumeId!.Value;
       await _context.Photos.AddAsync(newPhoto);
       await _context.SaveChangesAsync();
       return newPhoto.Id;

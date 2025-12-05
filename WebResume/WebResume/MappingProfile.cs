@@ -36,6 +36,7 @@ namespace WebResume
 
       CreateMap<ExperienceForCreationDto, Experience>();
       CreateMap<Experience, ExperienceOutputDto>();
+      CreateMap<ExperienceOutputDto, Experience>();
     }
   }
 }

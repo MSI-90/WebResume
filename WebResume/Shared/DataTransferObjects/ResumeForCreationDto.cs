@@ -26,5 +26,7 @@ namespace Shared.DataTransferObjects
     public string? PhotoFile { get; set; }
     public string? DesiredJob { get; init; }
     public IEnumerable<string>? Experience { get; init; }
+
+    public Guid? ResumeId { get; set; }
   }
 }

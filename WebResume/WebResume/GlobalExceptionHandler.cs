@@ -35,6 +35,9 @@ namespace WebResume
           case ExperienceDeserializeException:
             httpContext.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
             break;
+          case PhotoBigSizeException:
+            httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+            break;
           default: httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError; 
             break;
         }
