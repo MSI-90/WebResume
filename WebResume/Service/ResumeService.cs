@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Contracts;
 using Entites.Exceptions;
 using Entites.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Repository;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -12,7 +12,7 @@ namespace Service
   public sealed class ResumeService : IResumeService
   {
     private readonly RepositoryContext _repository;
-    private readonly ILoggerManager _logger;
+    private readonly ILogger _logger;
     private readonly IMapper _mapper;
     private readonly IPhotoService _photoService;
     private readonly IFileService _fileService;
@@ -20,7 +20,7 @@ namespace Service
     private readonly IBufferInfo _bufferInfo;
     private readonly IExperienceService _experienceService;
     public ResumeService(RepositoryContext repository, 
-      ILoggerManager logger, 
+      ILogger<ResumeService> logger, 
       IMapper mapper, 
       IPhotoService photoService, 
       IJobInfoService jobInfoService, 

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Contracts;
 using Entites.Exceptions;
 using Entites.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Repository;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -13,12 +13,12 @@ namespace Service
   public sealed class ExperienceService : IExperienceService
   {
     private readonly RepositoryContext _context;
-    private readonly ILoggerManager _loggerManager;
+    private readonly ILogger _logger;
     private readonly IMapper _mapper;
-    public ExperienceService(RepositoryContext context, ILoggerManager logger, IMapper mapper) 
+    public ExperienceService(RepositoryContext context, ILogger<ExperienceService> logger, IMapper mapper) 
     {
       _context = context;
-      _loggerManager = logger;
+      _logger = logger;
       _mapper = mapper;
     }
     public async Task<IEnumerable<Experience?>> GetExperienceAsync(Guid resumeId, CancellationToken token) => 
@@ -44,7 +44,7 @@ namespace Service
         }
         catch (JsonException jex)
         {
-          _loggerManager.LogError(jex.Message);
+          _logger.LogWarning(jex.Message);
           throw new ExperienceDeserializeException();
         }
       }

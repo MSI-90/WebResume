@@ -1,5 +1,4 @@
-﻿using Contracts;
-using Entites.ErrorModel;
+﻿using Entites.ErrorModel;
 using Entites.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
@@ -8,8 +7,8 @@ namespace WebResume
 {
   public class GlobalExceptionHandler : IExceptionHandler
   {
-    private readonly ILoggerManager _logger;
-    public GlobalExceptionHandler(ILoggerManager logger) 
+    private readonly ILogger _logger;
+    public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) 
     {
       _logger = logger;
     }

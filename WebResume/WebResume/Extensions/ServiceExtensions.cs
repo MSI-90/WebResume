@@ -1,6 +1,4 @@
-﻿using Contracts;
-using LoggerService;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service;
 using Service.BackgroundServices;
@@ -27,9 +25,6 @@ namespace WebResume.Extensions
       {
       });
 
-    public static void ConfigureLoggerService(this IServiceCollection services) =>
-      services.AddSingleton<ILoggerManager, LoggerManager>();
-
     public static void ConfigureService(this IServiceCollection services)
     {
       services.AddScoped<IResumeService, ResumeService>();
@@ -46,9 +41,10 @@ namespace WebResume.Extensions
         var env = sp.GetRequiredService<IHostEnvironment>();
         var uploadsPath = Path.Combine(env.ContentRootPath, config["FileStorage"]!);
 
-        return new FileService(
-          sp.GetRequiredService<ILoggerManager>(),
-          uploadsPath);
+        // Получаем конкретный логгер для FileService
+        var logger = sp.GetRequiredService<ILogger<FileService>>();
+
+        return new FileService(logger, uploadsPath);
       });
     }
 

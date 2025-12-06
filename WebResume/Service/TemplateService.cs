@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Contracts;
 using Entites.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Repository;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -11,9 +11,9 @@ namespace Service
   public sealed class TemplateService : ITemplateService
   {
     private readonly RepositoryContext _repository;
-    private readonly ILoggerManager _logger;
+    private readonly ILogger _logger;
     private readonly IMapper _mapper;
-    public TemplateService(RepositoryContext repository, ILoggerManager logger, IMapper mapper) 
+    public TemplateService(RepositoryContext repository, ILogger<TemplateService> logger, IMapper mapper) 
     {
       _repository = repository;
       _logger = logger;

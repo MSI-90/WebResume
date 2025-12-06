@@ -1,6 +1,6 @@
-﻿using Contracts;
-using Entites.Models;
+﻿using Entites.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Repository;
 using Service.Contracts;
 
@@ -8,11 +8,11 @@ namespace Service
 {
   public class BufferInfo : IBufferInfo
   {
-    private readonly ILoggerManager _logger;
+    private readonly ILogger _logger;
     private readonly IPhotoService _photoService;
     private readonly IFileService _fileService;
     private readonly RepositoryContext _context;
-    public BufferInfo(ILoggerManager logger, IPhotoService photoService, IFileService fileService, RepositoryContext context)
+    public BufferInfo(ILogger<BufferInfo> logger, IPhotoService photoService, IFileService fileService, RepositoryContext context)
     {
       _logger = logger;
       _photoService = photoService;

@@ -1,13 +1,8 @@
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.HttpOverrides;
-using NLog;
 using WebResume;
 using WebResume.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// NLog
-LogManager.Setup().LoadConfigurationFromFile(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
 
 // Automapper
 builder.Services.AddAutoMapper(typeof(Program));
@@ -22,7 +17,6 @@ builder.Services.ConfigureIISIntegration();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 // IOC
-builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureService();
 builder.Services.ConfigurePostgresConnection(builder.Configuration);
 builder.Services.ConfigureHostedServices();
