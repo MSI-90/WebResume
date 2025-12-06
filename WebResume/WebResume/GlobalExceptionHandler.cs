@@ -18,7 +18,7 @@ namespace WebResume
       httpContext.Response.ContentType = "application/json";
 
       var contextFeature = httpContext.Features.Get<IExceptionHandlerFeature>();
-      if (contextFeature != null) 
+      if (contextFeature is not null) 
       {
         switch (contextFeature.Error)
         {

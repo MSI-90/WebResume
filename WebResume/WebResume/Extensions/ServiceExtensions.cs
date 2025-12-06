@@ -35,17 +35,7 @@ namespace WebResume.Extensions
       services.AddScoped<IBufferInfo, BufferInfo>();
       services.AddScoped<IPhotoService, PhotoService>();
       services.AddScoped<IExperienceService, ExperienceService>();
-      services.AddScoped<IFileService, FileService>(sp =>
-      {
-        var config = sp.GetRequiredService<IConfiguration>();
-        var env = sp.GetRequiredService<IHostEnvironment>();
-        var uploadsPath = Path.Combine(env.ContentRootPath, config["FileStorage"]!);
-
-        // Получаем конкретный логгер для FileService
-        var logger = sp.GetRequiredService<ILogger<FileService>>();
-
-        return new FileService(logger, uploadsPath);
-      });
+      services.AddScoped<IFileService, FileService>();
     }
 
     public static void ConfigureHostedServices(this IServiceCollection services)

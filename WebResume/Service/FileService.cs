@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 
@@ -6,12 +7,14 @@ namespace Service
 {
   public sealed class FileService : IFileService
   {
+    private readonly IConfiguration _configuration;
     private readonly ILogger _logger;
     private readonly string _filePath;
-    public FileService(ILogger<FileService> logger, string filePath)
+    public FileService(IConfiguration configuration, ILogger<FileService> logger)
     {
+      _configuration = configuration;
       _logger = logger;
-      _filePath = filePath;
+      _filePath = _configuration["FileStorage"] ?? string.Empty;
     }
     public async Task<PhotoToUpload> CreatePhotoFileAsync(FileDto file)
     {
