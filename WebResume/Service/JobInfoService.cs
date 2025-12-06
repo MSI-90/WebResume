@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Contracts;
 using Entites.Exceptions;
 using Entites.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Repository;
 using Service.Contracts;
 using Shared.DataTransferObjects;
@@ -13,12 +13,12 @@ namespace Service
 {
   public sealed class JobInfoService : IJobInfoService
   {
-    private readonly ILoggerManager _loggerManager;
+    private readonly ILogger _loggerManager;
     private readonly RepositoryContext _context;
     private readonly IMapper _mapper;
-    public JobInfoService(ILoggerManager loggerManager, RepositoryContext context, IMapper mapper)
+    public JobInfoService(ILogger<JobInfoService> logger, RepositoryContext context, IMapper mapper)
     {
-      _loggerManager = loggerManager;
+      _loggerManager = logger;
       _context = context;
       _mapper = mapper;
     }

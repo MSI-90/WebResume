@@ -1,4 +1,4 @@
-﻿using Contracts;
+﻿using Microsoft.Extensions.Logging;
 using Service.Contracts;
 using Shared.DataTransferObjects;
 
@@ -6,11 +6,11 @@ namespace Service
 {
   public sealed class FileService : IFileService
   {
-    private readonly ILoggerManager _loggerManager;
+    private readonly ILogger _logger;
     private readonly string _filePath;
-    public FileService(ILoggerManager loggerManager, string filePath)
+    public FileService(ILogger<FileService> logger, string filePath)
     {
-      _loggerManager = loggerManager;
+      _logger = logger;
       _filePath = filePath;
     }
     public async Task<PhotoToUpload> CreatePhotoFileAsync(FileDto file)
@@ -32,7 +32,7 @@ namespace Service
       }
       catch (Exception ex)
       {
-        _loggerManager.LogError($"File is not created {ex.Message}");
+        _logger.LogError($"File is not created {ex.Message}");
         if (File.Exists(filePath))
           File.Delete(filePath);
         throw;
@@ -46,16 +46,16 @@ namespace Service
         if (File.Exists(filePath))
         {
           await Task.Run(() => File.Delete(filePath));
-          _loggerManager.LogInfo($"Файл {fileName} удален");
+          _logger.LogInformation($"Файл {fileName} удален");
         }
         else
         {
-          _loggerManager.LogWarn($"Файл {fileName} не найден");
+          _logger.LogWarning($"Файл {fileName} не найден");
         }
       }
       catch (Exception ex)
       {
-        _loggerManager.LogWarn($"Ошибка при удалении: {ex.Message}");
+        _logger.LogWarning($"Ошибка при удалении: {ex.Message}");
         throw;
       }
     }
