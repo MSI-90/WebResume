@@ -73,7 +73,6 @@ namespace Service
 
       resumeDTO.ResumeId = newResume.Id;
 
-
       await _photoService.AddPhotoInfoAsync(resumeDTO);
       await _jobInfoService.CreateDesiredJobAsync(resumeDTO);
       await _experienceService.CreateExperienceAsync(resumeDTO);

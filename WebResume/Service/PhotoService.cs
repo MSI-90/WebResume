@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Contracts;
 using Shared.DataTransferObjects;
-using System.Runtime;
 using System.Text.Json;
 
 namespace Service
@@ -55,7 +54,7 @@ namespace Service
         //TODO: пересмотреть
         photoDto = JsonSerializer.Deserialize<PhotoDto>(resume.PhotoFile);
       }
-      catch (Exception ex)
+      catch (JsonException jex)
       {
         //_loggerManager.LogError(ex.Message);
         throw;
