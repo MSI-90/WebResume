@@ -2,7 +2,7 @@
 {
   public class PhotoBigSizeException : Exception
   {
-    public PhotoBigSizeException() : base("Слишком большой размер файла.")
+    public PhotoBigSizeException() : base("Файл отсутствует, либо размер файла слишком велик.")
     { }
   }
 }

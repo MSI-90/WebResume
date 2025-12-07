@@ -14,7 +14,6 @@ namespace WebResume
     }
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
-      httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
       httpContext.Response.ContentType = "application/json";
 
       var contextFeature = httpContext.Features.Get<IExceptionHandlerFeature>();
