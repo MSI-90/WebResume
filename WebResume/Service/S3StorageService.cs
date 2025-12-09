@@ -1,13 +1,10 @@
-﻿using Amazon.Runtime.Internal;
-using Amazon.Runtime.Internal.Util;
-using Amazon.S3;
+﻿using Amazon.S3;
 using Amazon.S3.Model;
 using Entites.Exceptions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Service.Contracts;
 using Shared.DataTransferObjects;
-using System.Linq;
 
 namespace Service
 {
@@ -84,8 +81,30 @@ namespace Service
       return urlString;
     }
 
+    public async Task DeletePhotoAsync(Guid? photoId)
+    {
+      if (photoId is null) return;
+      try
+      {
+        var deleteObjectRequest = new DeleteObjectRequest
+        {
+          BucketName = _regRuConfiguration.BucketName,
+          Key = photoId.ToString(),
+        };
+
+        _logger.LogInformation($"Deleting photo: {deleteObjectRequest.Key}");
+        await _amazonS3client.DeleteObjectAsync(deleteObjectRequest);
+        _logger.LogInformation($"Object: {deleteObjectRequest.Key} deleted from {deleteObjectRequest.BucketName}.");
+      }
+      catch (AmazonS3Exception ex)
+      {
+        _logger.LogError($"Error encountered on server. Message:'{ex.Message}' when deleting an object.");
+      }
+    }
+
     ~S3StorageService(){
       _amazonS3client.Dispose();
+      _logger.LogInformation("AmazonS3 connection has been closed");
     }
   }
 }

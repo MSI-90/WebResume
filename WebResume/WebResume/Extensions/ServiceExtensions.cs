@@ -1,13 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using Repository;
 using Service;
-using Service.BackgroundServices;
 using Service.Contracts;
 using Shared.DataTransferObjects;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
 
 namespace WebResume.Extensions
 {
@@ -35,7 +30,6 @@ namespace WebResume.Extensions
       services.AddScoped<ISpecialInfoService, SpecialInfoService>();
       services.AddScoped<IJobInfoService, JobInfoService>();
       services.AddScoped<ICitizenshipService, CitizenshipService>();
-      services.AddScoped<IBufferInfo, BufferInfo>();
       services.AddScoped<IPhotoService, PhotoService>();
       services.AddScoped<IExperienceService, ExperienceService>();
       services.AddScoped<IS3StorageService, S3StorageService>();
@@ -44,11 +38,6 @@ namespace WebResume.Extensions
     public static void ConfigureOptionsConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
       services.Configure<RegRuS3Dto>(configuration.GetSection("regru"));
-    }
-
-    public static void ConfigureHostedServices(this IServiceCollection services)
-    {
-      services.AddHostedService<DeletePhoto>();
     }
   }
 }

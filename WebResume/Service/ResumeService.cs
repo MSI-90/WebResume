@@ -14,25 +14,23 @@ namespace Service
     private readonly RepositoryContext _repository;
     private readonly ILogger _logger;
     private readonly IMapper _mapper;
-    private readonly IPhotoService _photoService;
     private readonly IJobInfoService _jobInfoService;
-    private readonly IBufferInfo _bufferInfo;
     private readonly IExperienceService _experienceService;
+    private readonly IS3StorageService _s3;
     public ResumeService(RepositoryContext repository, 
       ILogger<ResumeService> logger, 
       IMapper mapper, 
       IPhotoService photoService, 
       IJobInfoService jobInfoService, 
-      IBufferInfo bufferInfo,
-      IExperienceService experienceService)
+      IExperienceService experienceService,
+      IS3StorageService s3)
     {
       _repository = repository;
       _logger = logger;
       _mapper = mapper;
-      _photoService = photoService;
       _jobInfoService = jobInfoService;
-      _bufferInfo = bufferInfo;
       _experienceService = experienceService;
+      _s3 = s3;
     }
 
     public async Task<IEnumerable<ResumeDto>> GetResumesAsync(CancellationToken token)
@@ -77,7 +75,7 @@ namespace Service
     public async Task DeleteResumeAsync(Guid resumeId, CancellationToken token) 
     {
       var resumeForDelete = await GetResumeAsync(resumeId, token);
-      await _bufferInfo.AddPhotoInfoToBuffer(resumeId, token);
+      await _s3.DeletePhotoAsync(resumeForDelete.PhotoId);
       _repository.Resume.Remove(_mapper.Map<Resume>(resumeForDelete));
       await _repository.SaveChangesAsync(token);
     }
