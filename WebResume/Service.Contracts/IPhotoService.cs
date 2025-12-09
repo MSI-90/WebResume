@@ -5,6 +5,6 @@ namespace Service.Contracts
   public interface IPhotoService
   {
     bool CheckFileOnValidAsync(FileDto? file);
-    Task<PhotoDto?> AddPhotoWithoutResumeAync(FileDto? file);
+    Task<PhotoDto?> GetPhotoResumeAync(FileDto? file);
   }
 }

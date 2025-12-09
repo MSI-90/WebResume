@@ -29,7 +29,7 @@ namespace WebResume.Presentation.Controllers
           FileStream = file.OpenReadStream()
         };
       }
-      var photoId = await _photoService.AddPhotoWithoutResumeAync(fileDto);
+      var photoId = await _photoService.GetPhotoResumeAync(fileDto);
       return Ok(photoId);
     }
   }

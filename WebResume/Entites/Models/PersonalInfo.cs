@@ -17,5 +17,7 @@ namespace Entites.Models
     [ForeignKey(nameof(Resume))]
     public Guid? ResumeId { get; set; }
     public Resume? Resume { get; set; }
+
+    public ICollection<PersonalInfoCitizenship> Citizenships { get; set; } = [];
   }
 }

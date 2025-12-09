@@ -33,7 +33,7 @@ namespace Service
 
       return true;
     }
-    public async Task<PhotoDto?> AddPhotoWithoutResumeAync(FileDto? file)
+    public async Task<PhotoDto?> GetPhotoResumeAync(FileDto? file)
     {
       var checkFile = CheckFileOnValidAsync(file);
       if (!checkFile)
