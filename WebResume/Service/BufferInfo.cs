@@ -6,17 +6,15 @@ using Service.Contracts;
 
 namespace Service
 {
-  public class BufferInfo : IBufferInfo
+  public sealed class BufferInfo : IBufferInfo
   {
     private readonly ILogger _logger;
     private readonly IPhotoService _photoService;
-    private readonly IFileService _fileService;
     private readonly RepositoryContext _context;
-    public BufferInfo(ILogger<BufferInfo> logger, IPhotoService photoService, IFileService fileService, RepositoryContext context)
+    public BufferInfo(ILogger<BufferInfo> logger, IPhotoService photoService, RepositoryContext context)
     {
       _logger = logger;
       _photoService = photoService;
-      _fileService = fileService;
       _context = context;
     }
 
@@ -25,19 +23,19 @@ namespace Service
     /// </summary>
     /// <param name="resumeId">Id резюме</param>
     /// <param name="token">токен отмены</param>
-    public async Task AddPhotoInfoToBuffer(Guid resumeId, CancellationToken token)
-    {
-      var photo = await _photoService.GetPhotoByResumeAsync(resumeId, token);
-      if (photo is null)
-        return;
+    //public async Task AddPhotoInfoToBuffer(Guid resumeId, CancellationToken token)
+    //{
+    //  //var photo = await _photoService.GetPhotoByResumeAsync(resumeId, token);
+    //  if (photo is null)
+    //    return;
 
-      var bufferInfo = new BufferEntity
-      {
-        Id = Guid.NewGuid(),
-        FileName = photo.FileName
-      };
-      await _context.BufferInfo.AddAsync(bufferInfo);
-    }
+    //  var bufferInfo = new BufferEntity
+    //  {
+    //    Id = Guid.NewGuid(),
+    //    FileName = photo.FileName
+    //  };
+    //  await _context.BufferInfo.AddAsync(bufferInfo);
+    //}
 
     /// <summary>
     /// Получить список записей из таблицы Buffer
@@ -61,12 +59,17 @@ namespace Service
       {
         if (!string.IsNullOrEmpty(item.FileName))
         {
-          await _fileService.DeletePhotoFromStorageAsync(item.FileName);
+          //await _fileService.DeletePhotoFromStorageAsync(item.FileName);
           _context.BufferInfo.Remove(item);
         }
       }
 
       await _context.SaveChangesAsync();
+    }
+
+    public Task AddPhotoInfoToBuffer(Guid resumeId, CancellationToken token)
+    {
+      throw new NotImplementedException();
     }
   }
 }

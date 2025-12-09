@@ -15,7 +15,6 @@ namespace Service
     private readonly ILogger _logger;
     private readonly IMapper _mapper;
     private readonly IPhotoService _photoService;
-    private readonly IFileService _fileService;
     private readonly IJobInfoService _jobInfoService;
     private readonly IBufferInfo _bufferInfo;
     private readonly IExperienceService _experienceService;
@@ -25,14 +24,12 @@ namespace Service
       IPhotoService photoService, 
       IJobInfoService jobInfoService, 
       IBufferInfo bufferInfo,
-      IFileService fileService,
       IExperienceService experienceService)
     {
       _repository = repository;
       _logger = logger;
       _mapper = mapper;
       _photoService = photoService;
-      _fileService = fileService;
       _jobInfoService = jobInfoService;
       _bufferInfo = bufferInfo;
       _experienceService = experienceService;
@@ -42,7 +39,6 @@ namespace Service
     {
       var resumes = await _repository.Resume
         .AsNoTracking()
-        .Include(r => r.PhotoFile)
         .Include(r => r.Job)
         .Include(r => r.Experience)
         .ToListAsync(token);
@@ -54,7 +50,6 @@ namespace Service
     {
       var resume = await _repository.Resume
         .AsNoTracking()
-        .Include(r => r.PhotoFile)
         .Include(r => r.Job)
         .Include(r => r.Experience)
         .Where(r => r.Id.Equals(resumeId))
@@ -73,7 +68,6 @@ namespace Service
 
       resumeDTO.ResumeId = newResume.Id;
 
-      await _photoService.AddPhotoInfoAsync(resumeDTO);
       await _jobInfoService.CreateDesiredJobAsync(resumeDTO);
       await _experienceService.CreateExperienceAsync(resumeDTO);
 

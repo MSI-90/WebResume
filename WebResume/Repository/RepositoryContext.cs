@@ -10,7 +10,6 @@ namespace Repository
     public DbSet<Resume> Resume {  get; set; }
     public DbSet<SpecialInfo> SpecialInfo { get; set; }
     public DbSet<Template> Templates { get; set; }
-    public DbSet<Photo> Photos { get; set; }
     public DbSet<JobInfo> JobInfos { get; set; }
     public DbSet<PersonalInfo> PersonalInfos { get; set; }
     public DbSet<Citizenship> Citizenships { get; set; }

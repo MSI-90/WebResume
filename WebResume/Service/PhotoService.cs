@@ -12,16 +12,17 @@ namespace Service
   public sealed class PhotoService : IPhotoService
   {
     private readonly RepositoryContext _context;
-    private readonly IFileService _fileService;
     public readonly IMapper _mapper;
-    public PhotoService(RepositoryContext context, IFileService fileService, IMapper mapper) 
+
+    private readonly IS3StorageService _s3;
+    public PhotoService(RepositoryContext context, IMapper mapper, IS3StorageService s3) 
     {
       _context = context;
-      _fileService = fileService;
       _mapper = mapper;
+      _s3 = s3;
     }
 
-    public static bool CheckFileOnValidAsync(FileDto? file) 
+    public bool CheckFileOnValidAsync(FileDto? file)
     {
       if (file?.Length == 0 || file?.Length > 3000000)
         return false;
@@ -36,52 +37,15 @@ namespace Service
     {
       var checkFile = CheckFileOnValidAsync(file);
       if (!checkFile)
-        throw new PhotoBigSizeException();
+        throw new PhotoSizeException();
 
-      var photoOnDirectory = await _fileService.CreatePhotoFileAsync(file!);
-      var newPhoto = new PhotoDto(Guid.NewGuid(), photoOnDirectory.FileName, file!.Length);
+      var putPhotoOnBucket = await _s3.UploadFileAsync(file);
+
+      PhotoDto? newPhoto = null;
+      if (putPhotoOnBucket.Item1)
+        newPhoto = new PhotoDto(new Guid(putPhotoOnBucket.Item2 ?? ""), putPhotoOnBucket.Item3);
+
       return newPhoto;
-    }
-
-    public async Task<Guid?> AddPhotoInfoAsync(ResumeForCreationDto resume)
-    {
-      if (string.IsNullOrEmpty(resume.PhotoFile) || string.IsNullOrWhiteSpace(resume.PhotoFile))
-        return Guid.Empty;
-
-      PhotoDto photoDto;
-      try
-      {
-        //TODO: пересмотреть
-        photoDto = JsonSerializer.Deserialize<PhotoDto>(resume.PhotoFile);
-      }
-      catch (JsonException jex)
-      {
-        //_loggerManager.LogError(ex.Message);
-        throw;
-      }
-
-      var newPhoto = _mapper.Map<Photo>(photoDto);
-      newPhoto!.ResumeId = resume.ResumeId!.Value;
-      await _context.Photos.AddAsync(newPhoto);
-      await _context.SaveChangesAsync();
-      return newPhoto.Id;
-    }
-
-    public async Task<Photo?> GetPhotoAsync(Guid photoId, CancellationToken token)
-    {
-      var photo = await _context.Photos
-        .Where(p => p.Id.Equals(photoId))
-        .FirstOrDefaultAsync(token);
-
-      return photo;
-    }
-
-    public async Task<Photo?> GetPhotoByResumeAsync(Guid resumeId, CancellationToken token)
-    {
-      var photo = await _context.Photos
-        .Where(p => p.ResumeId.Equals(resumeId))
-        .FirstOrDefaultAsync(token);
-      return photo;
     }
   }
 }

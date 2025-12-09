@@ -19,6 +19,7 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 // IOC
 builder.Services.ConfigureService();
 builder.Services.ConfigurePostgresConnection(builder.Configuration);
+builder.Services.ConfigureOptionsConfiguration(builder.Configuration);
 builder.Services.ConfigureHostedServices();
 
 var app = builder.Build();

@@ -3,7 +3,7 @@
   public record ResumeDto(
     Guid Id, 
     string FIO,
-    PhotoDto? Photo,
+    Guid? PhotoId,
     DesiredJobInfoOutputDto? DesiredJob,
     IEnumerable<ExperienceOutputDto?> Experience,
     string? PurposeResume,

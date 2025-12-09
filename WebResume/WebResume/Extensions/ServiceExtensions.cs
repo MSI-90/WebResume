@@ -1,8 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Repository;
 using Service;
 using Service.BackgroundServices;
 using Service.Contracts;
+using Shared.DataTransferObjects;
+using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 
 namespace WebResume.Extensions
 {
@@ -21,9 +26,7 @@ namespace WebResume.Extensions
       });
 
     public static void ConfigureIISIntegration(this IServiceCollection services) =>
-      services.Configure<IISServerOptions>(options =>
-      {
-      });
+      services.Configure<IISServerOptions>(options => {});
 
     public static void ConfigureService(this IServiceCollection services)
     {
@@ -35,7 +38,12 @@ namespace WebResume.Extensions
       services.AddScoped<IBufferInfo, BufferInfo>();
       services.AddScoped<IPhotoService, PhotoService>();
       services.AddScoped<IExperienceService, ExperienceService>();
-      services.AddScoped<IFileService, FileService>();
+      services.AddScoped<IS3StorageService, S3StorageService>();
+    }
+
+    public static void ConfigureOptionsConfiguration(this IServiceCollection services, IConfiguration configuration)
+    {
+      services.Configure<RegRuS3Dto>(configuration.GetSection("regru"));
     }
 
     public static void ConfigureHostedServices(this IServiceCollection services)

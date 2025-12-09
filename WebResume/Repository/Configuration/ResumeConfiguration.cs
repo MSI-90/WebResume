@@ -8,14 +8,6 @@ namespace Repository.Configuration
   {
     public void Configure(EntityTypeBuilder<Resume> builder)
     {
-
-      builder
-        .HasOne(r => r.PhotoFile)
-        .WithOne(p => p.Resume)
-        .HasForeignKey<Photo>(p => p.ResumeId)
-        .IsRequired()
-        .OnDelete(DeleteBehavior.Cascade);
-
       builder
         .HasOne(r => r.Job)
         .WithOne(j => j.Resume)
