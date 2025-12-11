@@ -41,6 +41,7 @@ namespace Entites.Models
     public JobInfo? Job { get; set; }
     public PersonalInfo? PersonalInfo { get; set; }
     public ICollection<Experience?> Experience { get; set; } = [];
+    public ICollection<ContactInfo> ContactInfo { get; set; } = [];
 
     [Column("template_id")]
     [ForeignKey(nameof(Template))]
