@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Entites.Exceptions;
+using Entites.Models;
 using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Contracts;
@@ -33,6 +34,16 @@ namespace Service
         .FirstOrDefaultAsync(token);
 
       return _mapper.Map<CitizenshipDto>(citizenship) ?? throw new CitizenshipNotFoundException(citizenshipGuid);
+    }
+
+    public async Task<HashSet<Citizenship>> GetCitizenShipsThenAnyAsync(IEnumerable<Guid>? citizenshipIds)
+    {
+      if (citizenshipIds is null || !citizenshipIds.Any())
+        throw new CitizenshipIsEmptyException();
+
+      return await _context.Citizenships
+        .Where(c => citizenshipIds.Contains(c.Id))
+        .ToHashSetAsync();
     }
   }
 }

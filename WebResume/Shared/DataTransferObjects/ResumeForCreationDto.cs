@@ -24,8 +24,12 @@ namespace Shared.DataTransferObjects
     [StringLength(500, ErrorMessage = "Максимальная длина для поля Целю резюме составляет 500 символов.")]
     public string? PurposeResume { get; init; }
     public string? DesiredJob { get; init; }
+
+    [Required(ErrorMessage = "Раздел личная информация необходимо заполнить")]
+    public string? PersonalInfo { get; init; }
     public IEnumerable<string>? Experience { get; init; }
     public Guid? PhotoId { get; init; }
+    public IEnumerable<Guid>? CitizenshipIds { get; init; }
     public Guid? ResumeId { get; set; }
   }
 }

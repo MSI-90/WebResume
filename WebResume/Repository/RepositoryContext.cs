@@ -13,7 +13,6 @@ namespace Repository
     public DbSet<JobInfo> JobInfos { get; set; }
     public DbSet<PersonalInfo> PersonalInfos { get; set; }
     public DbSet<Citizenship> Citizenships { get; set; }
-    public DbSet<PersonalInfoCitizenship> PInfoCitizenships { get; set; }
     public DbSet<Experience> Experience { get; set; }
     //public DbSet<User> Users { get; set; }
     public RepositoryContext(DbContextOptions options) : base(options)

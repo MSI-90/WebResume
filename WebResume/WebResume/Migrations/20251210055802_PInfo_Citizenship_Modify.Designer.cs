@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Repository;
@@ -11,9 +12,11 @@ using Repository;
 namespace WebResume.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20251210055802_PInfo_Citizenship_Modify")]
+    partial class PInfo_Citizenship_Modify
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace WebResume.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("CitizenshipPersonalInfo", b =>
-                {
-                    b.Property<Guid>("CitizenshipsId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("PersonalInfosId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("CitizenshipsId", "PersonalInfosId");
-
-                    b.HasIndex("PersonalInfosId");
-
-                    b.ToTable("CitizenshipPersonalInfo");
-                });
 
             modelBuilder.Entity("Entites.Models.Citizenship", b =>
                 {
@@ -2455,6 +2443,23 @@ namespace WebResume.Migrations
                     b.ToTable("personal_info", (string)null);
                 });
 
+            modelBuilder.Entity("Entites.Models.PersonalInfoCitizenship", b =>
+                {
+                    b.Property<Guid>("PersonalInfoId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("pinfo_id");
+
+                    b.Property<Guid>("CitizenshipsId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("citizenship_id");
+
+                    b.HasKey("PersonalInfoId", "CitizenshipsId");
+
+                    b.HasIndex("CitizenshipsId");
+
+                    b.ToTable("pinfo_citizenship", (string)null);
+                });
+
             modelBuilder.Entity("Entites.Models.Resume", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2602,21 +2607,6 @@ namespace WebResume.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CitizenshipPersonalInfo", b =>
-                {
-                    b.HasOne("Entites.Models.Citizenship", null)
-                        .WithMany()
-                        .HasForeignKey("CitizenshipsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entites.Models.PersonalInfo", null)
-                        .WithMany()
-                        .HasForeignKey("PersonalInfosId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Entites.Models.Experience", b =>
                 {
                     b.HasOne("Entites.Models.Resume", "Resume")
@@ -2650,6 +2640,25 @@ namespace WebResume.Migrations
                     b.Navigation("Resume");
                 });
 
+            modelBuilder.Entity("Entites.Models.PersonalInfoCitizenship", b =>
+                {
+                    b.HasOne("Entites.Models.Citizenship", "Citizenship")
+                        .WithMany("PersonalInfos")
+                        .HasForeignKey("CitizenshipsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entites.Models.PersonalInfo", "PInfo")
+                        .WithMany("Citizenships")
+                        .HasForeignKey("PersonalInfoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Citizenship");
+
+                    b.Navigation("PInfo");
+                });
+
             modelBuilder.Entity("Entites.Models.Resume", b =>
                 {
                     b.HasOne("Entites.Models.Template", "Template")
@@ -2659,6 +2668,16 @@ namespace WebResume.Migrations
                         .IsRequired();
 
                     b.Navigation("Template");
+                });
+
+            modelBuilder.Entity("Entites.Models.Citizenship", b =>
+                {
+                    b.Navigation("PersonalInfos");
+                });
+
+            modelBuilder.Entity("Entites.Models.PersonalInfo", b =>
+                {
+                    b.Navigation("Citizenships");
                 });
 
             modelBuilder.Entity("Entites.Models.Resume", b =>

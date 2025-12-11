@@ -18,6 +18,6 @@ namespace Entites.Models
     public Guid? ResumeId { get; set; }
     public Resume? Resume { get; set; }
 
-    public ICollection<PersonalInfoCitizenship> Citizenships { get; set; } = [];
+    public HashSet<Citizenship> Citizenships { get; set; } = [];
   }
 }

@@ -29,21 +29,11 @@ namespace Service
         .Where(j => j.Id.Equals(jobInfoGuid))
         .FirstOrDefaultAsync(token);
 
-    public async Task<Guid?> CreateDesiredJobAsync(ResumeForCreationDto resume)
+    public async Task CreateDesiredJobAsync(ResumeForCreationDto resume)
     {
-      if (string.IsNullOrEmpty(resume.DesiredJob) || string.IsNullOrWhiteSpace(resume.DesiredJob))
-        return null;
-
-      DesiredJobInfoForCreationDto? desiredJob;
-      try
-      {
-        desiredJob = JsonSerializer.Deserialize<DesiredJobInfoForCreationDto>(resume.DesiredJob) ?? throw new DesiredJobInfoDeserializeException();
-      }
-      catch (JsonException jex)
-      {
-        _loggerManager.LogError(jex.Message);
-        throw new DesiredJobInfoDeserializeException();
-      }
+      var desiredJob = DeserilizeDesiredJob(resume);
+      if (desiredJob is null)
+        return;
 
       var newJob = _mapper.Map<JobInfo>(desiredJob);
       newJob.Id = Guid.NewGuid();
@@ -51,8 +41,30 @@ namespace Service
       newJob.ResumeId = resume.ResumeId!.Value;
       await _context.JobInfos.AddAsync(newJob);
       await _context.SaveChangesAsync();
+    }
 
-      return newJob.Id;
+    public bool CheckDesiredJobAsValid(ResumeForCreationDto resume) 
+    {
+      if (string.IsNullOrEmpty(resume.DesiredJob) || string.IsNullOrWhiteSpace(resume.DesiredJob))
+        return false;
+
+      return true;
+    }
+
+    public DesiredJobInfoForCreationDto? DeserilizeDesiredJob(ResumeForCreationDto resume) 
+    {
+      if (!CheckDesiredJobAsValid(resume))
+        return null;
+
+      try
+      {
+        return JsonSerializer.Deserialize<DesiredJobInfoForCreationDto>(resume.DesiredJob!) ?? throw new DesiredJobInfoDeserializeException();
+      }
+      catch (JsonException jex)
+      {
+        _loggerManager.LogWarning(jex.Message);
+        throw new DesiredJobInfoDeserializeException();
+      }
     }
 
     public static JobInfo CheckAgreementData(bool? isAgreement, JobInfo newJob)

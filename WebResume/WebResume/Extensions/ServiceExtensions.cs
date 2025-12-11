@@ -33,6 +33,7 @@ namespace WebResume.Extensions
       services.AddScoped<IPhotoService, PhotoService>();
       services.AddScoped<IExperienceService, ExperienceService>();
       services.AddScoped<IS3StorageService, S3StorageService>();
+      services.AddScoped<IPersonalInfoService, PersonalInfoService>();
     }
 
     public static void ConfigureOptionsConfiguration(this IServiceCollection services, IConfiguration configuration)

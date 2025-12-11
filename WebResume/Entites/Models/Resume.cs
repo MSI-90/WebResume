@@ -37,8 +37,8 @@ namespace Entites.Models
     public DateTime UpdatedAt { get; set; }
 
     // navigation
-    public JobInfo? Job { get; set; }
     public Guid? PhotoId { get; set; }
+    public JobInfo? Job { get; set; }
     public PersonalInfo? PersonalInfo { get; set; }
     public ICollection<Experience?> Experience { get; set; } = [];
 

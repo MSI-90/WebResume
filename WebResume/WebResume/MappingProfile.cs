@@ -12,7 +12,8 @@ namespace WebResume
         .ForCtorParam("FIO",
           opt => opt.MapFrom(x => string.Join(' ', x.LastName, x.FirstName, x.MiddleName)))
         .ForCtorParam("DesiredJob", opt => opt.MapFrom(x => x.Job))
-        .ForCtorParam("Experience", opt => opt.MapFrom(x => x.Experience));
+        .ForCtorParam("Experience", opt => opt.MapFrom(x => x.Experience))
+        .ForCtorParam("PersonalInfo", opt => opt.MapFrom(x => x.PersonalInfo));
 
       CreateMap<ResumeDto, Resume>();
 
@@ -21,13 +22,16 @@ namespace WebResume
       CreateMap<ResumeForCreationDto, Resume>();
 
       CreateMap<DesiredJobInfoForCreationDto, JobInfo>();
-
       CreateMap<JobInfo, DesiredJobInfoOutputDto>();
 
       CreateMap<Citizenship, CitizenshipDto>();
 
+      CreateMap<PersonalInfo, PersonalInfoDto>();
+      CreateMap<PersonalInfoDto, PersonalInfo>();
+
       CreateMap<ResumeForCreationDto, Resume>()
-        .ForMember(dest => dest.Experience, opt => opt.Ignore());
+        .ForMember(dest => dest.Experience, opt => opt.Ignore())
+        .ForMember(dest => dest.PersonalInfo, opt => opt.Ignore());
 
       CreateMap<ExperienceForCreationDto, Experience>();
       CreateMap<Experience, ExperienceOutputDto>();

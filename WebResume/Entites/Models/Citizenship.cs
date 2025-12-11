@@ -9,6 +9,6 @@
     public string Alpha3Code {  get; set; } = string.Empty;
     public string NumericCode {  get; set; } = string.Empty;
 
-    public ICollection<PersonalInfoCitizenship> PersonalInfos { get; set; } = [];
+    public ICollection<PersonalInfo> PersonalInfos { get; set; } = [];
   }
 }
