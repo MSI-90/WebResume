@@ -22,11 +22,27 @@ namespace Repository.Configuration
         .IsRequired()
         .OnDelete(DeleteBehavior.Cascade);
 
+      builder.HasOne(r => r.ContactInfo)
+        .WithOne(c => c.Resume)
+        .HasForeignKey<ContactInfo>(c => c.ResumeId)
+        .IsRequired()
+        .OnDelete(DeleteBehavior.Cascade);
+
       builder
         .HasOne(r => r.Template)
         .WithMany(t => t.Resumes)
         .HasForeignKey(r => r.TemplateId)
         .OnDelete(DeleteBehavior.Restrict);
+
+      builder.ToTable("resume");
+      builder.Property(r => r.Id).HasColumnName("resume_id");
+      builder.Property(r => r.FirstName).HasColumnName("first_name").HasMaxLength(50);
+      builder.Property(r => r.LastName).HasColumnName("last_name").HasMaxLength(70);
+      builder.Property(r => r.MiddleName).HasColumnName("middle_name").HasMaxLength(70);
+      builder.Property(r => r.PurposeResume).HasColumnName("purpose_resume").HasMaxLength(500);
+      builder.Property(r => r.CreatedAt).HasColumnName("created_at");
+      builder.Property(r => r.UpdatedAt).HasColumnName("update_at");
+      builder.Property(r => r.TemplateId).HasColumnName("template_id");
 
       builder.HasData
       (

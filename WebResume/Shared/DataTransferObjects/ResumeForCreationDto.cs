@@ -27,6 +27,7 @@ namespace Shared.DataTransferObjects
 
     [Required(ErrorMessage = "Раздел личная информация необходимо заполнить")]
     public string? PersonalInfo { get; init; }
+    public string? ContactInfo { get; init; }
     public IEnumerable<string>? Experience { get; init; }
     public Guid? PhotoId { get; init; }
     public IEnumerable<Guid>? CitizenshipIds { get; init; }

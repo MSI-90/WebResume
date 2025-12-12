@@ -3,6 +3,7 @@ using System;
 using Entites.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Repository;
@@ -12,9 +13,11 @@ using Repository;
 namespace WebResume.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20251212080156_UpdateContactInfoWithJSON")]
+    partial class UpdateContactInfoWithJSON
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2333,8 +2336,8 @@ namespace WebResume.Migrations
                         .HasColumnType("text")
                         .HasColumnName("email");
 
-                    b.Property<string>("Phone")
-                        .HasColumnType("text")
+                    b.Property<long>("Phone")
+                        .HasColumnType("bigint")
                         .HasColumnName("phone");
 
                     b.Property<Guid>("ResumeId")

@@ -13,12 +13,12 @@ namespace Service
 {
   public sealed class JobInfoService : IJobInfoService
   {
-    private readonly ILogger _loggerManager;
+    private readonly ILogger _logger;
     private readonly RepositoryContext _context;
     private readonly IMapper _mapper;
     public JobInfoService(ILogger<JobInfoService> logger, RepositoryContext context, IMapper mapper)
     {
-      _loggerManager = logger;
+      _logger = logger;
       _context = context;
       _mapper = mapper;
     }
@@ -45,7 +45,7 @@ namespace Service
 
     public bool CheckDesiredJobAsValid(ResumeForCreationDto resume) 
     {
-      if (string.IsNullOrEmpty(resume.DesiredJob) || string.IsNullOrWhiteSpace(resume.DesiredJob))
+      if (string.IsNullOrWhiteSpace(resume.DesiredJob))
         return false;
 
       return true;
@@ -62,7 +62,7 @@ namespace Service
       }
       catch (JsonException jex)
       {
-        _loggerManager.LogWarning(jex.Message);
+        _logger.LogWarning(jex.Message);
         throw new DesiredJobInfoDeserializeException();
       }
     }

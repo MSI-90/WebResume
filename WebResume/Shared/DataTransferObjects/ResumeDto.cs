@@ -8,6 +8,7 @@ namespace Shared.DataTransferObjects
     Guid? PhotoId,
     PersonalInfoDto? PersonalInfo,
     DesiredJobInfoOutputDto? DesiredJob,
+    ContactInfoOutputDto ContactInfo,
     IEnumerable<ExperienceOutputDto?> Experience,
     string? PurposeResume,
     DateTime CreatedAt, 

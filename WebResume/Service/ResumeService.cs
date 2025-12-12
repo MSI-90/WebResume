@@ -18,6 +18,7 @@ namespace Service
     private readonly IExperienceService _experienceService;
     private readonly IS3StorageService _s3;
     private readonly IPersonalInfoService _personalInfoService;
+    private readonly IContactInfoService _contactInfoService;
     public ResumeService(RepositoryContext repository, 
       ILogger<ResumeService> logger, 
       IMapper mapper, 
@@ -25,7 +26,8 @@ namespace Service
       IJobInfoService jobInfoService, 
       IExperienceService experienceService,
       IS3StorageService s3,
-      IPersonalInfoService personalInfoService)
+      IPersonalInfoService personalInfoService,
+      IContactInfoService contactInfoService)
     {
       _repository = repository;
       _logger = logger;
@@ -34,6 +36,7 @@ namespace Service
       _experienceService = experienceService;
       _s3 = s3;
       _personalInfoService = personalInfoService;
+      _contactInfoService = contactInfoService;
     }
 
     public async Task<IEnumerable<ResumeDto>> GetResumesAsync(CancellationToken token)
@@ -43,6 +46,7 @@ namespace Service
         .Include(r => r.Job)
         .Include(r => r.Experience)
         .Include(r => r.PersonalInfo)
+        .Include(r => r.ContactInfo)
         .ToListAsync(token);
 
       return _mapper.Map<IEnumerable<ResumeDto>>(resumes);
@@ -55,6 +59,7 @@ namespace Service
         .Include(r => r.Job)
         .Include(r => r.Experience)
         .Include(r => r.PersonalInfo)
+        .Include(r => r.ContactInfo)
         .Where(r => r.Id.Equals(resumeId))
         .FirstOrDefaultAsync(token);
 
@@ -74,6 +79,7 @@ namespace Service
       await _jobInfoService.CreateDesiredJobAsync(resumeDTO);
       await _experienceService.CreateExperienceAsync(resumeDTO);
       await _personalInfoService.CreatePersonalInfoAsync(resumeDTO);
+      await _contactInfoService.CreateContactinfoAsync(resumeDTO);
 
       return await GetResumeAsync(newResume.Id, default);
     }

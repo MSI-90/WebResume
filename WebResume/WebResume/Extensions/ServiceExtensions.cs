@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using Repository;
 using Service;
 using Service.Contracts;
@@ -8,8 +9,17 @@ namespace WebResume.Extensions
 {
   public static class ServiceExtensions
   {
-    public static void ConfigurePostgresConnection(this IServiceCollection services, IConfiguration configuration) =>
-      services.AddDbContext<RepositoryContext>(options => options.UseNpgsql(configuration.GetConnectionString("sqlConnection")));
+    public static void ConfigurePostgresConnection(this IServiceCollection services, IConfiguration configuration)
+    {
+      // Создаём источник данных с включённой поддержкой POCO-сериализации
+      var dataSource = new NpgsqlDataSourceBuilder(configuration.GetConnectionString("sqlConnection"))
+          .EnableDynamicJson()
+          .Build();
+
+      // Добавляем DbContext, передавая ему уже настроенный источник данных
+      services.AddDbContext<RepositoryContext>(options =>
+          options.UseNpgsql(dataSource));
+    }
     
     public static void ConfigureCors(this IServiceCollection services) =>
       services.AddCors(options =>
@@ -34,6 +44,8 @@ namespace WebResume.Extensions
       services.AddScoped<IExperienceService, ExperienceService>();
       services.AddScoped<IS3StorageService, S3StorageService>();
       services.AddScoped<IPersonalInfoService, PersonalInfoService>();
+      services.AddScoped<ISocialNetworkService, SocialNetworkService>();
+      services.AddScoped<IContactInfoService, ContactInfoService>();
     }
 
     public static void ConfigureOptionsConfiguration(this IServiceCollection services, IConfiguration configuration)
