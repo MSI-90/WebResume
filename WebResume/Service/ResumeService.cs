@@ -19,6 +19,7 @@ namespace Service
     private readonly IS3StorageService _s3;
     private readonly IPersonalInfoService _personalInfoService;
     private readonly IContactInfoService _contactInfoService;
+    private readonly IEducationService _educationService;
     public ResumeService(RepositoryContext repository, 
       ILogger<ResumeService> logger, 
       IMapper mapper, 
@@ -27,7 +28,8 @@ namespace Service
       IExperienceService experienceService,
       IS3StorageService s3,
       IPersonalInfoService personalInfoService,
-      IContactInfoService contactInfoService)
+      IContactInfoService contactInfoService,
+      IEducationService educationService)
     {
       _repository = repository;
       _logger = logger;
@@ -37,6 +39,7 @@ namespace Service
       _s3 = s3;
       _personalInfoService = personalInfoService;
       _contactInfoService = contactInfoService;
+      _educationService = educationService;
     }
 
     public async Task<IEnumerable<ResumeDto>> GetResumesAsync(CancellationToken token)
@@ -46,7 +49,9 @@ namespace Service
         .Include(r => r.Job)
         .Include(r => r.Experience)
         .Include(r => r.PersonalInfo)
+          .ThenInclude(p => p.Citizenships)
         .Include(r => r.ContactInfo)
+        .Include(r => r.Education)
         .ToListAsync(token);
 
       return _mapper.Map<IEnumerable<ResumeDto>>(resumes);
@@ -59,7 +64,9 @@ namespace Service
         .Include(r => r.Job)
         .Include(r => r.Experience)
         .Include(r => r.PersonalInfo)
+          .ThenInclude(p => p.Citizenships)
         .Include(r => r.ContactInfo)
+        .Include(r => r.Education)
         .Where(r => r.Id.Equals(resumeId))
         .FirstOrDefaultAsync(token);
 
@@ -80,6 +87,7 @@ namespace Service
       await _experienceService.CreateExperienceAsync(resumeDTO);
       await _personalInfoService.CreatePersonalInfoAsync(resumeDTO);
       await _contactInfoService.CreateContactinfoAsync(resumeDTO);
+      await _educationService.CreateEducationAsync(resumeDTO);
 
       return await GetResumeAsync(newResume.Id, default);
     }

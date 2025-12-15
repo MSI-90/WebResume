@@ -17,7 +17,6 @@ namespace Entites.Models
     [ForeignKey(nameof(Resume))]
     public Guid? ResumeId { get; set; }
     public Resume? Resume { get; set; }
-
     public HashSet<Citizenship> Citizenships { get; set; } = [];
   }
 }

@@ -1,6 +1,4 @@
-﻿using Entites.Models;
-
-namespace Shared.DataTransferObjects
+﻿namespace Shared.DataTransferObjects
 {
   public record ResumeDto(
     Guid Id, 
@@ -9,6 +7,7 @@ namespace Shared.DataTransferObjects
     PersonalInfoDto? PersonalInfo,
     DesiredJobInfoOutputDto? DesiredJob,
     ContactInfoOutputDto ContactInfo,
+    IEnumerable<EducationOutputDto?> Education,
     IEnumerable<ExperienceOutputDto?> Experience,
     string? PurposeResume,
     DateTime CreatedAt, 

@@ -22,7 +22,8 @@ namespace Entites.Models
     public PersonalInfo? PersonalInfo { get; set; }
     public ContactInfo? ContactInfo { get; set; }
     public ICollection<Experience?> Experience { get; set; } = [];
-    
+    public ICollection<Education?> Education { get; set; } = [];
+
     //public required User User { get; set; }
   }
 }

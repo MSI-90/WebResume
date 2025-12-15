@@ -20,6 +20,7 @@ namespace Shared.DataTransferObjects
 
     [Required]
     public Guid TemplateId { get; init; }
+    public Guid? PhotoId { get; init; }
 
     [StringLength(500, ErrorMessage = "Максимальная длина для поля Целю резюме составляет 500 символов.")]
     public string? PurposeResume { get; init; }
@@ -29,7 +30,7 @@ namespace Shared.DataTransferObjects
     public string? PersonalInfo { get; init; }
     public string? ContactInfo { get; init; }
     public IEnumerable<string>? Experience { get; init; }
-    public Guid? PhotoId { get; init; }
+    public IEnumerable<string>? Education { get; init; }
     public IEnumerable<Guid>? CitizenshipIds { get; init; }
     public Guid? ResumeId { get; set; }
   }

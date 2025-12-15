@@ -14,6 +14,7 @@ namespace Repository
     public DbSet<Citizenship> Citizenships { get; set; }
     public DbSet<Experience> Experience { get; set; }
     public DbSet<ContactInfo> ContactInfos { get; set; }
+    public DbSet<Education> Educations { get; set; }
     //public DbSet<User> Users { get; set; }
     public RepositoryContext(DbContextOptions options) : base(options)
     {

@@ -5,7 +5,8 @@ namespace Shared.DataTransferObjects
   public record PersonalInfoDto
   ( 
     string? City, 
-    bool IsDualCitizenship, 
+    bool IsDualCitizenship,
+    List<CitizenshipOutputDto> Citizenships,
     DateOnly Birthday, 
     bool IsChildren, 
     Sex Sex, 

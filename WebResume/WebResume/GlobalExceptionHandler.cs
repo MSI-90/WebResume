@@ -33,7 +33,13 @@ namespace WebResume
           case ExperienceDeserializeException:
             httpContext.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
             break;
+          case PersonalInfoDeserializeException:
+            httpContext.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
+            break;
           case ContactInfoDeserializeException:
+            httpContext.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
+            break;
+          case EducationDeserializeException:
             httpContext.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
             break;
           case PhotoSizeException:
