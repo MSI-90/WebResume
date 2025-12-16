@@ -8,6 +8,7 @@
     DesiredJobInfoOutputDto? DesiredJob,
     ContactInfoOutputDto ContactInfo,
     IEnumerable<EducationOutputDto?> Education,
+    IEnumerable<CourseForOutputDto>? Course,
     IEnumerable<ExperienceOutputDto?> Experience,
     string? PurposeResume,
     DateTime CreatedAt, 

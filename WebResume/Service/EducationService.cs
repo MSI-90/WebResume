@@ -11,12 +11,12 @@ using System.Text.Json;
 
 namespace Service
 {
-  public sealed class EducationService : IEducationService
+  public sealed class EducationService : IEducationService, IEducationCourse<EducationYearAndKindDto>
   {
     private readonly ILogger<EducationService> _logger;
     private readonly RepositoryContext _context;
     private readonly IMapper _mapper;
-    public EducationService(ILogger<EducationService> logger, RepositoryContext context, IMapper mapper) 
+    public EducationService(ILogger<EducationService> logger, RepositoryContext context, IMapper mapper)
     {
       _logger = logger;
       _context = context;
@@ -63,31 +63,23 @@ namespace Service
       return newEducations;
     }
 
-    public EducationYearAndKindDto GetEducationYearAndKinds()
+    public EducationYearAndKindDto? GetEducationYearAndKinds()
     {
       uint minYear = 1950, maxYear = 2050;
       var educationYearAndKind = new EducationYearAndKindDto();
-      try
+      for (uint i = minYear; i <= maxYear; i++)
       {
-        for (uint i = minYear; i <= maxYear; i++)
+        educationYearAndKind.YearOfCompleate.Add(i);
+      }
+      educationYearAndKind!.EducationKind = 
+      [
+        new EducationKindDto()
         {
-          educationYearAndKind?.YearOfCompleate.Add(i);
+          KindEn = [..Enum.GetValues<EducationKind>().Select(e => e.ToString())],
+          KindRu = [..Enum.GetValues<EducationKind>().Select(e => e.GetDisplayName())]
         }
-        educationYearAndKind!.EducationKind = new List<EducationKindDto>()
-        {
-          new EducationKindDto()
-          {
-            KindEn = Enum.GetValues<EducationKind>().Select(e => e.ToString()).ToArray(),
-            KindRu = Enum.GetValues<EducationKind>().Select(e => e.GetDisplayName()).ToArray()
-          }
-        };
-      }
-      catch (Exception ex)
-      {
-        _logger.LogError(ex, "Error in GetEducationYearAndKinds");
-        throw;
-      }
-      
+      ];
+
       return educationYearAndKind;
     }
   }

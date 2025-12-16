@@ -5,16 +5,16 @@ namespace Shared.DataTransferObjects
   public record ResumeForCreationDto
   {
     [Required(ErrorMessage = "Необходимо задать значение имени.")]
-    [MinLength(3, ErrorMessage = "Минимальная длина поля Имя составляет 3 символа.")]
+    [MinLength(3, ErrorMessage = "Минимальная длина поля Имя составляет 2 символа.")]
     [StringLength(50, ErrorMessage = "Максимальная длина поля Имя составляет 50 символов.")]
     public string? FirstName { get; init; }
 
     [Required(ErrorMessage = "Фамилия - обязательное поле.")]
-    [MinLength(3, ErrorMessage = "Минимальная длина поля Фамилия составляет 3 символа.")]
+    [MinLength(3, ErrorMessage = "Минимальная длина поля Фамилия составляет 2 символа.")]
     [StringLength(70, ErrorMessage = "Максимальная длина поля Фамилия составляет 70 символов.")]
     public string? LastName { get; init; }
 
-    [MinLength(3, ErrorMessage = "Минимальная длина поля Отчество составляет 3 символа.")]
+    [MinLength(3, ErrorMessage = "Минимальная длина поля Отчество составляет 2 символа.")]
     [StringLength(70, ErrorMessage = "Максимальная длина поля Отчество составляет 70 символов.")]
     public string? MiddleName { get; init; }
 
@@ -31,6 +31,7 @@ namespace Shared.DataTransferObjects
     public string? ContactInfo { get; init; }
     public IEnumerable<string>? Experience { get; init; }
     public IEnumerable<string>? Education { get; init; }
+    public IEnumerable<string>? Course { get; init; }
     public IEnumerable<Guid>? CitizenshipIds { get; init; }
     public Guid? ResumeId { get; set; }
   }

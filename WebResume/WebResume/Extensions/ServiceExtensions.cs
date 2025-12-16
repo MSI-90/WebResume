@@ -47,6 +47,9 @@ namespace WebResume.Extensions
       services.AddScoped<ISocialNetworkService, SocialNetworkService>();
       services.AddScoped<IContactInfoService, ContactInfoService>();
       services.AddScoped<IEducationService, EducationService>();
+      services.AddScoped<IEducationCourse<EducationYearAndKindDto>, EducationService>();
+      services.AddScoped<ICourseService, CourseService>();
+      services.AddScoped<IEducationCourse<CourseYearDto>, CourseService>();
     }
 
     public static void ConfigureOptionsConfiguration(this IServiceCollection services, IConfiguration configuration)

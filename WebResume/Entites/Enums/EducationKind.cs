@@ -7,9 +7,6 @@ namespace Entites.Enums
   /// </summary>
   public enum EducationKind
   {
-    [Display(Name = "Без образования")]
-    None,
-
     [Display(Name = "Среднее образование")]
     SecondaryEducation,
 

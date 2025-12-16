@@ -8,6 +8,5 @@ namespace Service.Contracts
     Task CreateEducationAsync(ResumeForCreationDto resume);
     bool CheckEducationAsValid(ResumeForCreationDto resume);
     List<Education> DeserialiseEducation(ResumeForCreationDto resume);
-    EducationYearAndKindDto GetEducationYearAndKinds();
   }
 }

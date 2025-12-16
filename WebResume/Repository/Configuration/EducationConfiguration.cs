@@ -13,7 +13,7 @@ namespace Repository.Configuration
       builder.Property(p => p.NameOfEducationalInstitution).HasColumnName("education_institution").HasMaxLength(200);
       builder.Property(p => p.Faculty).HasColumnName("faculty").HasMaxLength(100);
       builder.Property(p => p.Speciality).HasColumnName("speciality").HasMaxLength(100);
-      builder.Property(p => p.Achievements).HasColumnName("achievements").HasColumnType("text").HasMaxLength(4000);
+      builder.Property(p => p.Achievements).HasColumnName("achievements").HasMaxLength(4000);
       builder.Property(p => p.YearOfCompletion).HasColumnName("year_of_completion");
       builder.Property(p => p.EducationKind).HasColumnName("educationKind");
     }

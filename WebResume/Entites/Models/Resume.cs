@@ -21,8 +21,10 @@ namespace Entites.Models
     public JobInfo? Job { get; set; }
     public PersonalInfo? PersonalInfo { get; set; }
     public ContactInfo? ContactInfo { get; set; }
-    public ICollection<Experience?> Experience { get; set; } = [];
-    public ICollection<Education?> Education { get; set; } = [];
+    public ICollection<Experience>? Experience { get; set; } = [];
+    public ICollection<Education>? Education { get; set; } = [];
+    public ICollection<Course>? Courses { get; set; } = [];
+    public ICollection<LanguageInfo?> Languages { get; set; } = [];
 
     //public required User User { get; set; }
   }

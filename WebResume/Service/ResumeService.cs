@@ -20,6 +20,7 @@ namespace Service
     private readonly IPersonalInfoService _personalInfoService;
     private readonly IContactInfoService _contactInfoService;
     private readonly IEducationService _educationService;
+    private readonly ICourseService _courseService;
     public ResumeService(RepositoryContext repository, 
       ILogger<ResumeService> logger, 
       IMapper mapper, 
@@ -29,7 +30,8 @@ namespace Service
       IS3StorageService s3,
       IPersonalInfoService personalInfoService,
       IContactInfoService contactInfoService,
-      IEducationService educationService)
+      IEducationService educationService,
+      ICourseService courseService)
     {
       _repository = repository;
       _logger = logger;
@@ -40,6 +42,7 @@ namespace Service
       _personalInfoService = personalInfoService;
       _contactInfoService = contactInfoService;
       _educationService = educationService;
+      _courseService = courseService;
     }
 
     public async Task<IEnumerable<ResumeDto>> GetResumesAsync(CancellationToken token)
@@ -52,6 +55,7 @@ namespace Service
           .ThenInclude(p => p.Citizenships)
         .Include(r => r.ContactInfo)
         .Include(r => r.Education)
+        .Include(r => r.Courses)
         .ToListAsync(token);
 
       return _mapper.Map<IEnumerable<ResumeDto>>(resumes);
@@ -67,6 +71,7 @@ namespace Service
           .ThenInclude(p => p.Citizenships)
         .Include(r => r.ContactInfo)
         .Include(r => r.Education)
+        .Include(r => r.Courses)
         .Where(r => r.Id.Equals(resumeId))
         .FirstOrDefaultAsync(token);
 
@@ -88,6 +93,7 @@ namespace Service
       await _personalInfoService.CreatePersonalInfoAsync(resumeDTO);
       await _contactInfoService.CreateContactinfoAsync(resumeDTO);
       await _educationService.CreateEducationAsync(resumeDTO);
+      await _courseService.CreateCourseAsync(resumeDTO);
 
       return await GetResumeAsync(newResume.Id, default);
     }

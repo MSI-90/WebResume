@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using Repository;
 using Service.Contracts;
 using Shared.DataTransferObjects;
-using System.Security.AccessControl;
 using System.Text.Json;
 
 namespace Service

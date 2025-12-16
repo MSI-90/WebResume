@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
+using Shared.DataTransferObjects;
 
 namespace WebResume.Presentation.Controllers
 {
@@ -7,16 +8,16 @@ namespace WebResume.Presentation.Controllers
   [ApiController]
   public class EducationController : ControllerBase
   {
-    private readonly IEducationService _educationService;
-    public EducationController(IEducationService educationService)
+    private readonly IEducationCourse<EducationYearAndKindDto> _edcourse;
+    public EducationController(IEducationCourse<EducationYearAndKindDto> ecourse)
     {
-      _educationService = educationService;
+      _edcourse = ecourse;
     }
 
     [HttpGet]
     public IActionResult GetEducationYearAndKinds()
     {
-      var educationYearAndKinds = _educationService.GetEducationYearAndKinds();
+      var educationYearAndKinds = _edcourse.GetEducationYearAndKinds();
       return Ok(educationYearAndKinds);
     }
   }
