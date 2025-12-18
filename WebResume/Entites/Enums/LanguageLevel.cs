@@ -7,7 +7,7 @@ namespace Entites.Enums
     [Display(Name = "А1 - начальный")]
     Beginner,
 
-    [Display(Name = "А2 - elementary")]
+    [Display(Name = "А2 - элементарный")]
     Elementary,
 
     [Display(Name = "B1 - средний")]

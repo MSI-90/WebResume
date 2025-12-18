@@ -21,7 +21,7 @@ namespace Service
     private readonly IContactInfoService _contactInfoService;
     private readonly IEducationService _educationService;
     private readonly ICourseService _courseService;
-    private readonly ILanguageService _languageService;
+    private readonly ILanguageInfoService _languageInfoService;
     public ResumeService(RepositoryContext repository, 
       ILogger<ResumeService> logger, 
       IMapper mapper, 
@@ -33,7 +33,7 @@ namespace Service
       IContactInfoService contactInfoService,
       IEducationService educationService,
       ICourseService courseService,
-      ILanguageService languageService)
+      ILanguageInfoService languageInfoService)
     {
       _repository = repository;
       _logger = logger;
@@ -45,7 +45,7 @@ namespace Service
       _contactInfoService = contactInfoService;
       _educationService = educationService;
       _courseService = courseService;
-      _languageService = languageService;
+      _languageInfoService = languageInfoService;
     }
 
     public async Task<IEnumerable<ResumeDto>> GetResumesAsync(CancellationToken token)
@@ -101,7 +101,7 @@ namespace Service
       await _contactInfoService.CreateContactinfoAsync(resumeDTO);
       await _educationService.CreateEducationAsync(resumeDTO);
       await _courseService.CreateCourseAsync(resumeDTO);
-      await _languageService.CreateLanguageInfoAsync(resumeDTO);
+      await _languageInfoService.CreateLanguageInfoAsync(resumeDTO);
 
       return await GetResumeAsync(newResume.Id, default);
     }

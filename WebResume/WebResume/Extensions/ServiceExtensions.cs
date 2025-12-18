@@ -50,6 +50,7 @@ namespace WebResume.Extensions
       services.AddScoped<IEducationCourse<EducationYearAndKindDto>, EducationService>();
       services.AddScoped<ICourseService, CourseService>();
       services.AddScoped<IEducationCourse<CourseYearDto>, CourseService>();
+      services.AddScoped<ILanguageInfoService, LanguageInfoService>();
       services.AddScoped<ILanguageService, LanguageService>();
     }
 

@@ -60,6 +60,8 @@ namespace WebResume
       CreateMap<LanguageForCreationDto, LanguageInfo>();
       CreateMap<LanguageInfo, LanguageInfoOutputDto>();
       CreateMap<Language, LanguageOutputDto>();
+
+      CreateMap<Language, LanguageDto>();
     }
   }
 }

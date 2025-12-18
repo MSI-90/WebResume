@@ -1,61 +1,44 @@
 ﻿using AutoMapper;
-using Entites.Exceptions;
+using Entites.Enums;
+using Entites.Enums.Extends;
 using Entites.Models;
-using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 using Repository;
 using Service.Contracts;
 using Shared.DataTransferObjects;
-using System.Text.Json;
 
 namespace Service
 {
   public sealed class LanguageService : ILanguageService
   {
-    private readonly ILogger<ILanguageService> _logger;
+    private readonly RepositoryContext _repository;
     private readonly IMapper _mapper;
-    private readonly RepositoryContext _context;
-    public LanguageService(ILogger<ILanguageService> logger, IMapper mapper, RepositoryContext context)
+    public LanguageService(RepositoryContext repository, IMapper mappe) 
     {
-      _logger = logger;
-      _mapper = mapper;
-      _context = context;
+      _repository = repository;
+      _mapper = mappe;
     }
 
-    public async Task CreateLanguageInfoAsync(ResumeForCreationDto resume)
-    {
-      var newLanguages = DeserializeLanguageExperience(resume);
-      await _context.LanguageInfos.AddRangeAsync(newLanguages);
-      await _context.SaveChangesAsync();
-    }
+    public async Task<IEnumerable<LanguageDto>> GetLanguages() => 
+      _mapper.Map<IEnumerable<LanguageDto>>(
+        await _repository.Languages.ToListAsync());
 
-    public bool CheckLanguageAsValid(ResumeForCreationDto resume)
+    public LanguageLevelDto GetLanguageLevel()
     {
-      return resume.Languages is not null || resume.Languages.Any();
-    }
-
-    public List<LanguageInfo> DeserializeLanguageExperience(ResumeForCreationDto resume)
-    {
-      if (!CheckLanguageAsValid(resume))
-        return new List<LanguageInfo>();
-
-      var newLanguage = new List<LanguageInfo>();
-      foreach (var item in resume.Languages!)
+      return new LanguageLevelDto
       {
-        try
-        {
-          var languageItem = JsonSerializer.Deserialize<LanguageForCreationDto>(item) ?? throw new LanguageInfoDeserializeException();
-          var newLang = _mapper.Map<LanguageInfo>(languageItem);
-          newLang.Id = Guid.NewGuid();
-          newLang.ResumeId = resume.ResumeId!.Value;
-          newLanguage.Add(newLang);
-        }
-        catch (JsonException jex)
-        {
-          _logger.LogWarning(jex.Message);
-          throw new LanguageInfoDeserializeException();
-        }
-      }
-      return newLanguage;
+        LevelEn = [..Enum.GetValues<LanguageLevel>().Select(l => l.ToString())],
+        LevelRu = [..Enum.GetValues<LanguageLevel>().Select(l => l.GetDisplayName())]
+      };
+    }
+
+    public async Task<LanguageAndLevelDto> GetLanguageLevelAsync()
+    {
+      return new LanguageAndLevelDto
+      {
+        Languages = await GetLanguages(),
+        Levels = GetLanguageLevel()
+      };
     }
   }
 }
