@@ -16,6 +16,7 @@ namespace Repository.Configuration
       builder.Property(j => j.ByAgreement).HasColumnName("agreement");
       builder.Property(j => j.EmploymentType).HasColumnName("employment_type");
       builder.Property(j => j.WorkSchedule).HasColumnName("work_shedule");
+      builder.Property(j => j.ResumeId).HasColumnName("resume_id");
     }
   }
 }

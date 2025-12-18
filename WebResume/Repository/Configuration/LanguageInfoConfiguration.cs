@@ -12,6 +12,7 @@ namespace Repository.Configuration
       builder.Property(li => li.Id).HasColumnName("id");
       builder.Property(li => li.Level).HasColumnName("level");
       builder.Property(li => li.LanguageId).HasColumnName("language_id");
+      builder.Property(li => li.ResumeId).HasColumnName("resume_id");
     }
   }
 }

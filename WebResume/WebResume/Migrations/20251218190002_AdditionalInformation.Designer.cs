@@ -3,6 +3,7 @@ using System;
 using Entites.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Repository;
@@ -12,9 +13,11 @@ using Repository;
 namespace WebResume.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20251218190002_AdditionalInformation")]
+    partial class AdditionalInformation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,8 +72,7 @@ namespace WebResume.Migrations
                         .HasColumnName("professional_skills");
 
                     b.Property<Guid>("ResumeId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("resume_id");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -2372,8 +2374,7 @@ namespace WebResume.Migrations
                         .HasColumnName("id");
 
                     b.Property<Guid>("ResumeId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("resume_id");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Title")
                         .HasMaxLength(250)
@@ -2447,8 +2448,7 @@ namespace WebResume.Migrations
                         .HasColumnName("organization_training");
 
                     b.Property<Guid>("ResumeId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("resume_id");
+                        .HasColumnType("uuid");
 
                     b.Property<long>("YearOfCompletion")
                         .HasColumnType("bigint");
@@ -2488,8 +2488,7 @@ namespace WebResume.Migrations
                         .HasColumnName("education_institution");
 
                     b.Property<Guid>("ResumeId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("resume_id");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Speciality")
                         .IsRequired()
@@ -2539,8 +2538,7 @@ namespace WebResume.Migrations
                         .HasColumnName("job_title");
 
                     b.Property<Guid>("ResumeId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("resume_id");
+                        .HasColumnType("uuid");
 
                     b.Property<DateOnly?>("StartJob")
                         .HasColumnType("date")
@@ -2582,8 +2580,7 @@ namespace WebResume.Migrations
                         .HasColumnName("job_title");
 
                     b.Property<Guid>("ResumeId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("resume_id");
+                        .HasColumnType("uuid");
 
                     b.Property<int?>("WorkSchedule")
                         .HasColumnType("integer")
@@ -3972,8 +3969,7 @@ namespace WebResume.Migrations
                         .HasColumnName("level");
 
                     b.Property<Guid>("ResumeId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("resume_id");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -4017,8 +4013,7 @@ namespace WebResume.Migrations
                         .HasColumnName("moving");
 
                     b.Property<Guid>("ResumeId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("resume_id");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Sex")
                         .HasColumnType("integer")
@@ -4030,34 +4025,6 @@ namespace WebResume.Migrations
                         .IsUnique();
 
                     b.ToTable("personal_info", (string)null);
-                });
-
-            modelBuilder.Entity("Entites.Models.Portfolio", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(4000)
-                        .HasColumnType("character varying(4000)")
-                        .HasColumnName("description");
-
-                    b.Property<Guid>("ResumeId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("resume_id");
-
-                    b.Property<string>("Url")
-                        .HasMaxLength(3000)
-                        .HasColumnType("character varying(3000)")
-                        .HasColumnName("url");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResumeId");
-
-                    b.ToTable("portfolio", (string)null);
                 });
 
             modelBuilder.Entity("Entites.Models.Resume", b =>
@@ -4327,17 +4294,6 @@ namespace WebResume.Migrations
                     b.Navigation("Resume");
                 });
 
-            modelBuilder.Entity("Entites.Models.Portfolio", b =>
-                {
-                    b.HasOne("Entites.Models.Resume", "Resume")
-                        .WithMany("Portfolio")
-                        .HasForeignKey("ResumeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Resume");
-                });
-
             modelBuilder.Entity("Entites.Models.Resume", b =>
                 {
                     b.HasOne("Entites.Models.Template", "Template")
@@ -4373,8 +4329,6 @@ namespace WebResume.Migrations
                     b.Navigation("Languages");
 
                     b.Navigation("PersonalInfo");
-
-                    b.Navigation("Portfolio");
                 });
 
             modelBuilder.Entity("Entites.Models.Template", b =>

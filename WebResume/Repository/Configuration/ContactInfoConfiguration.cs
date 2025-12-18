@@ -14,6 +14,7 @@ namespace Repository.Configuration
       builder.Property(p => p.Email).HasColumnName("email");
       builder.Property(p => p.ResumeId).HasColumnName("resume_id");
       builder.Property(p => p.SocialNetwork).HasColumnName("social_network").HasColumnType("jsonb");
+      builder.Property(p => p.ResumeId).HasColumnName("resume_id");
     }
   }
 }

@@ -15,6 +15,7 @@ namespace Repository.Configuration
       builder.Property(e => e.Achievements).HasColumnName("achivements").HasMaxLength(3000);
       builder.Property(e => e.StartJob).HasColumnName("start_job");
       builder.Property(e => e.EndJob).HasColumnName("end_job");
+      builder.Property(e => e.ResumeId).HasColumnName("resume_id");
     }
   }
 }

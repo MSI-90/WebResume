@@ -14,6 +14,7 @@ namespace Repository.Configuration
       builder.Property(p => p.OrganizationTraining).HasColumnName("organization_training").HasMaxLength(500);
       builder.Property(p => p.DurationOfTraining).HasColumnName("duration_of_training").HasMaxLength(300);
       builder.Property(p => p.Achievements).HasColumnName("achievements").HasMaxLength(4000);
+      builder.Property(p => p.ResumeId).HasColumnName("resume_id");
     }
   }
 }

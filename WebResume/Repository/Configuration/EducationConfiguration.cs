@@ -16,6 +16,7 @@ namespace Repository.Configuration
       builder.Property(p => p.Achievements).HasColumnName("achievements").HasMaxLength(4000);
       builder.Property(p => p.YearOfCompletion).HasColumnName("year_of_completion");
       builder.Property(p => p.EducationKind).HasColumnName("educationKind");
+      builder.Property(p => p.ResumeId).HasColumnName("resume_id");
     }
   }
 }

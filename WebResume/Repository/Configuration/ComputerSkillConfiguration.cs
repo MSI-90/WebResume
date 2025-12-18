@@ -11,6 +11,7 @@ namespace Repository.Configuration
       builder.ToTable("computer_skill");
       builder.Property(c => c.Id).HasColumnName("id");
       builder.Property(c => c.Title).HasColumnName("title").HasMaxLength(250);
+      builder.Property(c => c.ResumeId).HasColumnName("resume_id");
     }
   }
 }

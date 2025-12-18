@@ -17,6 +17,7 @@ namespace Repository.Configuration
       builder.Property(p => p.Moving).HasColumnName("moving");
       builder.Property(p => p.MaritalStatus).HasColumnName("maritalStatus");
       builder.Property(p => p.IsChildren).HasColumnName("is_children");
+      builder.Property(p => p.ResumeId).HasColumnName("resume_id");
     }
   }
 }
