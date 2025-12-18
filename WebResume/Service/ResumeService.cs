@@ -21,6 +21,7 @@ namespace Service
     private readonly IContactInfoService _contactInfoService;
     private readonly IEducationService _educationService;
     private readonly ICourseService _courseService;
+    private readonly ILanguageService _languageService;
     public ResumeService(RepositoryContext repository, 
       ILogger<ResumeService> logger, 
       IMapper mapper, 
@@ -31,7 +32,8 @@ namespace Service
       IPersonalInfoService personalInfoService,
       IContactInfoService contactInfoService,
       IEducationService educationService,
-      ICourseService courseService)
+      ICourseService courseService,
+      ILanguageService languageService)
     {
       _repository = repository;
       _logger = logger;
@@ -43,6 +45,7 @@ namespace Service
       _contactInfoService = contactInfoService;
       _educationService = educationService;
       _courseService = courseService;
+      _languageService = languageService;
     }
 
     public async Task<IEnumerable<ResumeDto>> GetResumesAsync(CancellationToken token)
@@ -56,6 +59,8 @@ namespace Service
         .Include(r => r.ContactInfo)
         .Include(r => r.Education)
         .Include(r => r.Courses)
+        .Include(r => r.Languages)
+          .ThenInclude(l => l.Language)
         .ToListAsync(token);
 
       return _mapper.Map<IEnumerable<ResumeDto>>(resumes);
@@ -72,6 +77,8 @@ namespace Service
         .Include(r => r.ContactInfo)
         .Include(r => r.Education)
         .Include(r => r.Courses)
+        .Include(r => r.Languages)
+          .ThenInclude(l => l.Language)
         .Where(r => r.Id.Equals(resumeId))
         .FirstOrDefaultAsync(token);
 
@@ -94,15 +101,17 @@ namespace Service
       await _contactInfoService.CreateContactinfoAsync(resumeDTO);
       await _educationService.CreateEducationAsync(resumeDTO);
       await _courseService.CreateCourseAsync(resumeDTO);
+      await _languageService.CreateLanguageInfoAsync(resumeDTO);
 
       return await GetResumeAsync(newResume.Id, default);
     }
 
     public async Task DeleteResumeAsync(Guid resumeId, CancellationToken token) 
     {
-      var resumeForDelete = await GetResumeAsync(resumeId, token);
-      await _s3.DeletePhotoAsync(resumeForDelete.PhotoId);
-      _repository.Resume.Remove(_mapper.Map<Resume>(resumeForDelete));
+      var resumeForDelete = _repository.Resume.Where(r => r.Id.Equals(resumeId)).FirstOrDefault();
+      if (resumeForDelete is null) return;
+      await _s3.DeletePhotoAsync(resumeForDelete?.PhotoId);
+      _repository.Resume.Remove(resumeForDelete!);
       await _repository.SaveChangesAsync(token);
     }
   }

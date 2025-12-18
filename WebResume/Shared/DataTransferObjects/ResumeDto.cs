@@ -10,6 +10,7 @@
     IEnumerable<EducationOutputDto?> Education,
     IEnumerable<CourseForOutputDto>? Course,
     IEnumerable<ExperienceOutputDto?> Experience,
+    IEnumerable<LanguageInfoOutputDto>? Languages,
     string? PurposeResume,
     DateTime CreatedAt, 
     DateTime UpdatedAt, 

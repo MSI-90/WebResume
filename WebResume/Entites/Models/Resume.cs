@@ -24,7 +24,7 @@ namespace Entites.Models
     public ICollection<Experience>? Experience { get; set; } = [];
     public ICollection<Education>? Education { get; set; } = [];
     public ICollection<Course>? Courses { get; set; } = [];
-    public ICollection<LanguageInfo?> Languages { get; set; } = [];
+    public ICollection<LanguageInfo> Languages { get; set; } = [];
 
     //public required User User { get; set; }
   }

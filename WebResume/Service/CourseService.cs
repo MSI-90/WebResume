@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Service
 {
-  public class CourseService : ICourseService, IEducationCourse<CourseYearDto>
+  public sealed class CourseService : ICourseService, IEducationCourse<CourseYearDto>
   {
     private readonly ILogger<CourseService> _logger;
     private readonly IMapper _mapper;

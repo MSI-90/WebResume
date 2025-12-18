@@ -11,6 +11,7 @@ namespace Repository.Configuration
       builder.ToTable("language_infos");
       builder.Property(li => li.Id).HasColumnName("id");
       builder.Property(li => li.Level).HasColumnName("level");
+      builder.Property(li => li.LanguageId).HasColumnName("language_id");
     }
   }
 }

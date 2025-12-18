@@ -12,6 +12,8 @@ namespace Entites.Models
     public Guid ResumeId { get; set; }
     public Resume? Resume { get; set; }
 
-    public Language? Language { get; set; }
+    [ForeignKey(nameof(Language))]
+    public Guid LanguageId { get; set; }
+    public required Language Language { get; set; }
   }
 }

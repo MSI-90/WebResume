@@ -16,7 +16,8 @@ namespace WebResume
         .ForCtorParam("PersonalInfo", opt => opt.MapFrom(x => x.PersonalInfo))
         .ForCtorParam("ContactInfo", opt => opt.MapFrom(x => x.ContactInfo))
         .ForCtorParam("Education", opt => opt.MapFrom(x => x.Education))
-        .ForCtorParam("Course", opt => opt.MapFrom(x => x.Courses));
+        .ForCtorParam("Course", opt => opt.MapFrom(x => x.Courses))
+        .ForCtorParam("Languages", opt => opt.MapFrom(x => x.Languages));
 
       CreateMap<ResumeDto, Resume>();
 
@@ -43,7 +44,8 @@ namespace WebResume
         .ForMember(dest => dest.Experience, opt => opt.Ignore())
         .ForMember(dest => dest.PersonalInfo, opt => opt.Ignore())
         .ForMember(dest => dest.ContactInfo, opt => opt.Ignore())
-        .ForMember(dest => dest.Education, opt => opt.Ignore());
+        .ForMember(dest => dest.Education, opt => opt.Ignore())
+        .ForMember(dest => dest.Languages, opt => opt.Ignore());
 
       CreateMap<ExperienceForCreationDto, Experience>();
       CreateMap<Experience, ExperienceOutputDto>();
@@ -54,6 +56,10 @@ namespace WebResume
 
       CreateMap<CourseForCreationDto, Course>();
       CreateMap<Course, CourseForOutputDto>();
+
+      CreateMap<LanguageForCreationDto, LanguageInfo>();
+      CreateMap<LanguageInfo, LanguageInfoOutputDto>();
+      CreateMap<Language, LanguageOutputDto>();
     }
   }
 }
