@@ -22,6 +22,7 @@ namespace Service
     private readonly IEducationService _educationService;
     private readonly ICourseService _courseService;
     private readonly ILanguageInfoService _languageInfoService;
+    private readonly IComputerSkillService _computerSkillService;
     public ResumeService(RepositoryContext repository, 
       ILogger<ResumeService> logger, 
       IMapper mapper, 
@@ -33,7 +34,8 @@ namespace Service
       IContactInfoService contactInfoService,
       IEducationService educationService,
       ICourseService courseService,
-      ILanguageInfoService languageInfoService)
+      ILanguageInfoService languageInfoService,
+      IComputerSkillService computerSkillService)
     {
       _repository = repository;
       _logger = logger;
@@ -46,6 +48,7 @@ namespace Service
       _educationService = educationService;
       _courseService = courseService;
       _languageInfoService = languageInfoService;
+      _computerSkillService = computerSkillService;
     }
 
     public async Task<IEnumerable<ResumeDto>> GetResumesAsync(CancellationToken token)
@@ -61,6 +64,7 @@ namespace Service
         .Include(r => r.Courses)
         .Include(r => r.Languages)
           .ThenInclude(l => l.Language)
+        .Include(r => r.ComputerSkill)
         .ToListAsync(token);
 
       return _mapper.Map<IEnumerable<ResumeDto>>(resumes);
@@ -79,6 +83,7 @@ namespace Service
         .Include(r => r.Courses)
         .Include(r => r.Languages)
           .ThenInclude(l => l.Language)
+        .Include(r => r.ComputerSkill)
         .Where(r => r.Id.Equals(resumeId))
         .FirstOrDefaultAsync(token);
 
@@ -102,6 +107,7 @@ namespace Service
       await _educationService.CreateEducationAsync(resumeDTO);
       await _courseService.CreateCourseAsync(resumeDTO);
       await _languageInfoService.CreateLanguageInfoAsync(resumeDTO);
+      await _computerSkillService.CreateCSkillAsync(resumeDTO);
 
       return await GetResumeAsync(newResume.Id, default);
     }

@@ -28,10 +28,8 @@ namespace Service
       await _context.SaveChangesAsync();
     }
 
-    public bool CheckLanguageAsValid(ResumeForCreationDto resume)
-    {
-      return resume.Languages is not null || resume.Languages.Any();
-    }
+    public bool CheckLanguageAsValid(ResumeForCreationDto resume) => 
+      resume.Languages is not null && resume.Languages.Any();
 
     public List<LanguageInfo> DeserializeLanguageExperience(ResumeForCreationDto resume)
     {

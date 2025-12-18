@@ -18,6 +18,7 @@ namespace Repository
     public DbSet<Course> Courses { get; set; }
     public DbSet<Language> Languages { get; set; }
     public DbSet<LanguageInfo> LanguageInfos { get; set; }
+    public DbSet<ComputerSkill> ComputerSkills { get; set; }
     //public DbSet<User> Users { get; set; }
     public RepositoryContext(DbContextOptions options) : base(options)
     {

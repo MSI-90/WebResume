@@ -34,6 +34,7 @@ namespace Shared.DataTransferObjects
     public IEnumerable<string>? Education { get; init; }
     public IEnumerable<string>? Course { get; init; }
     public IEnumerable<string>? Languages { get; init; }
+    public IEnumerable<string>? Skills { get; init; }
     public Guid? ResumeId { get; set; }
   }
 }

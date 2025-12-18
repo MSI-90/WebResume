@@ -52,6 +52,7 @@ namespace WebResume.Extensions
       services.AddScoped<IEducationCourse<CourseYearDto>, CourseService>();
       services.AddScoped<ILanguageInfoService, LanguageInfoService>();
       services.AddScoped<ILanguageService, LanguageService>();
+      services.AddScoped<IComputerSkillService, ComputerSkillService>();
     }
 
     public static void ConfigureOptionsConfiguration(this IServiceCollection services, IConfiguration configuration)

@@ -23,22 +23,18 @@ namespace Service
       _mapper.Map<IEnumerable<LanguageDto>>(
         await _repository.Languages.ToListAsync());
 
-    public LanguageLevelDto GetLanguageLevel()
-    {
-      return new LanguageLevelDto
+    public LanguageLevelDto GetLanguageLevel() => 
+      new LanguageLevelDto
       {
         LevelEn = [..Enum.GetValues<LanguageLevel>().Select(l => l.ToString())],
         LevelRu = [..Enum.GetValues<LanguageLevel>().Select(l => l.GetDisplayName())]
       };
-    }
 
-    public async Task<LanguageAndLevelDto> GetLanguageLevelAsync()
-    {
-      return new LanguageAndLevelDto
+    public async Task<LanguageAndLevelDto> GetLanguageLevelAsync() => 
+      new LanguageAndLevelDto
       {
         Languages = await GetLanguages(),
         Levels = GetLanguageLevel()
       };
-    }
   }
 }
