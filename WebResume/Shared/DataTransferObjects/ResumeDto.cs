@@ -12,6 +12,7 @@
     IEnumerable<ExperienceOutputDto?> Experience,
     IEnumerable<LanguageInfoOutputDto>? Languages,
     IEnumerable<ComputerSkillOutputDto>? ComputerSkills,
+    AdditionalInfoOutputDto AdditionalInfo,
     string? PurposeResume,
     DateTime CreatedAt, 
     DateTime UpdatedAt, 

@@ -23,7 +23,7 @@ namespace Service
 
     public async Task CreateLanguageInfoAsync(ResumeForCreationDto resume)
     {
-      var newLanguages = DeserializeLanguageExperience(resume);
+      var newLanguages = DeserializeLanguageInfo(resume);
       await _context.LanguageInfos.AddRangeAsync(newLanguages);
       await _context.SaveChangesAsync();
     }
@@ -31,7 +31,7 @@ namespace Service
     public bool CheckLanguageAsValid(ResumeForCreationDto resume) => 
       resume.Languages is not null && resume.Languages.Any();
 
-    public List<LanguageInfo> DeserializeLanguageExperience(ResumeForCreationDto resume)
+    public List<LanguageInfo> DeserializeLanguageInfo(ResumeForCreationDto resume)
     {
       if (!CheckLanguageAsValid(resume))
         return new List<LanguageInfo>();

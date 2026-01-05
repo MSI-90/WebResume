@@ -2,6 +2,7 @@
 using Entites.Exceptions;
 using Entites.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Logging;
 using Repository;
 using Service.Contracts;
@@ -23,6 +24,7 @@ namespace Service
     private readonly ICourseService _courseService;
     private readonly ILanguageInfoService _languageInfoService;
     private readonly IComputerSkillService _computerSkillService;
+    private readonly IAdditionalInfoService _additionalInfoService;
     public ResumeService(RepositoryContext repository, 
       ILogger<ResumeService> logger, 
       IMapper mapper, 
@@ -35,7 +37,8 @@ namespace Service
       IEducationService educationService,
       ICourseService courseService,
       ILanguageInfoService languageInfoService,
-      IComputerSkillService computerSkillService)
+      IComputerSkillService computerSkillService,
+      IAdditionalInfoService additionalInfoService)
     {
       _repository = repository;
       _logger = logger;
@@ -49,6 +52,7 @@ namespace Service
       _courseService = courseService;
       _languageInfoService = languageInfoService;
       _computerSkillService = computerSkillService;
+      _additionalInfoService = additionalInfoService;
     }
 
     public async Task<IEnumerable<ResumeDto>> GetResumesAsync(CancellationToken token)
@@ -65,6 +69,7 @@ namespace Service
         .Include(r => r.Languages)
           .ThenInclude(l => l.Language)
         .Include(r => r.ComputerSkill)
+        .Include(r => r.AdditionalInfo)
         .ToListAsync(token);
 
       return _mapper.Map<IEnumerable<ResumeDto>>(resumes);
@@ -84,6 +89,7 @@ namespace Service
         .Include(r => r.Languages)
           .ThenInclude(l => l.Language)
         .Include(r => r.ComputerSkill)
+        .Include(r => r.AdditionalInfo)
         .Where(r => r.Id.Equals(resumeId))
         .FirstOrDefaultAsync(token);
 
@@ -108,6 +114,7 @@ namespace Service
       await _courseService.CreateCourseAsync(resumeDTO);
       await _languageInfoService.CreateLanguageInfoAsync(resumeDTO);
       await _computerSkillService.CreateCSkillAsync(resumeDTO);
+      await _additionalInfoService.CreateAdditionalInfoAsync(resumeDTO);
 
       return await GetResumeAsync(newResume.Id, default);
     }

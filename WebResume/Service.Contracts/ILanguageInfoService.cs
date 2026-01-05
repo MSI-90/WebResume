@@ -7,6 +7,6 @@ namespace Service.Contracts
   {
     Task CreateLanguageInfoAsync(ResumeForCreationDto resume);
     bool CheckLanguageAsValid(ResumeForCreationDto resume);
-    List<LanguageInfo> DeserializeLanguageExperience(ResumeForCreationDto resume);
+    List<LanguageInfo> DeserializeLanguageInfo(ResumeForCreationDto resume);
   }
 }

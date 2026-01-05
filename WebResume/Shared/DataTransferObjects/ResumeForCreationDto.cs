@@ -22,13 +22,14 @@ namespace Shared.DataTransferObjects
     public Guid TemplateId { get; init; }
     public Guid? PhotoId { get; init; }
 
-    [StringLength(500, ErrorMessage = "Максимальная длина для поля Целю резюме составляет 500 символов.")]
+    [StringLength(500, ErrorMessage = "Максимальная длина для поля Цель резюме составляет 500 символов.")]
     public string? PurposeResume { get; init; }
     public string? DesiredJob { get; init; }
 
     [Required(ErrorMessage = "Раздел личная информация необходимо заполнить")]
     public string? PersonalInfo { get; init; }
     public string? ContactInfo { get; init; }
+    public string? AdditionalInfo { get; init; }
     public IEnumerable<Guid>? CitizenshipIds { get; init; }
     public IEnumerable<string>? Experience { get; init; }
     public IEnumerable<string>? Education { get; init; }
