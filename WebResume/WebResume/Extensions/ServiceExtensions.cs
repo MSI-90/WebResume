@@ -54,6 +54,7 @@ namespace WebResume.Extensions
       services.AddScoped<ILanguageService, LanguageService>();
       services.AddScoped<IComputerSkillService, ComputerSkillService>();
       services.AddScoped<IAdditionalInfoService, AdditionalInfoService>();
+      services.AddScoped<ICurrencyService, CurrencyService>();
     }
 
     public static void ConfigureOptionsConfiguration(this IServiceCollection services, IConfiguration configuration)

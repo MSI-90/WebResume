@@ -1,5 +1,4 @@
-﻿using Amazon.Runtime.Internal.Transform;
-using Entites.Enums;
+﻿using Entites.Enums;
 using Microsoft.Extensions.Logging;
 using Service.Contracts;
 using Shared.DataTransferObjects;
