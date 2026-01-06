@@ -55,6 +55,7 @@ namespace WebResume.Extensions
       services.AddScoped<IComputerSkillService, ComputerSkillService>();
       services.AddScoped<IAdditionalInfoService, AdditionalInfoService>();
       services.AddScoped<ICurrencyService, CurrencyService>();
+      services.AddScoped<IWorkSheduleService, WorkSheduleService>();
     }
 
     public static void ConfigureOptionsConfiguration(this IServiceCollection services, IConfiguration configuration)

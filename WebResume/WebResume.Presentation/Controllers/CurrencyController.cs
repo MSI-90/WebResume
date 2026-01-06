@@ -14,6 +14,7 @@ namespace WebResume.Presentation.Controllers
     }
 
     [HttpGet]
+    [ResponseCache(Duration = 3600)]
     public IActionResult GetCurrencies()
     {
       var currencies = _currencyService.GetCurrencyAsync();
