@@ -3,7 +3,7 @@ using Service.Contracts;
 
 namespace WebResume.Presentation.Controllers
 {
-  [Route("api/WorkShedule")]
+  [Route("api/work-shedule")]
   [ApiController]
   public class WorkSheduleController : ControllerBase
   {
