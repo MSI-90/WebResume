@@ -7,7 +7,7 @@ namespace Entites.Models
     public Guid Id { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
-    public string? MiddleName { get; set; }
+    public string? FatherName { get; set; }
     public string? PurposeResume { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }

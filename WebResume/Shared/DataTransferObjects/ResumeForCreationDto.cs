@@ -16,7 +16,7 @@ namespace Shared.DataTransferObjects
 
     [MinLength(3, ErrorMessage = "Минимальная длина поля Отчество составляет 2 символа.")]
     [StringLength(70, ErrorMessage = "Максимальная длина поля Отчество составляет 70 символов.")]
-    public string? MiddleName { get; init; }
+    public string? FatherName { get; init; }
 
     [Required]
     public Guid TemplateId { get; init; }
@@ -26,7 +26,8 @@ namespace Shared.DataTransferObjects
     public string? PurposeResume { get; init; }
     public string? DesiredJob { get; init; }
 
-    [Required(ErrorMessage = "Раздел личная информация необходимо заполнить")]
+    //TODO: вернуть обязательность
+    //[Required(ErrorMessage = "Раздел личная информация необходимо заполнить")]
     public string? PersonalInfo { get; init; }
     public string? ContactInfo { get; init; }
     public string? AdditionalInfo { get; init; }

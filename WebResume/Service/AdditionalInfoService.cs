@@ -24,6 +24,9 @@ namespace Service
     public async Task CreateAdditionalInfoAsync(ResumeForCreationDto resume)
     {
       var newAdditioanlInfoDto = DeserializeAdditionalInfo(resume);
+      if (newAdditioanlInfoDto is null)
+        return;
+
       var newAdditional = _mapper.Map<AdditionalInformation>(newAdditioanlInfoDto);
       newAdditional.Id = Guid.NewGuid();
       newAdditional.ResumeId = resume.ResumeId!.Value;

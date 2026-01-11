@@ -10,7 +10,7 @@ namespace WebResume
     {
       CreateMap<Resume, ResumeDto>()
         .ForCtorParam("FIO",
-          opt => opt.MapFrom(x => string.Join(' ', x.LastName, x.FirstName, x.MiddleName)))
+          opt => opt.MapFrom(x => string.Join(' ', x.LastName, x.FirstName, x.FatherName)))
         .ForCtorParam("DesiredJob", opt => opt.MapFrom(x => x.Job))
         .ForCtorParam("Experience", opt => opt.MapFrom(x => x.Experience))
         .ForCtorParam("PersonalInfo", opt => opt.MapFrom(x => x.PersonalInfo))
