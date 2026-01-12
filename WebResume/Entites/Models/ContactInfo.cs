@@ -9,7 +9,7 @@ namespace Entites.Models
     public string? Phone {  get; set; }
     public string? Email { get; set; }
 
-    public required SocialNetworkInfo SocialNetwork { get; set; }
+    public SocialNetworkInfo? SocialNetwork { get; set; }
 
     [ForeignKey(nameof(Resume))]
     public Guid ResumeId { get; set; }

@@ -5,10 +5,10 @@ namespace Shared.DataTransferObjects
 {
   public record ContactInfoForCreationDto(
     [Phone]
-    string Phone,
+    string? Phone,
     [EmailAddress]
-    string? Email,
-    SocialNetworkDto SocialNetwork
+    string Email,
+    SocialNetworkDto? SocialNetwork
     )
   {
   }
