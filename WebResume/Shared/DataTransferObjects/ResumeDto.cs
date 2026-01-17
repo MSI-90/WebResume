@@ -4,7 +4,7 @@
     Guid Id, 
     string FIO,
     Guid? PhotoId,
-    PersonalInfoDto? PersonalInfo,
+    PersonalInfoDTO? PersonalInfo,
     DesiredJobInfoOutputDto? DesiredJob,
     ContactInfoOutputDto ContactInfo,
     IEnumerable<EducationOutputDto?> Education,

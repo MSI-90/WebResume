@@ -2,7 +2,7 @@
 
 namespace Shared.DataTransferObjects
 {
-  public record PersonalInfoDto
+  public record PersonalInfoDTO
   ( 
     string? City, 
     bool IsDualCitizenship,

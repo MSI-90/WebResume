@@ -33,8 +33,8 @@ namespace WebResume
       CreateMap<Citizenship, CitizenshipDto>();
       CreateMap<Citizenship, CitizenshipOutputDto>();
 
-      CreateMap<PersonalInfo, PersonalInfoDto>();
-      CreateMap<PersonalInfoDto, PersonalInfo>();
+      CreateMap<PersonalInfo, PersonalInfoDTO>();
+      CreateMap<PersonalInfoDTO, PersonalInfo>();
 
       CreateMap<ContactInfoForCreationDto,  ContactInfo>();
       CreateMap<ContactInfo,ContactInfoForCreationDto>();
