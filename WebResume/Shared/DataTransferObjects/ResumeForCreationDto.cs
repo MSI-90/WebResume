@@ -14,7 +14,6 @@ namespace Shared.DataTransferObjects
     [StringLength(70, ErrorMessage = "Максимальная длина поля Фамилия составляет 70 символов.")]
     public string? LastName { get; init; }
 
-    [MinLength(3, ErrorMessage = "Минимальная длина поля Отчество составляет 2 символа.")]
     [StringLength(70, ErrorMessage = "Максимальная длина поля Отчество составляет 70 символов.")]
     public string? FatherName { get; init; }
 

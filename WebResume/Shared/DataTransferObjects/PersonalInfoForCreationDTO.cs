@@ -1,18 +1,18 @@
-﻿using Entites.Enums;
+using Entites.Enums;
 
 namespace Shared.DataTransferObjects
 {
   public record PersonalInfoForCreationDTO
-  ( 
-    string? City, 
+  (
+    string? City,
     bool IsDualCitizenship,
-    IEnumerable<CitizenshipOutputDto>? Citizenships,
-    DateOnly Birthday, 
-    bool IsChildren, 
-    Sex Sex, 
-    Moving Moving, 
+    IEnumerable<CitizenshipOutputDto> Citizenships,
+    DateOnly Birthday,
+    bool IsChildren,
+    Sex Sex,
+    Moving Moving,
     MaritalStatus MaritalStatus
-  ) 
-  { 
+  )
+  {
   }
 }
