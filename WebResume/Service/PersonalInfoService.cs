@@ -45,7 +45,7 @@ namespace Service
 
       newPersonalInfo.Id = Guid.NewGuid();
       newPersonalInfo.ResumeId = resumeDto.ResumeId;
-      newPersonalInfo.Citizenships = await _citizenshipService.GetCitizenShipsThenAnyAsync(resumeDto.CitizenshipIds);
+      newPersonalInfo.Citizenships = await _citizenshipService.GetCitizenShipsThenAnyAsync(resumeDto?.PersonalInfo?.CitizenshipIds);
 
       await _context.PersonalInfos.AddAsync(newPersonalInfo);
       await _context.SaveChangesAsync();

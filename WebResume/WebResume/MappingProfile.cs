@@ -21,6 +21,7 @@ namespace WebResume
         .ForCtorParam("ComputerSkills", opt => opt.MapFrom(x => x.ComputerSkill))
         .ForCtorParam("AdditionalInfo", opt => opt.MapFrom(x => x.AdditionalInfo));
 
+
       CreateMap<ResumeDto, Resume>();
 
       CreateMap<Template, TemplateDto>();
@@ -33,7 +34,8 @@ namespace WebResume
       CreateMap<Citizenship, CitizenshipDto>();
       CreateMap<Citizenship, CitizenshipOutputDto>();
 
-      CreateMap<PersonalInfo, PersonalInfoForCreationDTO>();
+      CreateMap<PersonalInfo, PersonalInfoDTO>();
+      CreateMap<PersonalInfoDTO, PersonalInfo>();
       CreateMap<PersonalInfoForCreationDTO, PersonalInfo>();
 
       CreateMap<ContactInfoForCreationDto,  ContactInfo>();

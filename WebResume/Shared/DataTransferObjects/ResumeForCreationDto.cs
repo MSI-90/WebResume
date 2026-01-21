@@ -29,7 +29,6 @@ namespace Shared.DataTransferObjects
     public PersonalInfoForCreationDTO? PersonalInfo { get; init; }
     public ContactInfoForCreationDto? ContactInfo { get; init; }
     public AdditionalInfoForCreationDto? AdditionalInfo { get; init; }
-    public IEnumerable<Guid>? CitizenshipIds { get; init; }
     public IEnumerable<ExperienceForCreationDto>? Experience { get; init; }
     public IEnumerable<EducationForCreationDto>? Education { get; init; }
     public IEnumerable<CourseForCreationDto>? Course { get; init; }

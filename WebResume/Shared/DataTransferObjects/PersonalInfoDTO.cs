@@ -2,11 +2,11 @@ using Entites.Enums;
 
 namespace Shared.DataTransferObjects
 {
-  public record PersonalInfoForCreationDTO
+  public record PersonalInfoDTO
   (
     string? City,
     bool IsDualCitizenship,
-    IEnumerable<Guid>? CitizenshipIds,
+    IEnumerable<CitizenshipOutputDto> Citizenships,
     DateOnly Birthday,
     bool IsChildren,
     Sex Sex,
