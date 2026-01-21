@@ -96,7 +96,7 @@ namespace Service
       return _mapper.Map<ResumeDto>(resume) ?? throw new ResumeNotFoundException(resumeId);
     }
 
-    public async Task<ResumeDto> CreateResumeAsync(ResumeForCreationDto resumeDTO)
+    public async Task<ResumeDto> CreateResumeAsync(ResumeForCreationDTO resumeDTO)
     {
       var newResume = _mapper.Map<Resume>(resumeDTO);
       newResume.Id = Guid.NewGuid();

@@ -2,11 +2,11 @@
 
 namespace Shared.DataTransferObjects
 {
-  public record PersonalInfoDTO
+  public record PersonalInfoForCreationDTO
   ( 
     string? City, 
     bool IsDualCitizenship,
-    List<CitizenshipOutputDto> Citizenships,
+    IEnumerable<CitizenshipOutputDto>? Citizenships,
     DateOnly Birthday, 
     bool IsChildren, 
     Sex Sex, 

@@ -5,8 +5,7 @@ namespace Service.Contracts
 {
   public interface IAdditionalInfoService
   {
-    Task CreateAdditionalInfoAsync(ResumeForCreationDto resume);
-    bool CheckAdditionalInfoAsValid(ResumeForCreationDto resume);
-    AdditionalInfoForCreationDto? DeserializeAdditionalInfo(ResumeForCreationDto resume);
+    Task CreateAdditionalInfoAsync(ResumeForCreationDTO resume);
+    bool CheckAdditionalInfoAsValid(ResumeForCreationDTO resume);
   }
 }

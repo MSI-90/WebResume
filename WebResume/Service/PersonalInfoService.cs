@@ -37,13 +37,12 @@ namespace Service
     /// </summary>
     /// <param name="resumeDto">резюме объект со всеми возможными вариантами из которых создается резюме</param>
     /// <returns>Задача</returns>
-    public async Task CreatePersonalInfoAsync(ResumeForCreationDto resumeDto) 
-    { 
-      var pInfo = DeserializePInfo(resumeDto);
-      if (pInfo is null)
-        return;
+    public async Task CreatePersonalInfoAsync(ResumeForCreationDTO resumeDto) 
+    {
+      if (CheckPInfoAsValid(resumeDto)) return;
 
-      var newPersonalInfo = _mapper.Map<PersonalInfo>(pInfo);
+      var newPersonalInfo = _mapper.Map<PersonalInfo>(resumeDto.PersonalInfo);
+
       newPersonalInfo.Id = Guid.NewGuid();
       newPersonalInfo.ResumeId = resumeDto.ResumeId;
       newPersonalInfo.Citizenships = await _citizenshipService.GetCitizenShipsThenAnyAsync(resumeDto.CitizenshipIds);
@@ -57,36 +56,9 @@ namespace Service
     /// </summary>
     /// <param name="resumeDto">резюме объект со всеми возможными вариантами из которых создается резюме</param>
     /// <returns>булевый параметр</returns>
-    public bool CheckPInfoAsValid(ResumeForCreationDto resumeDto)
+    public bool CheckPInfoAsValid(ResumeForCreationDTO resumeDto)
     {
-      if (resumeDto is null || string.IsNullOrWhiteSpace(resumeDto.PersonalInfo))
-      {
-        _logger.LogWarning("Раздел, личная информация отстуствует");
-        return false;
-      }
-      return true;
-    }
-
-    /// <summary>
-    /// Десериализация JSON объекта личной информации в DTO PersonalInfoDTO
-    /// </summary>
-    /// <param name="resumeDto">резюме объект со всеми возможными вариантами из которых создается резюме</param>
-    /// <returns>PersonalInfoDTO</returns>
-    /// <exception cref="PersonalInfoDeserializeException">Вариант исключения при десериализации, используется в глобальном UseExceptionHandler, вернет 422</exception>
-    public PersonalInfoDTO? DeserializePInfo(ResumeForCreationDto resumeDto)
-    {
-      if (!CheckPInfoAsValid(resumeDto))
-        return null;
-
-      try
-      {
-        return JsonSerializer.Deserialize<PersonalInfoDTO>(resumeDto.PersonalInfo!) ?? throw new PersonalInfoDeserializeException();
-      }
-      catch (JsonException jex)
-      {
-        _logger.LogError(jex.Message);
-        throw new PersonalInfoDeserializeException();
-      }
+      return resumeDto.PersonalInfo is null;
     }
 
     /// <summary>

@@ -21,36 +21,20 @@ namespace Service
       _mapper = mapper;
     }
 
-    public async Task CreateAdditionalInfoAsync(ResumeForCreationDto resume)
+    public async Task CreateAdditionalInfoAsync(ResumeForCreationDTO resume)
     {
-      var newAdditioanlInfoDto = DeserializeAdditionalInfo(resume);
-      if (newAdditioanlInfoDto is null)
-        return;
+      if (CheckAdditionalInfoAsValid(resume)) return;
 
-      var newAdditional = _mapper.Map<AdditionalInformation>(newAdditioanlInfoDto);
+      var newAdditional = _mapper.Map<AdditionalInformation>(resume.AdditionalInfo);
+
       newAdditional.Id = Guid.NewGuid();
       newAdditional.ResumeId = resume.ResumeId!.Value;
       await _context.AdditionalInformations.AddAsync(newAdditional);
       await _context.SaveChangesAsync();
     }
 
-    public bool CheckAdditionalInfoAsValid(ResumeForCreationDto resume) =>
-      resume.AdditionalInfo is not null && resume.AdditionalInfo.Any();
+    public bool CheckAdditionalInfoAsValid(ResumeForCreationDTO resume) =>
+      resume.AdditionalInfo is null;
 
-    public AdditionalInfoForCreationDto? DeserializeAdditionalInfo(ResumeForCreationDto resumeDto)
-    {
-      if (!CheckAdditionalInfoAsValid(resumeDto))
-        return null;
-
-      try
-      {
-        return JsonSerializer.Deserialize<AdditionalInfoForCreationDto>(resumeDto.AdditionalInfo!) ?? throw new AdditionalInfoDeserializeException();
-      }
-      catch (JsonException jex)
-      {
-        _logger.LogError(jex.Message);
-        throw new AdditionalInfoDeserializeException();
-      }
-    }
   }
 }

@@ -4,8 +4,7 @@ namespace Service.Contracts
 {
   public interface IContactInfoService
   {
-    Task CreateContactinfoAsync(ResumeForCreationDto resume);
-    bool CheckContactInfoAsValid(ResumeForCreationDto resume);
-    ContactInfoForCreationDto? DeserilizeContactInfo(ResumeForCreationDto resume);
+    Task CreateContactinfoAsync(ResumeForCreationDTO resume);
+    bool CheckContactInfoAsValid(ResumeForCreationDTO resume);
   }
 }

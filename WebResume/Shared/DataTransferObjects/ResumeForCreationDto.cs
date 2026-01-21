@@ -2,7 +2,7 @@
 
 namespace Shared.DataTransferObjects
 {
-  public record ResumeForCreationDto
+  public record ResumeForCreationDTO
   {
     [Required(ErrorMessage = "Необходимо задать значение имени.")]
     [MinLength(3, ErrorMessage = "Минимальная длина поля Имя составляет 2 символа.")]
@@ -24,19 +24,18 @@ namespace Shared.DataTransferObjects
 
     [StringLength(500, ErrorMessage = "Максимальная длина для поля Цель резюме составляет 500 символов.")]
     public string? PurposeResume { get; init; }
-    public string? DesiredJob { get; init; }
+    public DesiredJobInfoForCreationDto? DesiredJob { get; init; }
 
-    //TODO: вернуть обязательность
-    //[Required(ErrorMessage = "Раздел личная информация необходимо заполнить")]
-    public string? PersonalInfo { get; init; }
-    public string? ContactInfo { get; init; }
-    public string? AdditionalInfo { get; init; }
+    [Required(ErrorMessage = "Раздел личная информация необходимо заполнить")]
+    public PersonalInfoForCreationDTO? PersonalInfo { get; init; }
+    public ContactInfoForCreationDto? ContactInfo { get; init; }
+    public AdditionalInfoForCreationDto? AdditionalInfo { get; init; }
     public IEnumerable<Guid>? CitizenshipIds { get; init; }
-    public IEnumerable<string>? Experience { get; init; }
-    public IEnumerable<string>? Education { get; init; }
-    public IEnumerable<string>? Course { get; init; }
-    public IEnumerable<string>? Languages { get; init; }
-    public IEnumerable<string>? Skills { get; init; }
+    public IEnumerable<ExperienceForCreationDto>? Experience { get; init; }
+    public IEnumerable<EducationForCreationDto>? Education { get; init; }
+    public IEnumerable<CourseForCreationDto>? Course { get; init; }
+    public IEnumerable<LanguageForCreationDto>? Languages { get; init; }
+    public IEnumerable<ComputerSkillForCreationDto>? Skills { get; init; }
     public Guid? ResumeId { get; set; }
   }
 }

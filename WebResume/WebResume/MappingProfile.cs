@@ -25,7 +25,7 @@ namespace WebResume
 
       CreateMap<Template, TemplateDto>();
 
-      CreateMap<ResumeForCreationDto, Resume>();
+      CreateMap<ResumeForCreationDTO, Resume>();
 
       CreateMap<DesiredJobInfoForCreationDto, JobInfo>();
       CreateMap<JobInfo, DesiredJobInfoOutputDto>();
@@ -33,8 +33,8 @@ namespace WebResume
       CreateMap<Citizenship, CitizenshipDto>();
       CreateMap<Citizenship, CitizenshipOutputDto>();
 
-      CreateMap<PersonalInfo, PersonalInfoDTO>();
-      CreateMap<PersonalInfoDTO, PersonalInfo>();
+      CreateMap<PersonalInfo, PersonalInfoForCreationDTO>();
+      CreateMap<PersonalInfoForCreationDTO, PersonalInfo>();
 
       CreateMap<ContactInfoForCreationDto,  ContactInfo>();
       CreateMap<ContactInfo,ContactInfoForCreationDto>();
@@ -42,7 +42,7 @@ namespace WebResume
       CreateMap<SocialNetworkDto, SocialNetworkInfo>();
       CreateMap<SocialNetworkInfo, SocialNetworkOutputDto>();
 
-      CreateMap<ResumeForCreationDto, Resume>()
+      CreateMap<ResumeForCreationDTO, Resume>()
         .ForMember(dest => dest.Experience, opt => opt.Ignore())
         .ForMember(dest => dest.PersonalInfo, opt => opt.Ignore())
         .ForMember(dest => dest.ContactInfo, opt => opt.Ignore())

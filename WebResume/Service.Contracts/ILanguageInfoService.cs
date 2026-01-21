@@ -5,8 +5,7 @@ namespace Service.Contracts
 {
   public interface ILanguageInfoService
   {
-    Task CreateLanguageInfoAsync(ResumeForCreationDto resume);
-    bool CheckLanguageAsValid(ResumeForCreationDto resume);
-    List<LanguageInfo> DeserializeLanguageInfo(ResumeForCreationDto resume);
+    Task CreateLanguageInfoAsync(ResumeForCreationDTO resume);
+    bool CheckLanguageAsValid(ResumeForCreationDTO resume);
   }
 }

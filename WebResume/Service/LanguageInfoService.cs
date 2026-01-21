@@ -21,39 +21,24 @@ namespace Service
       _context = context;
     }
 
-    public async Task CreateLanguageInfoAsync(ResumeForCreationDto resume)
+    public async Task CreateLanguageInfoAsync(ResumeForCreationDTO resume)
     {
-      var newLanguages = DeserializeLanguageInfo(resume);
-      await _context.LanguageInfos.AddRangeAsync(newLanguages);
-      await _context.SaveChangesAsync();
-    }
-
-    public bool CheckLanguageAsValid(ResumeForCreationDto resume) => 
-      resume.Languages is not null && resume.Languages.Any();
-
-    public List<LanguageInfo> DeserializeLanguageInfo(ResumeForCreationDto resume)
-    {
-      if (!CheckLanguageAsValid(resume))
-        return new List<LanguageInfo>();
+      if (!CheckLanguageAsValid(resume)) return;
 
       var newLanguage = new List<LanguageInfo>();
       foreach (var item in resume.Languages!)
       {
-        try
-        {
-          var languageItem = JsonSerializer.Deserialize<LanguageForCreationDto>(item) ?? throw new LanguageInfoDeserializeException();
-          var newLang = _mapper.Map<LanguageInfo>(languageItem);
-          newLang.Id = Guid.NewGuid();
-          newLang.ResumeId = resume.ResumeId!.Value;
-          newLanguage.Add(newLang);
-        }
-        catch (JsonException jex)
-        {
-          _logger.LogWarning(jex.Message);
-          throw new LanguageInfoDeserializeException();
-        }
+        var newLang = _mapper.Map<LanguageInfo>(item);
+        newLang.Id = Guid.NewGuid();
+        newLang.ResumeId = resume.ResumeId!.Value;
+        newLanguage.Add(newLang);
       }
-      return newLanguage;
+
+      await _context.LanguageInfos.AddRangeAsync(newLanguage);
+      await _context.SaveChangesAsync();
     }
+
+    public bool CheckLanguageAsValid(ResumeForCreationDTO resume) => 
+      resume.Languages is not null && resume.Languages.Any();
   }
 }

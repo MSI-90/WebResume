@@ -21,39 +21,25 @@ namespace Service
       _mapper = mapper;
     }
 
-    public async Task CreateCSkillAsync(ResumeForCreationDto resume)
+    public async Task CreateCSkillAsync(ResumeForCreationDTO resume)
     {
-      var computerSkills = DeserializeComputerSkillExperience(resume);
-      await _repository.ComputerSkills.AddRangeAsync(computerSkills);
-      await _repository.SaveChangesAsync();
-    }
-
-    public bool CheckCSkillsAsValid(ResumeForCreationDto resume) =>
-      resume.Skills is not null && resume.Skills.Any();
-
-    public List<ComputerSkill> DeserializeComputerSkillExperience(ResumeForCreationDto resume)
-    {
-      if (!CheckCSkillsAsValid(resume))
-        return new List<ComputerSkill>();
+      if (!CheckCSkillsAsValid(resume)) return;
 
       var newSkills = new List<ComputerSkill>();
       foreach (var item in resume.Skills!)
       {
-        try
-        {
-          var computerSkillItem = JsonSerializer.Deserialize<ComputerSkillForCreationDto>(item) ?? throw new ComputerSkillDeserializeException();
-          var newLang = _mapper.Map<ComputerSkill>(computerSkillItem);
-          newLang.Id = Guid.NewGuid();
-          newLang.ResumeId = resume.ResumeId!.Value;
-          newSkills.Add(newLang);
-        }
-        catch (JsonException jex)
-        {
-          _logger.LogWarning(jex.Message);
-          throw new ComputerSkillDeserializeException();
-        }
+        var newLang = _mapper.Map<ComputerSkill>(item);
+        newLang.Id = Guid.NewGuid();
+        newLang.ResumeId = resume.ResumeId!.Value;
+        newSkills.Add(newLang);
       }
-      return newSkills;
+
+      await _repository.ComputerSkills.AddRangeAsync(newSkills);
+      await _repository.SaveChangesAsync();
     }
+
+    public bool CheckCSkillsAsValid(ResumeForCreationDTO resume) =>
+      resume.Skills is not null && resume.Skills.Any();
+
   }
 }

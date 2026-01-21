@@ -5,8 +5,7 @@ namespace Service.Contracts
 {
   public interface ICourseService
   {
-    Task CreateCourseAsync(ResumeForCreationDto resume);
-    bool CheckCourseAsValid(ResumeForCreationDto resume);
-    List<Course> DeserialiseCourse(ResumeForCreationDto resume);
+    Task CreateCourseAsync(ResumeForCreationDTO resume);
+    bool CheckCourseAsValid(ResumeForCreationDTO resume);
   }
 }

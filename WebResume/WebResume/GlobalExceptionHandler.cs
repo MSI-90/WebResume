@@ -27,30 +27,6 @@ namespace WebResume
           case TemplateNotFoundException:
             httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
             break;
-          case DesiredJobInfoDeserializeException:
-            httpContext.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
-            break;
-          case ExperienceDeserializeException:
-            httpContext.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
-            break;
-          case PersonalInfoDeserializeException:
-            httpContext.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
-            break;
-          case ContactInfoDeserializeException:
-            httpContext.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
-            break;
-          case EducationDeserializeException:
-            httpContext.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
-            break;
-          case CourseDeserializeException:
-            httpContext.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
-            break;
-          case LanguageInfoDeserializeException:
-            httpContext.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
-            break;
-          case AdditionalInfoDeserializeException:
-            httpContext.Response.StatusCode = StatusCodes.Status422UnprocessableEntity;
-            break;
           case PhotoSizeException:
             httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
             break;

@@ -38,7 +38,7 @@ namespace WebResume.Presentation.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> ResumeFromForm([FromForm] ResumeForCreationDto resumeForCreateDto)
+    public async Task<IActionResult> ResumeFromForm([FromBody] ResumeForCreationDTO resumeForCreateDto)
     {
       var resume = await _service.CreateResumeAsync(resumeForCreateDto);
       return CreatedAtRoute("GetResume", new { resumeId = resume.Id }, resume);

@@ -26,45 +26,25 @@ namespace Service
       .Where(e => e.ResumeId.Equals(resumeId))
       .ToListAsync(token);
     
-    public async Task CreateExperienceAsync(ResumeForCreationDto resume)
+    public async Task CreateExperienceAsync(ResumeForCreationDTO resume)
     {
-      var newExperiences = DeserialiseExperience(resume);
-      await _context.Experience.AddRangeAsync(newExperiences);
-      await _context.SaveChangesAsync();
-    }
-
-    public bool CheckExperienceAsValid(ResumeForCreationDto resume)
-    {
-      if (resume.Experience is null || !resume.Experience.Any())
-        return false;
-      
-      return true;
-    }
-
-    public List<Experience> DeserialiseExperience(ResumeForCreationDto resume) 
-    {
-      if (!CheckExperienceAsValid(resume))
-        return new List<Experience>();
+      if (!CheckExperienceAsValid(resume)) return;
 
       var newExperiences = new List<Experience>();
       foreach (var item in resume.Experience!)
       {
-        try
-        {
-          var experienceItem = JsonSerializer.Deserialize<ExperienceForCreationDto>(item) ?? throw new ExperienceDeserializeException();
-          var newExp = _mapper.Map<Experience>(experienceItem);
-          newExp.Id = Guid.NewGuid();
-          newExp.ResumeId = resume.ResumeId!.Value;
-          newExperiences.Add(newExp);
-        }
-        catch (JsonException jex)
-        {
-          _logger.LogWarning(jex.Message);
-          throw new ExperienceDeserializeException();
-        }
+        var newExp = _mapper.Map<Experience>(item);
+        newExp.Id = Guid.NewGuid();
+        newExp.ResumeId = resume.ResumeId!.Value;
+        newExperiences.Add(newExp);
       }
-      return newExperiences;
+
+      await _context.Experience.AddRangeAsync(newExperiences);
+      await _context.SaveChangesAsync();
     }
+
+    public bool CheckExperienceAsValid(ResumeForCreationDTO resume) => 
+      resume.Experience is not null && resume.Experience.Any();
 
   }
 }

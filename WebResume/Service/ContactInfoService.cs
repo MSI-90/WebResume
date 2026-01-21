@@ -20,41 +20,21 @@ namespace Service
       _context = context;
       _mapper = mapper;
     }
-    public async Task CreateContactinfoAsync(ResumeForCreationDto resume)
+    public async Task CreateContactinfoAsync(ResumeForCreationDTO resume)
     {
-      var contactInfo = DeserilizeContactInfo(resume);
-      if (contactInfo is null)
-        return;
-
-      var newContact = _mapper.Map<ContactInfo>(contactInfo);
+      if (CheckContactInfoAsValid(resume)) return;
+      
+      var newContact = _mapper.Map<ContactInfo>(resume.ContactInfo);
       newContact.Id = Guid.NewGuid();
       newContact.ResumeId = resume.ResumeId!.Value;
       await _context.ContactInfos.AddAsync(newContact);
       await _context.SaveChangesAsync();
     }
 
-    public bool CheckContactInfoAsValid(ResumeForCreationDto resume)
+    public bool CheckContactInfoAsValid(ResumeForCreationDTO resume)
     {
-      if (string.IsNullOrWhiteSpace(resume.ContactInfo))
-        return false;
-
-      return true;
+        return resume.ContactInfo is null;
     }
 
-    public ContactInfoForCreationDto? DeserilizeContactInfo(ResumeForCreationDto resume)
-    {
-      if (!CheckContactInfoAsValid(resume))
-        return null;
-
-      try
-      {
-        return JsonSerializer.Deserialize<ContactInfoForCreationDto>(resume.ContactInfo!) ?? throw new ContactInfoDeserializeException();
-      }
-      catch (JsonException jex)
-      {
-        _logger.LogWarning(jex.Message);
-        throw new ContactInfoDeserializeException();
-      }
-    }
   }
 }

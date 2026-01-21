@@ -38,7 +38,7 @@ namespace Service
 
     public async Task<HashSet<Citizenship>> GetCitizenShipsThenAnyAsync(IEnumerable<Guid>? citizenshipIds)
     {
-      if (citizenshipIds is null || !citizenshipIds.Any())
+      if (!citizenshipIds.Any())
         throw new CitizenshipIsEmptyException();
 
       return await _context.Citizenships

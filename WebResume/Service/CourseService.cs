@@ -21,45 +21,25 @@ namespace Service
       _context = context;
     }
 
-    public async Task CreateCourseAsync(ResumeForCreationDto resume)
+    public async Task CreateCourseAsync(ResumeForCreationDTO resume)
     {
-      var newCourse = DeserialiseCourse(resume);
-      await _context.Courses.AddRangeAsync(newCourse);
-      await _context.SaveChangesAsync();
-    }
-
-    public bool CheckCourseAsValid(ResumeForCreationDto resume)
-    {
-      if (resume.Course is null || !resume.Course.Any())
-        return false;
-
-      return true;
-    }
-
-    public List<Course> DeserialiseCourse(ResumeForCreationDto resume)
-    {
-      if(!CheckCourseAsValid(resume))
-        return new List<Course>();
+      if (!CheckCourseAsValid(resume)) return;
 
       var newCources = new List<Course>();
       foreach (var item in resume.Course!)
       {
-        try
-        {
-          var courseItem = JsonSerializer.Deserialize<CourseForCreationDto>(item) ?? throw new CourseDeserializeException();
-          var newCourse = _mapper.Map<Course>(courseItem);
-          newCourse.Id = Guid.NewGuid();
-          newCourse.ResumeId = resume.ResumeId!.Value;
-          newCources.Add(newCourse);
-        }
-        catch (JsonException jex)
-        {
-          _logger.LogWarning(jex.Message);
-          throw new CourseDeserializeException();
-        }
+        var newCourse = _mapper.Map<Course>(item);
+        newCourse.Id = Guid.NewGuid();
+        newCourse.ResumeId = resume.ResumeId!.Value;
+        newCources.Add(newCourse);
       }
-      return newCources;
+
+      await _context.Courses.AddRangeAsync(newCources);
+      await _context.SaveChangesAsync();
     }
+
+    public bool CheckCourseAsValid(ResumeForCreationDTO resume) =>
+      resume.Course is not null && resume.Course.Any();
 
     public CourseYearDto? GetEducationYearAndKinds()
     {
