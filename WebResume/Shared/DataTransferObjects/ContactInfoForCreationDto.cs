@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Shared.DataTransferObjects
 {
   public record ContactInfoForCreationDto(
-    [Phone]
+    [Phone(ErrorMessage = "Укажите, пожалуйста номер телефона")]
     string? Phone,
     [EmailAddress]
     string Email,
