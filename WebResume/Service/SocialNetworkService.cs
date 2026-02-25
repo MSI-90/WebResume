@@ -21,7 +21,7 @@ namespace Service
       uint i = 0;
       while (i != socials.Length)
       {
-        socialsAsList.Add(new SocialNetworkMetadataDto(i, socials[i].ToString(), $"/icons/{socials[i].ToString().ToLowerInvariant()}.svg"));
+        socialsAsList.Add(new SocialNetworkMetadataDto(i, socials[i].ToString(), $"{socials[i].ToString().ToLowerInvariant()}.svg"));
         i++;
       }
       return socialsAsList;

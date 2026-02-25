@@ -1,30 +1,33 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 
 namespace Entites.Enums
 {
   public enum SocialKind
   {
-    [Display(Name = "Whatsapp")]
-    Whatsapp = 0,
-    [Display(Name = "Viber")]
-    Viber = 1,
-    [Display(Name = "Telegram")]
-    Telegram = 2,
-    [Display(Name = "VK")]
-    VK = 3,
-    [Display(Name = "Skype")]
-    Skype = 4,
-    [Display(Name = "Linkedin")]
-    Linkedin = 5,
-    [Display(Name = "Instagram")]
-    Instagram = 6,
-    [Display(Name = "Github")]
-    Github = 7,
-    [Display(Name = "Facebook")]
-    Facebook = 8,
-    [Display(Name = "Dribble")]
-    Dribble = 9,
     [Display(Name = "Behance")]
-    Behance = 10
+    Behance,
+    [Display(Name = "Dribble")]
+    Dribble,
+    [Display(Name = "Facebook")]
+    Facebook,
+    [Display(Name = "Github")]
+    Github,
+    [Display(Name = "Instagram")]
+    Instagram,
+    [Display(Name = "Linkedin")]
+    Linkedin,
+    [Display(Name = "MAX")]
+    MAX,
+    [Display(Name = "Skype")]
+    Skype,
+    [Display(Name = "Telegram")]
+    Telegram,
+    [Display(Name = "Viber")]
+    Viber,
+    [Display(Name = "VK")]
+    VK,
+    [Display(Name = "Whatsapp")]
+    Whatsapp
   }
 }

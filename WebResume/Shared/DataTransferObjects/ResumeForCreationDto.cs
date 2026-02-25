@@ -5,12 +5,12 @@ namespace Shared.DataTransferObjects
   public record ResumeForCreationDTO
   {
     [Required(ErrorMessage = "Необходимо задать значение имени.")]
-    [MinLength(3, ErrorMessage = "Минимальная длина поля Имя составляет 2 символа.")]
+    [MinLength(2, ErrorMessage = "Минимальная длина поля Имя составляет 2 символа.")]
     [StringLength(50, ErrorMessage = "Максимальная длина поля Имя составляет 50 символов.")]
     public string? FirstName { get; init; }
 
     [Required(ErrorMessage = "Фамилия - обязательное поле.")]
-    [MinLength(3, ErrorMessage = "Минимальная длина поля Фамилия составляет 2 символа.")]
+    [MinLength(2, ErrorMessage = "Минимальная длина поля Фамилия составляет 2 символа.")]
     [StringLength(70, ErrorMessage = "Максимальная длина поля Фамилия составляет 70 символов.")]
     public string? LastName { get; init; }
 
