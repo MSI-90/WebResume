@@ -18,7 +18,7 @@ namespace Service
     {
       var socials = Enum.GetValues<SocialKind>();
       var socialsAsList = new List<SocialNetworkMetadataDto>();
-      uint i = 0;
+      uint i = 1;
       while (i != socials.Length)
       {
         socialsAsList.Add(new SocialNetworkMetadataDto(i, socials[i].ToString(), $"{socials[i].ToString().ToLowerInvariant()}.svg"));
