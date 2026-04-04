@@ -15,7 +15,6 @@ namespace WebResume.Presentation.Controllers
     }
 
     [HttpGet]
-    [ResponseCache(Duration = 3600)]
     public IActionResult GetEducationYearAndKinds()
     {
       var educationYearAndKinds = _edcourse.GetEducationYearAndKinds();

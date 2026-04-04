@@ -14,7 +14,6 @@ namespace WebResume.Presentation.Controllers
     }
 
     [HttpGet]
-    [ResponseCache(Duration = 3600)]
     public IActionResult GetBirthdayData()
     {
       var birthdayData = _birthdayService.GetBirthdayData();

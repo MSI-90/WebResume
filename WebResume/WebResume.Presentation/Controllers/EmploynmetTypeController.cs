@@ -3,7 +3,7 @@ using Service.Contracts;
 
 namespace WebResume.Presentation.Controllers
 {
-  [Route("api/employnment-type")]
+  [Route("api/employment-type")]
   [ApiController]
   public class EmploynmetTypeController : ControllerBase
   {
@@ -14,7 +14,6 @@ namespace WebResume.Presentation.Controllers
     }
 
     [HttpGet]
-    [ResponseCache(Duration = 3600)]
     public ActionResult GetEmploynmetTypes()
     {
       var employmentTypes = _employnmetTypeService.GetEmploymentTypes();

@@ -6,7 +6,7 @@ using Service.Contracts;
 // реализованные для решения бизнесс задачи в сервис который непосредственно с ней связан.
 namespace WebResume.Presentation.Controllers
 {
-  [Route("api/work-shedule")]
+  [Route("api/work-schedule")]
   [ApiController]
   public class WorkSheduleController : ControllerBase
   {
@@ -17,7 +17,6 @@ namespace WebResume.Presentation.Controllers
     }
 
     [HttpGet]
-    [ResponseCache(Duration = 3600)]
     public IActionResult GetWorkShedule()
     {
       var workShedule = _workSheduleService.GetWorkShedule();

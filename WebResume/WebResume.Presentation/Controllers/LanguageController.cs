@@ -14,7 +14,6 @@ namespace WebResume.Presentation.Controllers
     }
 
     [HttpGet]
-    [ResponseCache(Duration = 3600)]
     public async Task<IActionResult> GetLanguages()
     {
       var languagesAnLevels = await _languageService.GetLanguageLevelAsync();
