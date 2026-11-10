@@ -30,8 +30,8 @@ namespace WebResume
           case PhotoSizeException:
             httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
             break;
-          case CitizenshipIsEmptyException:
-            httpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+          case CitizenshipNotFoundException:
+            httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
             break;
           case BucketUndefinedException:
             httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
